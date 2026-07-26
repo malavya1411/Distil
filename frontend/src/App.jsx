@@ -65,14 +65,13 @@ export default function App() {
   const [sessionId, setSessionId] = useState(null);
   const [sessionInfo, setSessionInfo] = useState({});
   const [ingestingDoc, setIngestingDoc] = useState('');
+  const [ingestData, setIngestData] = useState(null);
+  const [isIngestFinished, setIsIngestFinished] = useState(false);
 
   const goToUpload = () => {
     setView('upload');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const [ingestData, setIngestData] = useState(null);
-  const [isIngestFinished, setIsIngestFinished] = useState(false);
 
   const handleIngesting = (active, docName = '') => {
     if (active) {
@@ -113,44 +112,44 @@ export default function App() {
   return (
     <div className="app">
 
-      {/* ═══ NAVIGATION ══════════════════════════════════════════════════ */}
-      <nav className="nav" role="navigation" aria-label="Main navigation">
-        <div className="nav-inner">
-          {/* Logo */}
-          <button
-            className="nav-logo"
-            onClick={handleReset}
-            aria-label="Distil home"
-            style={{ background: 'none', border: 'none' }}
-          >
-            <div className="nav-logo-mark" aria-hidden="true">D</div>
-            <span className="nav-logo-name">Distil</span>
-          </button>
+      {/* ═══ NAVIGATION (Hidden during full-screen AI workspace) ═════════ */}
+      {view !== 'chat' && (
+        <nav className="nav" role="navigation" aria-label="Main navigation">
+          <div className="nav-inner">
+            <button
+              className="nav-logo"
+              onClick={handleReset}
+              aria-label="Distil home"
+              style={{ background: 'none', border: 'none' }}
+            >
+              <div className="nav-logo-mark" aria-hidden="true">D</div>
+              <span className="nav-logo-name">Distil</span>
+            </button>
 
-          {/* Right */}
-          <div className="nav-right">
-            {view === 'landing' && (
-              <button
-                className="gradient-btn nav-cta"
-                onClick={goToUpload}
-                id="nav-get-started-btn"
-              >
-                Get started
-              </button>
-            )}
-            {view === 'upload' && (
-              <button className="nav-link" onClick={handleReset}>
-                Home
-              </button>
-            )}
-            {(view === 'ingesting' || view === 'chat') && (
-              <button className="nav-link" onClick={goToUpload}>
-                New document
-              </button>
-            )}
+            <div className="nav-right">
+              {view === 'landing' && (
+                <button
+                  className="gradient-btn nav-cta"
+                  onClick={goToUpload}
+                  id="nav-get-started-btn"
+                >
+                  Get started
+                </button>
+              )}
+              {view === 'upload' && (
+                <button className="nav-link" onClick={handleReset}>
+                  Home
+                </button>
+              )}
+              {view === 'ingesting' && (
+                <button className="nav-link" onClick={goToUpload}>
+                  New document
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
 
       {/* ═══ LANDING PAGE ════════════════════════════════════════════════ */}
       {view === 'landing' && (
@@ -159,9 +158,6 @@ export default function App() {
           {/* ── Hero ───────────────────────────────────────────────────── */}
           <section className="hero-section" aria-labelledby="hero-headline">
             <div className="hero-inner">
-
-
-
               <h1 className="hero-headline" id="hero-headline">
                 Read less.<br />
                 <span className="gradient-text">Understand more.</span>
@@ -200,11 +196,7 @@ export default function App() {
           </section>
 
           {/* ── How It Works ───────────────────────────────────────────── */}
-          <section
-            className="section"
-            id="how-it-works"
-            aria-labelledby="how-title"
-          >
+          <section className="section" id="how-it-works" aria-labelledby="how-title">
             <div className="section-inner">
               <span className="section-label">How it works</span>
               <h2 className="section-title" id="how-title">
@@ -227,10 +219,7 @@ export default function App() {
           </section>
 
           {/* ── Features ───────────────────────────────────────────────── */}
-          <section
-            className="section section-alt"
-            aria-labelledby="features-title"
-          >
+          <section className="section section-alt" aria-labelledby="features-title">
             <div className="section-inner">
               <span className="section-label">Features</span>
               <h2 className="section-title" id="features-title">
@@ -305,9 +294,9 @@ export default function App() {
         </main>
       )}
 
-      {/* ═══ CHAT PAGE ═══════════════════════════════════════════════════ */}
+      {/* ═══ CHAT PAGE (FULL 3-COLUMN AI KNOWLEDGE WORKSPACE) ═════════════ */}
       {view === 'chat' && sessionId && (
-        <main id="main-content" className="chat-view">
+        <main id="main-content" className="chat-workspace-full">
           <ChatInterface
             sessionId={sessionId}
             sessionInfo={sessionInfo}
@@ -316,23 +305,25 @@ export default function App() {
         </main>
       )}
 
-      {/* ═══ FOOTER ══════════════════════════════════════════════════════ */}
-      <footer className="footer" role="contentinfo">
-        <div className="footer-inner">
-          <button
-            className="footer-logo"
-            onClick={handleReset}
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-            aria-label="Distil home"
-          >
-            <div className="footer-logo-mark" aria-hidden="true">D</div>
-            <span className="footer-logo-name">Distil</span>
-          </button>
-          <span className="footer-tagline">
-            Document QA Assistant · Session-scoped
-          </span>
-        </div>
-      </footer>
+      {/* ═══ FOOTER (Hidden during full-screen AI workspace) ═════════════ */}
+      {view !== 'chat' && (
+        <footer className="footer" role="contentinfo">
+          <div className="footer-inner">
+            <button
+              className="footer-logo"
+              onClick={handleReset}
+              style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+              aria-label="Distil home"
+            >
+              <div className="footer-logo-mark" aria-hidden="true">D</div>
+              <span className="footer-logo-name">Distil</span>
+            </button>
+            <span className="footer-tagline">
+              Document QA Assistant · Session-scoped
+            </span>
+          </div>
+        </footer>
+      )}
 
     </div>
   );

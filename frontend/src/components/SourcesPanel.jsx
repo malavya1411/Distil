@@ -2,11 +2,9 @@ import { useState } from 'react';
 import './SourcesPanel.css';
 
 /**
- * SourcesPanel — collapsible panel showing retrieved source chunks per answer.
- *
- * Props:
- *   sources  - array of { chunkId, text, score, metadata }
- *   noMatch  - bool: true if no relevant chunks were found
+ * SourcesPanel — Perplexity-style Evidence Citations Card.
+ * Displays retrieved source passages with confidence score, page/section metadata,
+ * and expandable text snippets.
  */
 export default function SourcesPanel({ sources, noMatch }) {
   const [open, setOpen] = useState(false);
@@ -15,9 +13,9 @@ export default function SourcesPanel({ sources, noMatch }) {
   if (noMatch) {
     return (
       <div className="no-match-notice" role="note" aria-label="No matching content found">
+        <span className="no-match-icon">🔒</span>
         <span>
-          No relevant content was found in the document for this question —
-          the answer reflects that absence rather than guessing.
+          No relevant content was found in the document for this question — the response reflects that absence rather than guessing.
         </span>
       </div>
     );
@@ -48,106 +46,76 @@ export default function SourcesPanel({ sources, noMatch }) {
   };
 
   return (
-    <div className="sources-panel">
+    <div className="perplexity-sources-panel">
       <button
-        className={`sources-toggle${open ? ' open' : ''}`}
+        className={`sources-toggle-pill${open ? ' open' : ''}`}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-controls="sources-list"
         id="sources-toggle-btn"
       >
-        <span className="sources-toggle-left">
+        <div className="toggle-left">
+          <span className="citations-icon">📎</span>
           <span>
-            {sources.length} source{sources.length !== 1 ? 's' : ''} · top match {(topScore * 100).toFixed(0)}%
+            {sources.length} Evidence Source{sources.length !== 1 ? 's' : ''}
           </span>
-        </span>
+          <span className="confidence-pill" style={{ color: scoreColor(topScore) }}>
+            {(topScore * 100).toFixed(0)}% match
+          </span>
+        </div>
         <span className="toggle-chevron" aria-hidden="true">▾</span>
       </button>
 
       {open && (
-        <div className="sources-list" id="sources-list" role="list">
+        <div className="sources-cards-grid" role="list">
           {sources.map((src, idx) => {
             const isExpanded = expandedChunks.has(src.chunkId || idx);
-            const isLong = src.text.length > 400;
+            const isLong = src.text.length > 360;
 
             return (
               <div
                 key={src.chunkId || idx}
-                className="source-chunk"
+                className="evidence-card"
                 role="listitem"
-                aria-label={`Source ${idx + 1}: ${src.metadata?.sectionLabel || 'chunk'}`}
               >
-                {/* Header */}
-                <div className="source-chunk-header">
-                  <div className="source-chunk-left">
-                    <span className="source-index" aria-hidden="true">{idx + 1}</span>
-                    <span
-                      className="source-chunk-label"
-                      title={src.metadata?.sectionLabel}
-                    >
-                      {src.metadata?.sectionLabel || `Chunk ${idx + 1}`}
+                {/* Evidence Card Top Row */}
+                <div className="evidence-card-header">
+                  <div className="evidence-header-left">
+                    <span className="evidence-num">{idx + 1}</span>
+                    <span className="evidence-section-name">
+                      {src.metadata?.sectionLabel || `Section Chunk ${idx + 1}`}
                     </span>
                   </div>
 
-                  <div className="source-chunk-right">
-                    {/* Score bar */}
-                    <div
-                      className="score-bar-wrap"
-                      aria-hidden="true"
-                      title={`Similarity: ${(src.score * 100).toFixed(1)}%`}
-                    >
-                      <div
-                        className="score-bar-fill"
-                        style={{
-                          width: `${Math.round(src.score * 100)}%`,
-                          background: scoreColor(src.score),
-                        }}
-                      />
-                    </div>
-                    {/* Score badge */}
-                    <span
-                      className={`source-score-badge ${scoreClass(src.score)}`}
-                      aria-label={`Relevance: ${(src.score * 100).toFixed(1)}%`}
-                    >
-                      {(src.score * 100).toFixed(1)}%
+                  <div className="evidence-header-right">
+                    <span className={`confidence-badge ${scoreClass(src.score)}`}>
+                      {(src.score * 100).toFixed(1)}% match
                     </span>
                   </div>
                 </div>
 
-                {/* Body */}
-                <div className="source-chunk-body">
-                  {/* Meta row */}
+                {/* Evidence Card Snippet Body */}
+                <div className="evidence-card-body">
                   {(src.metadata?.pageNumber || src.metadata?.sourceDoc) && (
-                    <div className="source-meta">
+                    <div className="evidence-meta-row">
                       {src.metadata.sourceDoc && (
-                        <span className="source-meta-item">
-                          {src.metadata.sourceDoc}
-                        </span>
+                        <span className="meta-tag">{src.metadata.sourceDoc}</span>
                       )}
                       {src.metadata.pageNumber && (
-                        <span className="source-meta-item">
-                          Page {src.metadata.pageNumber}
-                        </span>
+                        <span className="meta-tag">Page {src.metadata.pageNumber}</span>
                       )}
                     </div>
                   )}
 
-                  {/* Chunk text */}
-                  <p className={`source-chunk-text${isExpanded ? ' expanded' : ''}`}>
-                    {isExpanded || !isLong
-                      ? src.text
-                      : src.text.slice(0, 400) + '…'}
+                  <p className={`evidence-text${isExpanded ? ' expanded' : ''}`}>
+                    {isExpanded || !isLong ? src.text : src.text.slice(0, 360) + '…'}
                   </p>
 
-                  {/* Expand / collapse long chunks */}
                   {isLong && (
                     <button
-                      className="source-expand-btn"
+                      className="evidence-expand-btn"
                       onClick={() => toggleExpand(src.chunkId || idx)}
-                      aria-expanded={isExpanded}
-                      aria-label={isExpanded ? 'Show less text' : 'Show full chunk text'}
                     >
-                      {isExpanded ? 'Show less' : 'Show full excerpt'}
+                      {isExpanded ? 'Show less' : 'Read full passage'}
                     </button>
                   )}
                 </div>
