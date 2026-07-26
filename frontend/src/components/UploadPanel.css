@@ -1,0 +1,219 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   UploadPanel.css — Upload zone + document-type toggle styles
+───────────────────────────────────────────────────────────────────────────── */
+
+.upload-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── Mode toggle ─────────────────────────────────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  gap: 4px;
+}
+
+.mode-toggle button {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mode-toggle button.active {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ── Doc-type toggle ─────────────────────────────────────────────────────── */
+.doctype-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.doctype-toggle label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.doctype-toggle select {
+  flex: 1;
+  min-width: 140px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.doctype-toggle select:focus {
+  border-color: var(--accent-flat);
+}
+
+/* ── Dropzone ─────────────────────────────────────────────────────────────── */
+.dropzone {
+  position: relative;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.dropzone:hover,
+.dropzone.dragging {
+  border-color: var(--accent-flat);
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.dropzone input[type='file'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropzone-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.dropzone-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.dropzone-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.dropzone-file-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(99, 102, 241, 0.08);
+  border-radius: var(--radius);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.dropzone-file-selected span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.dropzone-file-selected button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 2px;
+  transition: color 0.15s;
+}
+
+.dropzone-file-selected button:hover {
+  color: var(--error);
+}
+
+/* ── Paste area ───────────────────────────────────────────────────────────── */
+.paste-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.paste-area textarea {
+  width: 100%;
+  min-height: 200px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  padding: 14px 16px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.paste-area textarea:focus {
+  border-color: var(--accent-flat);
+}
+
+.paste-area textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ── Privacy note ─────────────────────────────────────────────────────────── */
+.privacy-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.privacy-note span {
+  line-height: 1.4;
+}
+
+/* ── Submit button ────────────────────────────────────────────────────────── */
+.upload-submit {
+  padding: 13px 24px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+/* ── Error ───────────────────────────────────────────────────────────────── */
+.upload-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  color: #fca5a5;
+}
