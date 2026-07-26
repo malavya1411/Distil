@@ -146,10 +146,7 @@ export default function App() {
           <section className="hero-section" aria-labelledby="hero-headline">
             <div className="hero-inner">
 
-              <div className="hero-badge">
-                <span className="hero-badge-dot" aria-hidden="true" />
-                <span>Document Assistant</span>
-              </div>
+
 
               <h1 className="hero-headline" id="hero-headline">
                 Read less.<br />
