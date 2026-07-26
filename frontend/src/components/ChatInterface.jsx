@@ -421,13 +421,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                   </p>
                 </div>
 
-                <div className="workspace-intro-box">
-                  <div className="intro-badge">Ready to explore</div>
-                  <p className="intro-text">
-                    Your document has been distilled into searchable knowledge. Ask anything naturally and every answer will include supporting citations.
-                  </p>
-                </div>
-
                 {/* Suggested AI Prompt Cards Grid */}
                 <div className="prompt-cards-section">
                   <span className="prompt-cards-label">Recommended Queries</span>
@@ -543,7 +536,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
       </main>
 
       {/* ═════════════════════════════════════════════════════════════════════
-         3. RIGHT SIDEBAR (Contextual Document Metadata Panel)
+         3. RIGHT SIDEBAR (Contextual Document Metadata Panel - 2 Clean Sections)
       ═════════════════════════════════════════════════════════════════════ */}
       <aside className={`workspace-sidebar-right ${showRightPanel ? 'open' : 'closed'}`}>
         <div className="right-panel-header">
@@ -559,48 +552,12 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
 
         <div className="right-panel-scroll">
 
-          {/* AI Summary Card */}
-          <div className="panel-card">
-            <span className="panel-card-label">Executive Summary</span>
-            <p className="panel-card-text">
+          {/* Section 1: Executive Overview & Topics */}
+          <div className="panel-section">
+            <span className="panel-section-title">Overview</span>
+            <p className="panel-overview-text">
               Distilled section breakdown available. Grounded responses are generated strictly from indexed chunks.
             </p>
-          </div>
-
-          {/* Metadata Grid */}
-          <div className="panel-card">
-            <span className="panel-card-label">Document Stats</span>
-            <div className="meta-grid">
-              <div className="meta-item">
-                <span className="meta-label">Indexed Chunks</span>
-                <span className="meta-value">{sessionInfo.chunkCount || 42}</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-label">Document Type</span>
-                <span className="meta-value">{sessionInfo.docType || 'Auto'}</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-label">Embed Model</span>
-                <span className="meta-value">gemini-embedding-001</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-label">Generation</span>
-                <span className="meta-value">Groq llama-3.3-70b</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-label">AI Confidence</span>
-                <span className="meta-value success">98.4%</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-label">Security</span>
-                <span className="meta-value">In-Memory Only</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Topic Tags */}
-          <div className="panel-card">
-            <span className="panel-card-label">Key Topics</span>
             <div className="topic-tags-wrap">
               <span className="topic-tag">#Privacy</span>
               <span className="topic-tag">#DataSharing</span>
@@ -610,12 +567,44 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             </div>
           </div>
 
-          {/* Grounding Notice */}
-          <div className="panel-card grounding-notice-card">
-            <span className="grounding-title">Grounded &amp; Private</span>
-            <p className="grounding-text">
-              Responses are guaranteed zero-hallucination. No document text is stored on disk or used for model training.
-            </p>
+          <div className="panel-divider" />
+
+          {/* Section 2: Document Specs & Grounding */}
+          <div className="panel-section">
+            <span className="panel-section-title">Document Specs</span>
+            <dl className="stats-list">
+              <div className="stat-row">
+                <dt>Indexed Chunks</dt>
+                <dd>{sessionInfo.chunkCount || 42}</dd>
+              </div>
+              <div className="stat-row">
+                <dt>Document Type</dt>
+                <dd>{sessionInfo.docType || 'Auto'}</dd>
+              </div>
+              <div className="stat-row">
+                <dt>Embed Model</dt>
+                <dd>gemini-embedding-001</dd>
+              </div>
+              <div className="stat-row">
+                <dt>Generation</dt>
+                <dd>Groq llama-3.3-70b</dd>
+              </div>
+              <div className="stat-row">
+                <dt>AI Confidence</dt>
+                <dd className="stat-success">98.4%</dd>
+              </div>
+              <div className="stat-row">
+                <dt>Security</dt>
+                <dd>In-Memory Only</dd>
+              </div>
+            </dl>
+
+            <div className="privacy-footnote">
+              <span className="footnote-title">Grounded &amp; Private</span>
+              <p className="footnote-desc">
+                Responses are guaranteed zero-hallucination. No document text is stored on disk or used for training.
+              </p>
+            </div>
           </div>
 
         </div>
