@@ -174,6 +174,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
         <div className="paste-area">
           <textarea
             id="paste-text-input"
+            className="paste-textarea"
             placeholder="Paste your Terms & Conditions, privacy policy, research paper, or any long document here…"
             value={pastedText}
             onChange={(e) => setPastedText(e.target.value)}

@@ -142,28 +142,23 @@
 }
 
 /* ── Textarea mode ───────────────────────────────────────────────────────── */
-.text-input-wrap {
+.paste-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.text-input-wrap label {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  gap: 8px;
+  width: 100%;
 }
 
 .paste-textarea {
   width: 100%;
-  min-height: 160px;
+  min-height: 180px;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 14px 16px;
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   resize: vertical;
   outline: none;
@@ -178,6 +173,19 @@
   color: var(--text-muted);
 }
 
+.char-count {
+  align-self: flex-end;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.privacy-note {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .upload-error {
   padding: 10px 14px;
   background: var(--error-bg);
@@ -187,8 +195,9 @@
   font-size: 0.82rem;
 }
 
-.upload-submit-btn {
+.upload-submit {
   width: 100%;
-  padding: 13px;
+  padding: 14px;
   font-size: 0.95rem;
+  font-weight: 600;
 }
