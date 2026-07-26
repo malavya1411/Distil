@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import UploadPanel from './components/UploadPanel';
 import IngestionStatus from './components/IngestionStatus';
 import ChatInterface from './components/ChatInterface';
@@ -69,14 +69,15 @@ const FEATURES = [
 // ─── App ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  // Views: 'landing' | 'upload' | 'ingesting' | 'chat'
   const [view, setView] = useState('landing');
   const [sessionId, setSessionId] = useState(null);
   const [sessionInfo, setSessionInfo] = useState({});
   const [ingestingDoc, setIngestingDoc] = useState('');
-  const uploadRef = useRef(null);
 
-  const scrollToUpload = () => {
-    uploadRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const goToUpload = () => {
+    setView('upload');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleIngesting = (active, docName = '') => {
@@ -101,8 +102,7 @@ export default function App() {
     setSessionId(null);
     setSessionInfo({});
     setIngestingDoc('');
-    // Scroll to upload on reset so user can easily re-upload
-    setTimeout(scrollToUpload, 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -133,29 +133,29 @@ export default function App() {
           {/* Right */}
           <div className="nav-right">
             {view === 'landing' && (
-              <>
-                <button className="nav-link" onClick={scrollToUpload}>
-                  Try it →
-                </button>
-                <button
-                  className="gradient-btn nav-cta"
-                  onClick={scrollToUpload}
-                  id="nav-get-started-btn"
-                >
-                  Get started
-                </button>
-              </>
+              <button
+                className="gradient-btn nav-cta"
+                onClick={goToUpload}
+                id="nav-get-started-btn"
+              >
+                Get started →
+              </button>
+            )}
+            {view === 'upload' && (
+              <button className="nav-link" onClick={handleReset}>
+                ← Home
+              </button>
             )}
             {(view === 'ingesting' || view === 'chat') && (
-              <button className="nav-link" onClick={handleReset}>
-                ← Back
+              <button className="nav-link" onClick={goToUpload}>
+                ↩ New document
               </button>
             )}
           </div>
         </div>
       </nav>
 
-      {/* ═══ LANDING ═════════════════════════════════════════════════════ */}
+      {/* ═══ LANDING PAGE ════════════════════════════════════════════════ */}
       {view === 'landing' && (
         <main id="main-content">
 
@@ -182,11 +182,11 @@ export default function App() {
               <div className="hero-actions">
                 <button
                   className="gradient-btn hero-primary-btn"
-                  onClick={scrollToUpload}
+                  onClick={goToUpload}
                   id="hero-try-btn"
-                  aria-label="Try Distil — scroll to upload"
+                  aria-label="Get started — navigate to upload page"
                 >
-                  Try it now — it's free ↓
+                  Get started — it's free →
                 </button>
                 <button
                   className="hero-secondary-btn"
@@ -263,36 +263,50 @@ export default function App() {
             </div>
           </section>
 
-          {/* ── Upload CTA ─────────────────────────────────────────────── */}
-          <section
-            className="upload-section"
-            id="upload"
-            ref={uploadRef}
-            aria-labelledby="upload-title"
-          >
-            <div className="upload-section-inner">
-              <span className="section-label">Get started</span>
-              <h2 className="section-title" id="upload-title">
-                Try it with your document
-              </h2>
-              <p className="section-sub">
-                Upload a PDF or paste text below. Your document is never stored
-                — it exists only for this session.
+          {/* ── Bottom CTA Banner ──────────────────────────────────────── */}
+          <section className="cta-banner-section">
+            <div className="cta-banner-inner">
+              <h2 className="cta-banner-title">Ready to analyze your document?</h2>
+              <p className="cta-banner-sub">
+                Upload a PDF or paste text. Get grounded answers in seconds.
               </p>
-
-              <div className="upload-widget">
-                <UploadPanel
-                  onIngestComplete={handleIngestComplete}
-                  onIngesting={(active, docName) => handleIngesting(active, docName)}
-                />
-              </div>
+              <button
+                className="gradient-btn hero-primary-btn"
+                onClick={goToUpload}
+                id="bottom-cta-btn"
+              >
+                Get started now →
+              </button>
             </div>
           </section>
 
         </main>
       )}
 
-      {/* ═══ INGESTING ═══════════════════════════════════════════════════ */}
+      {/* ═══ DEDICATED UPLOAD PAGE ═══════════════════════════════════════ */}
+      {view === 'upload' && (
+        <main id="main-content" className="upload-page">
+          <div className="upload-page-inner">
+            <div className="upload-page-header">
+              <span className="section-label">Session Upload</span>
+              <h1 className="upload-page-title">Upload your document</h1>
+              <p className="upload-page-sub">
+                Upload a PDF file or paste text below. Your document is processed in memory
+                and never stored on disk.
+              </p>
+            </div>
+
+            <div className="upload-widget">
+              <UploadPanel
+                onIngestComplete={handleIngestComplete}
+                onIngesting={(active, docName) => handleIngesting(active, docName)}
+              />
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* ═══ INGESTING PAGE ══════════════════════════════════════════════ */}
       {view === 'ingesting' && (
         <main id="main-content" className="ingestion-view" aria-live="polite">
           <div className="card" style={{ maxWidth: 520, width: '100%', padding: 0 }}>
@@ -301,7 +315,7 @@ export default function App() {
         </main>
       )}
 
-      {/* ═══ CHAT ════════════════════════════════════════════════════════ */}
+      {/* ═══ CHAT PAGE ═══════════════════════════════════════════════════ */}
       {view === 'chat' && sessionId && (
         <main id="main-content" className="chat-view">
           <ChatInterface

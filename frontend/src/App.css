@@ -407,26 +407,69 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   UPLOAD SECTION (CTA)
+   CTA BANNER SECTION (ON LANDING PAGE)
 ═══════════════════════════════════════════════════════════════════════════ */
 
-.upload-section {
-  padding: 80px 24px 96px;
-  background: var(--bg-base);
-}
-
-.upload-section-inner {
-  max-width: 640px;
-  margin: 0 auto;
+.cta-banner-section {
+  padding: 80px 24px;
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+  border-top: 1px solid var(--border);
   text-align: center;
 }
 
-.upload-section-inner .section-title {
-  margin-bottom: 10px;
+.cta-banner-inner {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
-.upload-section-inner .section-sub {
-  margin: 0 auto 40px;
+.cta-banner-title {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.cta-banner-sub {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DEDICATED UPLOAD PAGE
+═══════════════════════════════════════════════════════════════════════════ */
+
+.upload-page {
+  flex: 1;
+  padding: 60px 24px 80px;
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-page-inner {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.upload-page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.upload-page-title {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 8px 0 10px;
+}
+
+.upload-page-sub {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .upload-widget {
