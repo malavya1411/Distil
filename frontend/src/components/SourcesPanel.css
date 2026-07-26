@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   SourcesPanel.css — Perplexity Style Evidence Citations
+   SourcesPanel.css — Evidence Citations (Flat Palette)
 ───────────────────────────────────────────────────────────────────────────── */
 
 .perplexity-sources-panel {
@@ -13,7 +13,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 8px 14px;
-  background: #FAFBFF;
+  background: #F7F8FA;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
@@ -25,8 +25,7 @@
 }
 
 .sources-toggle-pill:hover {
-  background: #F1F5F9;
-  border-color: var(--border-strong);
+  background: #E3E6EA;
   color: var(--text-primary);
 }
 
@@ -35,8 +34,6 @@
   align-items: center;
   gap: 8px;
 }
-
-.citations-icon { font-size: 0.85rem; }
 
 .confidence-pill {
   font-size: 0.72rem;
@@ -76,12 +73,11 @@
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
 }
 
 .evidence-card:hover {
-  border-color: rgba(108, 99, 255, 0.35);
-  box-shadow: var(--shadow);
+  border-color: var(--border-strong);
 }
 
 .evidence-card-header {
@@ -89,7 +85,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: #FAFBFF;
+  background: #F7F8FA;
   border-bottom: 1px solid var(--border);
 }
 
@@ -104,10 +100,10 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent-light);
-  color: var(--accent-flat);
+  background: #E3E6EA;
+  color: var(--text-primary);
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,9 +126,9 @@
   border-radius: 999px;
 }
 
-.confidence-badge.high   { background: #DCFCE7; color: #15803D; }
-.confidence-badge.medium { background: #FEF9C3; color: #854D0E; }
-.confidence-badge.low    { background: #FEE2E2; color: #B91C1C; }
+.confidence-badge.high   { background: #F0FDF4; color: #2F855A; border: 1px solid #BBF7D0; }
+.confidence-badge.medium { background: #FFFBEB; color: #B7791F; border: 1px solid #FDE68A; }
+.confidence-badge.low    { background: #FEF2F2; color: #B23A34; border: 1px solid #FECACA; }
 
 .evidence-card-body {
   padding: 12px 14px;
@@ -148,10 +144,11 @@
 
 .meta-tag {
   font-size: 0.7rem;
-  color: var(--text-muted);
-  background: var(--bg-surface);
+  color: var(--text-secondary);
+  background: var(--bg-base);
   padding: 2px 6px;
   border-radius: 4px;
+  border: 1px solid var(--border);
 }
 
 .evidence-text {
@@ -179,11 +176,11 @@
   align-items: flex-start;
   gap: 8px;
   padding: 12px 14px;
-  background: #FFFBEB;
+  background: var(--warning-bg);
   border: 1px solid #FDE68A;
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
-  color: #B45309;
+  color: var(--warning);
   line-height: 1.5;
   margin-top: 10px;
 }
