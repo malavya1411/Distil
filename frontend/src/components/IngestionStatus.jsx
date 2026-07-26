@@ -83,6 +83,16 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
     return () => clearInterval(statusTimerRef.current);
   }, [complete]);
 
+  // 3. Auto-navigate to chat workspace when complete
+  useEffect(() => {
+    if (complete && onOpenWorkspace) {
+      const autoTimer = setTimeout(() => {
+        onOpenWorkspace();
+      }, 650);
+      return () => clearTimeout(autoTimer);
+    }
+  }, [complete, onOpenWorkspace]);
+
   // Ring geometry
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
@@ -106,7 +116,7 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
 
           <p className="distil-loader-sub">
             {complete
-              ? 'Knowledge structure built and indexed. Ready for instant Q&A.'
+              ? 'Knowledge structure built and indexed. Opening workspace…'
               : 'Turning hundreds of pages into structured knowledge.'}
           </p>
 
@@ -197,7 +207,7 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
             <div className="progress-percentage-row">
               <span className="progress-percent-num">{progress}%</span>
               <span className="progress-status-text">
-                {complete ? 'Indexed' : STATUS_MESSAGES[messageIndex]}
+                {complete ? 'Opening workspace…' : STATUS_MESSAGES[messageIndex]}
               </span>
             </div>
 
@@ -261,33 +271,23 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
           })}
         </div>
 
-        {/* Footer Security Note or Action Button */}
+        {/* Security Footer */}
         <div className="distil-loader-footer">
-          {complete ? (
-            <button
-              className="gradient-btn open-workspace-btn"
-              onClick={onOpenWorkspace}
-              id="open-workspace-btn"
-            >
-              Open Workspace →
-            </button>
-          ) : (
-            <div className="security-note">
-              <svg className="shield-icon" viewBox="0 0 24 24" width="16" height="16">
-                <path
-                  d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-                  fill="none"
-                  stroke="#6B7280"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span>
-                Large files usually finish within 30–60 seconds. Your document is processed securely in memory and never stored.
-              </span>
-            </div>
-          )}
+          <div className="security-note">
+            <svg className="shield-icon" viewBox="0 0 24 24" width="16" height="16">
+              <path
+                d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                fill="none"
+                stroke="#6B7280"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>
+              Large files usually finish within 30–60 seconds. Your document is processed securely in memory and never stored.
+            </span>
+          </div>
         </div>
 
       </div>
