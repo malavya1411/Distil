@@ -9,19 +9,16 @@ import './App.css';
 const STEPS = [
   {
     num: '01',
-    icon: '📄',
     title: 'Upload or paste',
     desc: 'Drop a PDF or paste raw text — Terms & Conditions, privacy policies, EULAs, or research papers.',
   },
   {
     num: '02',
-    icon: '⚡',
     title: 'Instant indexing',
-    desc: 'Your document is split into sections, embedded with Gemini, and stored in a fast in-memory index.',
+    desc: 'Your document is split into sections, embedded, and stored in a fast in-memory index.',
   },
   {
     num: '03',
-    icon: '💬',
     title: 'Ask anything',
     desc: 'Ask in plain English. Every answer is grounded in the original text with visible source citations.',
   },
@@ -29,37 +26,31 @@ const STEPS = [
 
 const FEATURES = [
   {
-    icon: '🔍',
     color: 'indigo',
     title: 'Grounded answers only',
     desc: 'The model answers strictly from your document. If something isn\'t covered, it says so — no hallucinations.',
   },
   {
-    icon: '📎',
     color: 'violet',
     title: 'Source citations',
     desc: 'Every answer links back to the exact section it came from, with a relevance score so you can trust the result.',
   },
   {
-    icon: '⚡',
     color: 'amber',
-    title: 'Groq LPU generation',
-    desc: 'Answers arrive in under a second. Groq\'s Language Processing Unit makes generation the fastest part of the pipeline.',
+    title: 'Fast generation',
+    desc: 'Answers arrive in under a second. Optimized processing makes generation fast and responsive.',
   },
   {
-    icon: '📑',
     color: 'sky',
     title: 'Clause-aware chunking',
     desc: 'Legal text is split on section boundaries, not arbitrary character counts — better retrieval from the start.',
   },
   {
-    icon: '🔒',
     color: 'green',
     title: 'Session-only privacy',
     desc: 'Your document never touches a database. It lives only in memory for the duration of your session.',
   },
   {
-    icon: '💬',
     color: 'rose',
     title: 'Multi-turn Q&A',
     desc: 'Follow up naturally. Conversation history is maintained so context carries across questions.',
@@ -115,20 +106,12 @@ export default function App() {
           <button
             className="nav-logo"
             onClick={handleReset}
-            aria-label="Distil — go to home"
+            aria-label="Distil home"
             style={{ background: 'none', border: 'none' }}
           >
-            <div className="nav-logo-mark" aria-hidden="true">✦</div>
+            <div className="nav-logo-mark" aria-hidden="true">D</div>
             <span className="nav-logo-name">Distil</span>
           </button>
-
-          {/* Center badge */}
-          <div className="nav-center">
-            <span className="nav-pill">
-              <span aria-hidden="true">⚡</span>
-              Gemini embeddings · Groq generation
-            </span>
-          </div>
 
           {/* Right */}
           <div className="nav-right">
@@ -138,17 +121,17 @@ export default function App() {
                 onClick={goToUpload}
                 id="nav-get-started-btn"
               >
-                Get started →
+                Get started
               </button>
             )}
             {view === 'upload' && (
               <button className="nav-link" onClick={handleReset}>
-                ← Home
+                Home
               </button>
             )}
             {(view === 'ingesting' || view === 'chat') && (
               <button className="nav-link" onClick={goToUpload}>
-                ↩ New document
+                New document
               </button>
             )}
           </div>
@@ -165,7 +148,7 @@ export default function App() {
 
               <div className="hero-badge">
                 <span className="hero-badge-dot" aria-hidden="true" />
-                <span>RAG-powered · Free tier · No data stored</span>
+                <span>Document Assistant</span>
               </div>
 
               <h1 className="hero-headline" id="hero-headline">
@@ -176,7 +159,7 @@ export default function App() {
               <p className="hero-sub">
                 Upload a Terms &amp; Conditions, privacy policy, or research paper.
                 Ask any question in plain English — get a grounded answer with
-                the exact source passage, in under a second.
+                the exact source passage.
               </p>
 
               <div className="hero-actions">
@@ -186,7 +169,7 @@ export default function App() {
                   id="hero-try-btn"
                   aria-label="Get started — navigate to upload page"
                 >
-                  Get started — it's free →
+                  Get started
                 </button>
                 <button
                   className="hero-secondary-btn"
@@ -197,11 +180,10 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="hero-trust" aria-label="Trust signals">
-                <span className="hero-trust-item"><span>🔒</span> Session-only · never saved</span>
-                <span className="hero-trust-item"><span>⚡</span> &lt;1s Groq generation</span>
-                <span className="hero-trust-item"><span>✓</span> No hallucinations</span>
-                <span className="hero-trust-item"><span>💳</span> $0 · free tier</span>
+              <div className="hero-trust" aria-label="Key features">
+                <span className="hero-trust-item">Session-only privacy</span>
+                <span className="hero-trust-item">Fast response time</span>
+                <span className="hero-trust-item">Grounded in source text</span>
               </div>
             </div>
           </section>
@@ -225,7 +207,6 @@ export default function App() {
                 {STEPS.map((step) => (
                   <div key={step.num} className="step-card" role="listitem">
                     <div className="step-number" aria-hidden="true">{step.num}</div>
-                    <div className="step-icon" aria-hidden="true">{step.icon}</div>
                     <h3 className="step-title">{step.title}</h3>
                     <p className="step-desc">{step.desc}</p>
                   </div>
@@ -252,9 +233,6 @@ export default function App() {
               <div className="features-grid" role="list">
                 {FEATURES.map((f) => (
                   <div key={f.title} className="feature-card" role="listitem">
-                    <div className={`feature-icon-wrap ${f.color}`} aria-hidden="true">
-                      {f.icon}
-                    </div>
                     <h3 className="feature-title">{f.title}</h3>
                     <p className="feature-desc">{f.desc}</p>
                   </div>
@@ -275,7 +253,7 @@ export default function App() {
                 onClick={goToUpload}
                 id="bottom-cta-btn"
               >
-                Get started now →
+                Get started now
               </button>
             </div>
           </section>
@@ -288,11 +266,10 @@ export default function App() {
         <main id="main-content" className="upload-page">
           <div className="upload-page-inner">
             <div className="upload-page-header">
-              <span className="section-label">Session Upload</span>
               <h1 className="upload-page-title">Upload your document</h1>
               <p className="upload-page-sub">
                 Upload a PDF file or paste text below. Your document is processed in memory
-                and never stored on disk.
+                and never stored.
               </p>
             </div>
 
@@ -335,11 +312,11 @@ export default function App() {
             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
             aria-label="Distil home"
           >
-            <div className="footer-logo-mark" aria-hidden="true">✦</div>
+            <div className="footer-logo-mark" aria-hidden="true">D</div>
             <span className="footer-logo-name">Distil</span>
           </button>
           <span className="footer-tagline">
-            RAG-powered Document Q&amp;A · Gemini embeddings · Groq generation · Session-only · Free
+            Document QA Assistant · Session-scoped
           </span>
         </div>
       </footer>

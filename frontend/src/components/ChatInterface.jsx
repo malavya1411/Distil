@@ -31,25 +31,15 @@ const SUGGESTED_BY_DOCTYPE = {
 
 // ─── Simple answer renderer (bold + paragraph awareness) ─────────────────
 
-/**
- * Render the answer text with basic formatting:
- *  - Double newlines → paragraph breaks
- *  - "quoted text" → styled blockquote approximation
- *  - **bold** → <strong>
- */
 function AnswerText({ text }) {
   if (!text) return null;
 
-  // Split on double newlines for paragraphs
   const paragraphs = text.split(/\n{2,}/).filter(Boolean);
 
   return (
     <div className="answer-text">
       {paragraphs.map((para, i) => {
-        // Check if this paragraph looks like a quoted passage (starts with " or >)
         const isQuote = para.trimStart().startsWith('"') || para.trimStart().startsWith('>');
-
-        // Process **bold** markers
         const rendered = para.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
         if (isQuote) {
@@ -89,7 +79,6 @@ function useCopyToClipboard(timeout = 1800) {
       setCopied(true);
       setTimeout(() => setCopied(false), timeout);
     } catch {
-      // Fallback for non-HTTPS environments
       const el = document.createElement('textarea');
       el.value = text;
       document.body.appendChild(el);
@@ -114,10 +103,10 @@ function MessageActions({ text, model }) {
       <button
         className={`action-btn${copied ? ' copied' : ''}`}
         onClick={() => copy(text)}
-        aria-label={copied ? 'Copied!' : 'Copy answer to clipboard'}
-        title={copied ? 'Copied!' : 'Copy answer'}
+        aria-label={copied ? 'Copied' : 'Copy answer'}
+        title={copied ? 'Copied' : 'Copy answer'}
       >
-        {copied ? '✓ Copied' : '⎘ Copy'}
+        {copied ? 'Copied' : 'Copy'}
       </button>
       {model && (
         <span className="model-badge" title="Generation model">
@@ -130,14 +119,6 @@ function MessageActions({ text, model }) {
 
 // ─── Main component ───────────────────────────────────────────────────────
 
-/**
- * ChatInterface — multi-turn Q&A against the ingested document.
- *
- * Props:
- *   sessionId   - active session ID from the backend
- *   sessionInfo - { sourceDoc, chunkCount, docType }
- *   onReset     - callback to go back to upload screen
- */
 export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -150,12 +131,10 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
   const suggestedQuestions =
     SUGGESTED_BY_DOCTYPE[docType] || SUGGESTED_BY_DOCTYPE.auto;
 
-  // Scroll to bottom on new message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // Auto-resize textarea
   const handleInputChange = (e) => {
     setInput(e.target.value);
     const ta = textareaRef.current;
@@ -172,7 +151,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
     }
   };
 
-  // Build conversation history for multi-turn context (last 6 turns max)
   const buildHistory = () => {
     return messages
       .slice(-6)
@@ -224,7 +202,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
 
     } catch (err) {
       setError(err.message);
-      // Remove the optimistic user message on failure
       setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
     } finally {
       setLoading(false);
@@ -236,15 +213,13 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
     handleSend(question);
   };
 
-  // ── Render ──────────────────────────────────────────────────────────────
-
   return (
     <div className="chat-wrapper">
 
       {/* Session banner */}
       <div className="session-banner">
         <div className="session-banner-info">
-          <span className="session-badge">● Ready</span>
+          <span className="session-badge">Ready</span>
           <span className="session-banner-doc" title={sessionInfo.sourceDoc}>
             <strong>{sessionInfo.sourceDoc || 'Document'}</strong>
             {' · '}
@@ -259,7 +234,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             id="upload-new-doc-btn"
             aria-label="Upload a new document"
           >
-            ↩ New document
+            New document
           </button>
         </div>
       </div>
@@ -275,7 +250,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         {/* Empty state with suggested chips */}
         {messages.length === 0 && !loading && (
           <div className="chat-empty">
-            <div className="chat-empty-icon" aria-hidden="true">💬</div>
             <div>
               <p className="chat-empty-title">Your document is ready</p>
               <p className="chat-empty-sub">
@@ -293,7 +267,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                   aria-label={`Ask: ${q}`}
                   disabled={loading}
                 >
-                  <span aria-hidden="true">→</span>
                   {q}
                 </button>
               ))}
@@ -310,7 +283,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             aria-label={`${msg.role === 'user' ? 'Your question' : 'Answer'}`}
           >
             <div className="message-avatar" aria-hidden="true">
-              {msg.role === 'user' ? 'U' : '✦'}
+              {msg.role === 'user' ? 'U' : 'A'}
             </div>
 
             <div className="message-content">
@@ -322,7 +295,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                 )}
               </div>
 
-              {/* Assistant: actions + sources */}
               {msg.role === 'assistant' && (
                 <>
                   <MessageActions text={msg.text} model={msg.model} />
@@ -336,7 +308,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         {/* Typing indicator */}
         {loading && (
           <div className="message assistant" aria-label="Generating answer…">
-            <div className="message-avatar" aria-hidden="true">✦</div>
+            <div className="message-avatar" aria-hidden="true">A</div>
             <div className="message-content">
               <div className="message-bubble">
                 <div className="typing-indicator" aria-hidden="true">
@@ -355,7 +327,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
       {/* Error */}
       {error && (
         <div className="chat-error" role="alert" aria-live="assertive">
-          <span>⚠️</span>
           <span>{error}</span>
         </div>
       )}
@@ -369,7 +340,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="Ask a question about your document… (Enter to send, Shift+Enter for new line)"
+            placeholder="Ask a question about your document… (Enter to send)"
             disabled={loading}
             rows={1}
             aria-label="Question input"
@@ -385,7 +356,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           disabled={loading || !input.trim()}
           aria-label="Send question"
         >
-          <span aria-hidden="true">↑</span>
           Send
         </button>
       </div>

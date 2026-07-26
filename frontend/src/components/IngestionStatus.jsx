@@ -5,8 +5,7 @@ import './IngestionStatus.css';
  * IngestionStatus — shown during backend chunking + embedding.
  *
  * Phase 5: animated stage tracker that cycles through stages to communicate
- * progress visually. The actual backend progress is not streamed (MVP),
- * so we simulate with time-based stage advancement.
+ * progress visually.
  *
  * Props:
  *   sourceDoc - filename or label
@@ -15,14 +14,13 @@ import './IngestionStatus.css';
 const STAGES = [
   { id: 'extract',  label: 'Extracting text from document',    doneIcon: '✓', estimatedMs: 2000  },
   { id: 'chunk',    label: 'Splitting into sections & chunks',  doneIcon: '✓', estimatedMs: 3000  },
-  { id: 'embed',    label: 'Generating embeddings (throttled)', doneIcon: '✓', estimatedMs: 99999 }, // stays active
+  { id: 'embed',    label: 'Generating embeddings',             doneIcon: '✓', estimatedMs: 99999 }, // stays active
   { id: 'index',    label: 'Building search index',            doneIcon: '✓', estimatedMs: 1000  },
 ];
 
 export default function IngestionStatus({ sourceDoc }) {
   const [activeStage, setActiveStage] = useState(0);
 
-  // Advance through stages automatically based on estimated durations
   useEffect(() => {
     let elapsed = 0;
     const timers = [];
@@ -55,7 +53,6 @@ export default function IngestionStatus({ sourceDoc }) {
       {/* Spinner */}
       <div className="ingestion-spinner-wrap" aria-hidden="true">
         <div className="ingestion-spinner" />
-        <div className="ingestion-spinner-icon">✦</div>
       </div>
 
       {/* Title + doc name */}
@@ -94,8 +91,7 @@ export default function IngestionStatus({ sourceDoc }) {
 
       {/* Tip note */}
       <p className="ingestion-note">
-        Embedding generation respects Gemini free-tier rate limits — large
-        documents may take up to a minute. Hang tight!
+        Processing document contents. This may take up to a minute for larger files.
       </p>
 
       <div className="ingestion-dots" aria-hidden="true">

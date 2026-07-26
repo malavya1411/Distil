@@ -105,7 +105,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
           onClick={() => { setMode('pdf'); setError(''); }}
           id="tab-pdf"
         >
-          📄 Upload PDF
+          Upload PDF
         </button>
         <button
           role="tab"
@@ -114,7 +114,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
           onClick={() => { setMode('paste'); setError(''); }}
           id="tab-paste"
         >
-          📋 Paste Text
+          Paste Text
         </button>
       </div>
 
@@ -156,7 +156,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
 
           {file ? (
             <div className="dropzone-file-selected" onClick={(e) => e.stopPropagation()}>
-              <span>📄 {file.name}</span>
+              <span>{file.name}</span>
               <button
                 onClick={(e) => { e.stopPropagation(); setFile(null); }}
                 aria-label="Remove selected file"
@@ -165,7 +165,6 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
             </div>
           ) : (
             <>
-              <span className="dropzone-icon">☁️</span>
               <p className="dropzone-label">Drop your PDF here, or click to browse</p>
               <p className="dropzone-hint">PDF files only · Max 20 MB</p>
             </>
@@ -187,14 +186,12 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
       {/* Error */}
       {error && (
         <div className="upload-error" role="alert" aria-live="assertive">
-          <span>⚠️</span>
           <span>{error}</span>
         </div>
       )}
 
       {/* Privacy note */}
       <p className="privacy-note">
-        <span>🔒</span>
         <span>Your document is never saved — it exists only for this session and is discarded when you close the tab.</span>
       </p>
 
@@ -206,7 +203,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
         disabled={mode === 'pdf' ? !file : pastedText.trim().length < 50}
         aria-label="Start document ingestion"
       >
-        Analyse Document →
+        Analyse Document
       </button>
     </div>
   );

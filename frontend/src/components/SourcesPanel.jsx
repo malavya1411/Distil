@@ -3,7 +3,6 @@ import './SourcesPanel.css';
 
 /**
  * SourcesPanel — collapsible panel showing retrieved source chunks per answer.
- * Phase 5: score progress bar, expandable chunk text, index badges, meta row.
  *
  * Props:
  *   sources  - array of { chunkId, text, score, metadata }
@@ -16,7 +15,6 @@ export default function SourcesPanel({ sources, noMatch }) {
   if (noMatch) {
     return (
       <div className="no-match-notice" role="note" aria-label="No matching content found">
-        <span aria-hidden="true">⚠️</span>
         <span>
           No relevant content was found in the document for this question —
           the answer reflects that absence rather than guessing.
@@ -34,13 +32,12 @@ export default function SourcesPanel({ sources, noMatch }) {
   };
 
   const scoreColor = (score) => {
-    if (score >= 0.75) return '#4ade80';
-    if (score >= 0.60) return '#fbbf24';
-    return '#fca5a5';
+    if (score >= 0.75) return '#16a34a';
+    if (score >= 0.60) return '#d97706';
+    return '#dc2626';
   };
 
   const topScore = sources[0]?.score || 0;
-  const qualityColor = scoreColor(topScore);
 
   const toggleExpand = (chunkId) => {
     setExpandedChunks((prev) => {
@@ -60,11 +57,6 @@ export default function SourcesPanel({ sources, noMatch }) {
         id="sources-toggle-btn"
       >
         <span className="sources-toggle-left">
-          <span
-            className="sources-quality-dot"
-            style={{ background: qualityColor }}
-            aria-hidden="true"
-          />
           <span>
             {sources.length} source{sources.length !== 1 ? 's' : ''} · top match {(topScore * 100).toFixed(0)}%
           </span>
@@ -129,13 +121,11 @@ export default function SourcesPanel({ sources, noMatch }) {
                     <div className="source-meta">
                       {src.metadata.sourceDoc && (
                         <span className="source-meta-item">
-                          <span aria-hidden="true">📄</span>
                           {src.metadata.sourceDoc}
                         </span>
                       )}
                       {src.metadata.pageNumber && (
                         <span className="source-meta-item">
-                          <span aria-hidden="true">📍</span>
                           Page {src.metadata.pageNumber}
                         </span>
                       )}
@@ -157,7 +147,7 @@ export default function SourcesPanel({ sources, noMatch }) {
                       aria-expanded={isExpanded}
                       aria-label={isExpanded ? 'Show less text' : 'Show full chunk text'}
                     >
-                      {isExpanded ? '↑ Show less' : '↓ Show full excerpt'}
+                      {isExpanded ? 'Show less' : 'Show full excerpt'}
                     </button>
                   )}
                 </div>
