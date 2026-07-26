@@ -7,25 +7,21 @@ import './ChatInterface.css';
 const PROMPT_CARDS_BY_DOCTYPE = {
   legal: [
     {
-      icon: '📄',
       category: 'Privacy & Data',
       question: 'Can they share or sell my personal data?',
       desc: 'Find every clause discussing personal information and third-party disclosure.',
     },
     {
-      icon: '⚖️',
       category: 'Legal Terms',
       question: 'What are my rights to cancel or terminate?',
       desc: 'Review cancellation windows, notice requirements, and termination penalties.',
     },
     {
-      icon: '💰',
       category: 'Payments & Fees',
       question: 'Are there hidden charges or auto-renewals?',
       desc: 'Summarize all pricing, renewal clauses, and financial obligations.',
     },
     {
-      icon: '⚠️',
       category: 'Risk & Liability',
       question: 'What is Acme\'s limitation of liability?',
       desc: 'Extract liability caps, indemnification, and dispute resolution terms.',
@@ -33,25 +29,21 @@ const PROMPT_CARDS_BY_DOCTYPE = {
   ],
   academic: [
     {
-      icon: '🔬',
       category: 'Hypothesis',
       question: 'What is the primary hypothesis of this paper?',
       desc: 'Summarize the central research question and theoretical framework.',
     },
     {
-      icon: '📊',
       category: 'Methodology',
       question: 'What methodology and datasets were used?',
       desc: 'Extract experimental setup, sample sizes, and evaluation metrics.',
     },
     {
-      icon: '💡',
       category: 'Key Findings',
       question: 'What were the key results and findings?',
       desc: 'List the quantitative claims and major experimental conclusions.',
     },
     {
-      icon: '📌',
       category: 'Limitations',
       question: 'What limitations were acknowledged by the authors?',
       desc: 'Highlight noted scope constraints and suggested future research.',
@@ -59,25 +51,21 @@ const PROMPT_CARDS_BY_DOCTYPE = {
   ],
   auto: [
     {
-      icon: '📄',
       category: 'Overview',
       question: 'What is the main purpose of this document?',
       desc: 'Get a clear executive summary of the document\'s core subject.',
     },
     {
-      icon: '⚖️',
       category: 'Rights & Rules',
       question: 'What are the main restrictions or obligations?',
       desc: 'Identify what the user is permitted and restricted from doing.',
     },
     {
-      icon: '💰',
       category: 'Financial Terms',
       question: 'What financial or billing terms are mentioned?',
       desc: 'Find all references to costs, fees, refunds, and pricing.',
     },
     {
-      icon: '⚠️',
       category: 'Important Clauses',
       question: 'Are there any critical deadlines or liabilities?',
       desc: 'Highlight important risk factors, legal governing laws, and dates.',
@@ -328,7 +316,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
 
         {/* Search documents */}
         <div className="sidebar-search-box">
-          <span className="search-icon">🔍</span>
           <input
             type="text"
             placeholder="Search document... (⌘K)"
@@ -341,7 +328,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         <div className="sidebar-section">
           <span className="sidebar-section-label">Active Document</span>
           <div className="active-doc-card">
-            <div className="doc-card-icon">📄</div>
             <div className="doc-card-info">
               <span className="doc-card-name" title={sessionInfo.sourceDoc}>
                 {sessionInfo.sourceDoc || 'Active Document'}
@@ -359,15 +345,12 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           <span className="sidebar-section-label">Collections</span>
           <nav className="sidebar-nav-list">
             <button className="sidebar-nav-item active">
-              <span>💬</span>
               <span>AI Research Chat</span>
             </button>
             <button className="sidebar-nav-item">
-              <span>📌</span>
               <span>Key Extracted Clauses</span>
             </button>
             <button className="sidebar-nav-item">
-              <span>📊</span>
               <span>Risk &amp; Compliance Matrix</span>
             </button>
           </nav>
@@ -418,7 +401,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                 onClick={() => setShowRightPanel(true)}
                 title="Show document metadata panel"
               >
-                ℹ️
+                Info
               </button>
             )}
           </div>
@@ -439,7 +422,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                 </div>
 
                 <div className="workspace-intro-box">
-                  <div className="intro-badge">✨ Ready to explore</div>
+                  <div className="intro-badge">Ready to explore</div>
                   <p className="intro-text">
                     Your document has been distilled into searchable knowledge. Ask anything naturally and every answer will include supporting citations.
                   </p>
@@ -458,7 +441,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                         tabIndex={0}
                       >
                         <div className="card-top-row">
-                          <span className="card-icon">{card.icon}</span>
                           <span className="card-category">{card.category}</span>
                         </div>
                         <h4 className="card-question">{card.question}</h4>
@@ -530,16 +512,13 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         {/* Error Notice */}
         {error && (
           <div className="workspace-error-banner" role="alert">
-            <span>⚠️ {error}</span>
+            <span>{error}</span>
           </div>
         )}
 
         {/* Floating AI Composer */}
         <div className="floating-composer-wrap">
           <div className="floating-composer-inner">
-            <button className="composer-tool-btn" title="Attach file or reference">
-              📎
-            </button>
             <textarea
               ref={textareaRef}
               id="composer-input"
@@ -633,7 +612,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
 
           {/* Grounding Notice */}
           <div className="panel-card grounding-notice-card">
-            <span className="grounding-title">🔒 Grounded &amp; Private</span>
+            <span className="grounding-title">Grounded &amp; Private</span>
             <p className="grounding-text">
               Responses are guaranteed zero-hallucination. No document text is stored on disk or used for model training.
             </p>

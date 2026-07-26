@@ -13,7 +13,6 @@ export default function SourcesPanel({ sources, noMatch }) {
   if (noMatch) {
     return (
       <div className="no-match-notice" role="note" aria-label="No matching content found">
-        <span className="no-match-icon">🔒</span>
         <span>
           No relevant content was found in the document for this question — the response reflects that absence rather than guessing.
         </span>
@@ -54,7 +53,6 @@ export default function SourcesPanel({ sources, noMatch }) {
         id="sources-toggle-btn"
       >
         <div className="toggle-left">
-          <span className="citations-icon">📎</span>
           <span>
             {sources.length} Evidence Source{sources.length !== 1 ? 's' : ''}
           </span>
