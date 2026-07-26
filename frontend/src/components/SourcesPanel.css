@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   SourcesPanel.css — Phase 5 polished sources panel
+   SourcesPanel.css — Light theme
 ───────────────────────────────────────────────────────────────────────────── */
 
 .sources-panel {
@@ -7,49 +7,37 @@
   width: 100%;
 }
 
-/* ── Toggle button ──────────────────────────────────────────────────────── */
+/* Toggle */
 .sources-toggle {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
-  background: none;
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 5px 11px;
-  color: var(--text-muted);
+  padding: 6px 12px;
+  color: var(--text-secondary);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
   width: 100%;
-  justify-content: space-between;
 }
 
 .sources-toggle:hover {
+  background: var(--bg-elevated);
   border-color: var(--border-strong);
-  color: var(--text-secondary);
-  background: var(--bg-hover);
+  color: var(--text-primary);
 }
 
 .sources-toggle-left {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
-.sources-toggle .toggle-chevron {
-  transition: transform 0.2s ease;
-  display: inline-block;
-  font-size: 0.65rem;
-  opacity: 0.7;
-}
-
-.sources-toggle.open .toggle-chevron {
-  transform: rotate(180deg);
-}
-
-/* High-relevance indicator dot on toggle */
 .sources-quality-dot {
   width: 6px;
   height: 6px;
@@ -57,7 +45,17 @@
   flex-shrink: 0;
 }
 
-/* ── Chunks list ────────────────────────────────────────────────────────── */
+.sources-toggle .toggle-chevron {
+  transition: transform 0.2s ease;
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+.sources-toggle.open .toggle-chevron {
+  transform: rotate(180deg);
+}
+
+/* List */
 .sources-list {
   display: flex;
   flex-direction: column;
@@ -71,16 +69,17 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Individual chunk card ──────────────────────────────────────────────── */
+/* Chunk card */
 .source-chunk {
   background: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.15s;
+  transition: box-shadow 0.15s, border-color 0.15s;
 }
 
 .source-chunk:hover {
+  box-shadow: var(--shadow-sm);
   border-color: var(--border-strong);
 }
 
@@ -90,10 +89,9 @@
   justify-content: space-between;
   gap: 10px;
   padding: 9px 13px;
-  background: var(--bg-elevated);
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
-  gap: 6px;
 }
 
 .source-chunk-left {
@@ -107,7 +105,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--bg-hover);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   display: flex;
   align-items: center;
@@ -128,7 +126,6 @@
   max-width: 220px;
 }
 
-/* Score badge + bar */
 .source-chunk-right {
   display: flex;
   align-items: center;
@@ -136,12 +133,14 @@
   flex-shrink: 0;
 }
 
+/* Score bar */
 .score-bar-wrap {
   width: 48px;
   height: 4px;
-  background: var(--bg-hover);
+  background: var(--bg-elevated);
   border-radius: 999px;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .score-bar-fill {
@@ -150,6 +149,7 @@
   transition: width 0.4s ease;
 }
 
+/* Score badge */
 .source-score-badge {
   font-size: 0.7rem;
   font-weight: 600;
@@ -158,11 +158,11 @@
   white-space: nowrap;
 }
 
-.source-score-badge.high   { background: rgba(34,197,94,0.12);  color: #4ade80;  border: 1px solid rgba(34,197,94,0.2);  }
-.source-score-badge.medium { background: rgba(245,158,11,0.12); color: #fbbf24;  border: 1px solid rgba(245,158,11,0.2); }
-.source-score-badge.low    { background: rgba(239,68,68,0.08);  color: #fca5a5;  border: 1px solid rgba(239,68,68,0.15); }
+.source-score-badge.high   { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.source-score-badge.medium { background: #fef9c3; color: #92400e; border: 1px solid #fde047; }
+.source-score-badge.low    { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
 
-/* Chunk body */
+/* Body */
 .source-chunk-body {
   padding: 10px 13px;
 }
@@ -170,7 +170,7 @@
 .source-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 6px;
   flex-wrap: wrap;
 }
@@ -194,9 +194,7 @@
   overflow-y: auto;
 }
 
-.source-chunk-text.expanded {
-  max-height: none;
-}
+.source-chunk-text.expanded { max-height: none; }
 
 .source-expand-btn {
   background: none;
@@ -206,25 +204,23 @@
   font-size: 0.72rem;
   cursor: pointer;
   padding: 4px 0;
-  opacity: 0.8;
+  font-weight: 500;
   transition: opacity 0.15s;
 }
 
-.source-expand-btn:hover {
-  opacity: 1;
-}
+.source-expand-btn:hover { opacity: 0.75; }
 
-/* ── No-match notice ────────────────────────────────────────────────────── */
+/* No match */
 .no-match-notice {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 14px;
-  background: rgba(245, 158, 11, 0.07);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  gap: 9px;
+  padding: 10px 13px;
+  background: var(--warning-bg);
+  border: 1px solid #fde68a;
   border-radius: var(--radius);
   font-size: 0.8rem;
-  color: #fcd34d;
+  color: var(--warning);
   margin-top: 8px;
   line-height: 1.5;
 }

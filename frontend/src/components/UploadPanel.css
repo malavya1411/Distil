@@ -1,20 +1,18 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   UploadPanel.css — Upload zone + document-type toggle styles
+   UploadPanel.css — Light theme
 ───────────────────────────────────────────────────────────────────────────── */
 
 .upload-panel {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   width: 100%;
-  max-width: 680px;
-  margin: 0 auto;
 }
 
 /* ── Mode toggle ─────────────────────────────────────────────────────────── */
 .mode-toggle {
   display: flex;
-  background: var(--bg-elevated);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 4px;
@@ -23,29 +21,30 @@
 
 .mode-toggle button {
   flex: 1;
-  padding: 8px 16px;
+  padding: 9px 16px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: 7px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
 }
 
 .mode-toggle button.active {
-  background: var(--bg-hover);
+  background: var(--bg-base);
   color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
 }
 
-/* ── Doc-type toggle ─────────────────────────────────────────────────────── */
+/* ── Doc-type row ─────────────────────────────────────────────────────────── */
 .doctype-toggle {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .doctype-toggle label {
@@ -57,21 +56,21 @@
 
 .doctype-toggle select {
   flex: 1;
-  min-width: 140px;
-  background: var(--bg-elevated);
+  background: var(--bg-base);
   border: 1px solid var(--border-strong);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.875rem;
-  padding: 7px 12px;
+  padding: 8px 12px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .doctype-toggle select:focus {
   border-color: var(--accent-flat);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
 }
 
 /* ── Dropzone ─────────────────────────────────────────────────────────────── */
@@ -83,12 +82,13 @@
   text-align: center;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
+  background: var(--bg-surface);
 }
 
 .dropzone:hover,
 .dropzone.dragging {
   border-color: var(--accent-flat);
-  background: rgba(99, 102, 241, 0.04);
+  background: var(--accent-light);
 }
 
 .dropzone input[type='file'] {
@@ -96,19 +96,20 @@
   inset: 0;
   opacity: 0;
   cursor: pointer;
+  z-index: 1;
 }
 
 .dropzone-icon {
-  font-size: 2.5rem;
-  margin-bottom: 12px;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
   display: block;
 }
 
 .dropzone-label {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .dropzone-hint {
@@ -121,16 +122,18 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 16px;
-  background: rgba(99, 102, 241, 0.08);
+  padding: 14px 16px;
+  background: var(--accent-light);
   border-radius: var(--radius);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  position: relative;
+  z-index: 2;
 }
 
 .dropzone-file-selected span {
   font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--accent-flat);
 }
 
 .dropzone-file-selected button {
@@ -140,8 +143,9 @@
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
-  padding: 2px;
+  padding: 2px 4px;
   transition: color 0.15s;
+  border-radius: 4px;
 }
 
 .dropzone-file-selected button:hover {
@@ -152,13 +156,13 @@
 .paste-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .paste-area textarea {
   width: 100%;
-  min-height: 200px;
-  background: var(--bg-elevated);
+  min-height: 180px;
+  background: var(--bg-surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
   color: var(--text-primary);
@@ -168,11 +172,12 @@
   padding: 14px 16px;
   resize: vertical;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .paste-area textarea:focus {
   border-color: var(--accent-flat);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
 }
 
 .paste-area textarea::placeholder {
@@ -180,7 +185,7 @@
 }
 
 .char-count {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   text-align: right;
 }
@@ -189,31 +194,32 @@
 .privacy-note {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-size: 0.78rem;
   color: var(--text-muted);
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
-.privacy-note span {
-  line-height: 1.4;
-}
-
-/* ── Submit button ────────────────────────────────────────────────────────── */
+/* ── Submit ────────────────────────────────────────────────────────────────── */
 .upload-submit {
   padding: 13px 24px;
   font-size: 0.95rem;
   width: 100%;
+  border-radius: var(--radius-lg);
 }
 
 /* ── Error ───────────────────────────────────────────────────────────────── */
 .upload-error {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 16px;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  gap: 9px;
+  padding: 12px 14px;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: var(--radius);
-  font-size: 0.85rem;
-  color: #fca5a5;
+  font-size: 0.83rem;
+  color: var(--error);
 }
