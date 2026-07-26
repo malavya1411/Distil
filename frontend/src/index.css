@@ -1,43 +1,44 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   Distil — Design System (Light Theme with Visual Depth)
-   Global tokens, resets, and utility classes.
+   Distil — Design System (Flat Palette)
+   Solid colors only — zero gradients.
 ───────────────────────────────────────────────────────────────────────────── */
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 /* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Backgrounds — rich warm off-whites */
-  --bg-base:        #fbfcfd;
-  --bg-surface:     #f1f5f9;
-  --bg-elevated:    #ffffff;
-  --bg-hover:       #eaeff5;
+  /* Backgrounds */
+  --bg-base:        #F7F8FA;
+  --bg-surface:     #FFFFFF;
+  --bg-elevated:    #FFFFFF;
+  --bg-hover:       #F1F3F6;
+  --bg-muted:       #F7F8FA;
 
   /* Borders */
-  --border:         #e2e8f0;
-  --border-strong:  #cbd5e1;
+  --border:         #E3E6EA;
+  --border-strong:  #CBD1D8;
 
-  /* Accent — indigo/violet */
-  --accent-from:    #6366f1;
-  --accent-to:      #8b5cf6;
-  --accent-flat:    #6366f1;
-  --accent-light:   #eef2ff;
-  --accent-glow:    rgba(99, 102, 241, 0.18);
+  /* Accent — Deep Navy-Ink */
+  --accent-from:    #1F4E79;
+  --accent-to:      #1F4E79;
+  --accent-flat:    #1F4E79;
+  --accent-light:   #F7F8FA;
+  --accent-glow:    transparent;
 
-  /* Text — Uniform deep slate throughout */
-  --text-primary:   #0f172a;
-  --text-secondary: #475569;
-  --text-muted:     #94a3b8;
+  /* Text */
+  --text-primary:   #14181F;
+  --text-secondary: #5B6472;
+  --text-muted:     #8C96A5;
 
   /* Status */
-  --success:        #16a34a;
-  --success-bg:     #f0fdf4;
-  --success-border: #bbf7d0;
-  --warning:        #d97706;
-  --warning-bg:     #fffbeb;
-  --error:          #dc2626;
-  --error-bg:       #fef2f2;
-  --error-border:   #fecaca;
+  --success:        #2F855A;
+  --success-bg:     #F0FDF4;
+  --success-border: #BBF7D0;
+  --warning:        #B7791F;
+  --warning-bg:     #FFFBEB;
+  --error:          #B23A34;
+  --error-bg:       #FEF2F2;
+  --error-border:   #FECACA;
 
   /* Typography */
   --font-heading:   'Playfair Display', 'Instrument Serif', Georgia, serif;
@@ -45,17 +46,17 @@
   --font-mono:      'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
   /* Spacing / radius */
-  --radius-sm:      8px;
-  --radius:         12px;
-  --radius-lg:      18px;
-  --radius-xl:      24px;
+  --radius-sm:      6px;
+  --radius:         10px;
+  --radius-lg:      14px;
+  --radius-xl:      20px;
 
-  /* Multi-layered Depth Shadows */
-  --shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
-  --shadow:         0 2px 5px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
-  --shadow-md:      0 6px 16px -2px rgba(15, 23, 42, 0.07), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
-  --shadow-lg:      0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
-  --shadow-xl:      0 24px 50px -12px rgba(15, 23, 42, 0.11), 0 8px 20px -6px rgba(15, 23, 42, 0.05);
+  /* Clean Shadows */
+  --shadow-sm:      0 1px 2px rgba(20, 24, 31, 0.04);
+  --shadow:         0 2px 4px rgba(20, 24, 31, 0.05);
+  --shadow-md:      0 4px 12px rgba(20, 24, 31, 0.06);
+  --shadow-lg:      0 8px 24px rgba(20, 24, 31, 0.08);
+  --shadow-xl:      0 16px 40px rgba(20, 24, 31, 0.10);
 }
 
 /* ── Reset ───────────────────────────────────────────────────────────────── */
@@ -88,7 +89,7 @@ body {
 
 /* ── Scrollbar ────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-track { background: var(--bg-base); }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
@@ -104,7 +105,7 @@ h1, h2, h3, h4 {
 code, pre { font-family: var(--font-mono); }
 a { color: var(--accent-flat); text-decoration: none; }
 
-/* ── Uniform Heading Text Color ───────────────────────────────────────────── */
+/* ── Uniform Solid Text (No Gradients) ────────────────────────────────────── */
 .gradient-text {
   color: var(--text-primary);
   background: none;
@@ -113,41 +114,38 @@ a { color: var(--accent-flat); text-decoration: none; }
   background-clip: unset;
 }
 
-/* ── Button Base ─────────────────────────────────────────────────────────── */
+/* ── Solid Button (No Gradients) ─────────────────────────────────────────── */
 .gradient-btn {
-  background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
-  color: #fff;
+  background: var(--accent-flat);
+  color: #FFFFFF;
   border: none;
   cursor: pointer;
   font-family: var(--font-body);
   font-weight: 600;
   border-radius: var(--radius);
-  transition: opacity 0.15s, transform 0.12s, box-shadow 0.15s;
+  transition: background 0.15s, opacity 0.15s, transform 0.12s;
   letter-spacing: -0.01em;
-  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .gradient-btn:hover:not(:disabled) {
-  opacity: 0.94;
+  background: #173B5C;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px var(--accent-glow);
 }
 
 .gradient-btn:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
 }
 
 .gradient-btn:disabled {
-  opacity: 0.45;
+  background: var(--border);
+  color: var(--text-muted);
   cursor: not-allowed;
-  box-shadow: none;
 }
 
 /* ── Card ────────────────────────────────────────────────────────────────── */
 .card {
-  background: var(--bg-elevated);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }

@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   UploadPanel.css — Light theme
+   UploadPanel.css — Flat Palette
 ───────────────────────────────────────────────────────────────────────────── */
 
 .upload-panel {
@@ -12,7 +12,7 @@
 /* ── Mode toggle ─────────────────────────────────────────────────────────── */
 .mode-toggle {
   display: flex;
-  background: var(--bg-surface);
+  background: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 4px;
@@ -28,15 +28,15 @@
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 500;
-  border-radius: 7px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .mode-toggle button.active {
-  background: var(--bg-base);
+  background: var(--bg-surface);
   color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   font-weight: 600;
 }
 
@@ -56,8 +56,8 @@
 
 .doctype-toggle select {
   flex: 1;
-  background: var(--bg-base);
-  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.875rem;
@@ -65,18 +65,17 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
 }
 
 .doctype-toggle select:focus {
   border-color: var(--accent-flat);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
 }
 
 /* ── Dropzone ─────────────────────────────────────────────────────────────── */
 .dropzone {
   position: relative;
-  border: 2px dashed var(--border-strong);
+  border: 2px dashed var(--border);
   border-radius: var(--radius-lg);
   padding: 48px 32px;
   text-align: center;
@@ -88,17 +87,11 @@
 .dropzone:hover,
 .dropzone.dragging {
   border-color: var(--accent-flat);
-  background: var(--accent-light);
+  background: var(--bg-base);
 }
 
 .dropzone input[type='file'] {
   display: none;
-}
-
-.dropzone-icon {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  display: block;
 }
 
 .dropzone-label {
@@ -119,9 +112,9 @@
   justify-content: center;
   gap: 10px;
   padding: 14px 16px;
-  background: var(--accent-light);
+  background: var(--bg-base);
   border-radius: var(--radius);
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  border: 1px solid var(--border);
   position: relative;
   z-index: 2;
 }
@@ -129,7 +122,7 @@
 .dropzone-file-selected span {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent-flat);
+  color: var(--text-primary);
 }
 
 .dropzone-file-selected button {
@@ -148,74 +141,54 @@
   color: var(--error);
 }
 
-/* ── Paste area ───────────────────────────────────────────────────────────── */
-.paste-area {
+/* ── Textarea mode ───────────────────────────────────────────────────────── */
+.text-input-wrap {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
-.paste-area textarea {
-  width: 100%;
-  min-height: 180px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
+.text-input-wrap label {
   font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.paste-textarea {
+  width: 100%;
+  min-height: 160px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
   line-height: 1.6;
-  padding: 14px 16px;
   resize: vertical;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
 }
 
-.paste-area textarea:focus {
+.paste-textarea:focus {
   border-color: var(--accent-flat);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
 }
 
-.paste-area textarea::placeholder {
+.paste-textarea::placeholder {
   color: var(--text-muted);
 }
 
-.char-count {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-align: right;
-}
-
-/* ── Privacy note ─────────────────────────────────────────────────────────── */
-.privacy-note {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  padding: 10px 14px;
-  background: var(--bg-surface);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-/* ── Submit ────────────────────────────────────────────────────────────────── */
-.upload-submit {
-  padding: 13px 24px;
-  font-size: 0.95rem;
-  width: 100%;
-  border-radius: var(--radius-lg);
-}
-
-/* ── Error ───────────────────────────────────────────────────────────────── */
 .upload-error {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  padding: 12px 14px;
+  padding: 10px 14px;
   background: var(--error-bg);
   border: 1px solid var(--error-border);
-  border-radius: var(--radius);
-  font-size: 0.83rem;
+  border-radius: var(--radius-sm);
   color: var(--error);
+  font-size: 0.82rem;
+}
+
+.upload-submit-btn {
+  width: 100%;
+  padding: 13px;
+  font-size: 0.95rem;
 }

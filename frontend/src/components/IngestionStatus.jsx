@@ -132,13 +132,13 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
           <svg className="funnel-svg" viewBox="0 0 120 120" width="120" height="120">
             <defs>
               <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#6C63FF" />
-                <stop offset="100%" stopColor="#8B5CF6" />
+                <stop offset="0%" stopColor="#1F4E79" />
+                <stop offset="100%" stopColor="#1F4E79" />
               </linearGradient>
 
               <linearGradient id="successGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#22C55E" />
-                <stop offset="100%" stopColor="#16A34A" />
+                <stop offset="0%" stopColor="#2F855A" />
+                <stop offset="100%" stopColor="#2F855A" />
               </linearGradient>
 
               <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">

@@ -123,31 +123,10 @@
 .hero-section {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #fafaff 0%, #ffffff 100%);
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
   padding: 96px 24px 80px;
   text-align: center;
-}
-
-/* subtle dot-grid background */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle, #c7d2fe 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-/* radial fade so dots don't extend to edges */
-.hero-section::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #fafaff 100%);
-  pointer-events: none;
 }
 
 .hero-inner {
@@ -459,10 +438,7 @@
 .upload-page {
   flex: 1;
   padding: 64px 24px 96px;
-  background:
-    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(99, 102, 241, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 30% at 80% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 60%),
-    var(--bg-surface);
+  background: var(--bg-base);
   display: flex;
   flex-direction: column;
   align-items: center;
