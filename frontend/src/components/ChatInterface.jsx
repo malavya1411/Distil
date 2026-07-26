@@ -227,16 +227,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             {sessionInfo.docType && ` · ${sessionInfo.docType}`}
           </span>
         </div>
-        <div className="session-banner-actions">
-          <button
-            className="session-action-btn"
-            onClick={onReset}
-            id="upload-new-doc-btn"
-            aria-label="Upload a new document"
-          >
-            New document
-          </button>
-        </div>
       </div>
 
       {/* Message list */}
