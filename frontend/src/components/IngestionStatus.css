@@ -43,8 +43,9 @@
 }
 
 .ingestion-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 3px;
 }
