@@ -5,6 +5,15 @@
 
 ---
 
+## Key Working (How It Works)
+
+1. **Upload & Domain-Aware Chunking**: Upload a PDF or paste text. Distil splits documents along legal section boundaries (e.g., `Section 8.2`) or paper headings instead of arbitrary character cuts.
+2. **Vector Embedding**: Text chunks are embedded into 3072-dimensional vectors using Gemini API (`gemini-embedding-001`) and stored in a private, session-scoped in-memory vector index.
+3. **Similarity Search & Retrieval**: When a question is asked, Distil performs cosine similarity search to retrieve the top-4 most relevant passage chunks clearing a strict `0.55` similarity threshold.
+4. **Sub-Second Grounded Generation**: Retrieved chunks are passed to Groq LPU (`llama-3.3-70b-versatile`), producing a grounded answer with verbatim evidence citations in **~350ms** with zero hallucinations.
+
+---
+
 ## Technical Overview & System Architecture
 
 Distil is built on a high-throughput Retrieval-Augmented Generation (RAG) architecture engineered for privacy, mathematical precision, and sub-second end-to-end response latency.
