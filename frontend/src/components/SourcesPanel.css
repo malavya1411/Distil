@@ -1,119 +1,230 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   SourcesPanel.css — Collapsible retrieved-chunks panel per answer
+   SourcesPanel.css — Phase 5 polished sources panel
 ───────────────────────────────────────────────────────────────────────────── */
 
 .sources-panel {
   margin-top: 10px;
+  width: 100%;
 }
 
-/* Toggle button */
+/* ── Toggle button ──────────────────────────────────────────────────────── */
 .sources-toggle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: none;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  color: var(--text-secondary);
+  padding: 5px 11px;
+  color: var(--text-muted);
   font-family: var(--font-body);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .sources-toggle:hover {
   border-color: var(--border-strong);
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+}
+
+.sources-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .sources-toggle .toggle-chevron {
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
   display: inline-block;
+  font-size: 0.65rem;
+  opacity: 0.7;
 }
 
 .sources-toggle.open .toggle-chevron {
   transform: rotate(180deg);
 }
 
-/* Chunks list */
+/* High-relevance indicator dot on toggle */
+.sources-quality-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Chunks list ────────────────────────────────────────────────────────── */
 .sources-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-  animation: fade-in 0.18s ease;
+  gap: 8px;
+  margin-top: 8px;
+  animation: sources-in 0.18s ease;
 }
 
-@keyframes fade-in {
+@keyframes sources-in {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Individual chunk card */
+/* ── Individual chunk card ──────────────────────────────────────────────── */
 .source-chunk {
-  background: var(--bg-elevated);
+  background: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.source-chunk:hover {
+  border-color: var(--border-strong);
 }
 
 .source-chunk-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  padding: 9px 13px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
+  gap: 6px;
+}
+
+.source-chunk-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.source-index {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .source-chunk-label {
-  font-size: 0.78rem;
+  font-size: 0.77rem;
   font-weight: 600;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 260px;
+  max-width: 220px;
+}
+
+/* Score badge + bar */
+.source-chunk-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.score-bar-wrap {
+  width: 48px;
+  height: 4px;
+  background: var(--bg-hover);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
 }
 
 .source-score-badge {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
 }
 
-.source-score-badge.high   { background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.2);  }
-.source-score-badge.medium { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
-.source-score-badge.low    { background: rgba(239,68,68,0.08);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.15); }
+.source-score-badge.high   { background: rgba(34,197,94,0.12);  color: #4ade80;  border: 1px solid rgba(34,197,94,0.2);  }
+.source-score-badge.medium { background: rgba(245,158,11,0.12); color: #fbbf24;  border: 1px solid rgba(245,158,11,0.2); }
+.source-score-badge.low    { background: rgba(239,68,68,0.08);  color: #fca5a5;  border: 1px solid rgba(239,68,68,0.15); }
+
+/* Chunk body */
+.source-chunk-body {
+  padding: 10px 13px;
+}
+
+.source-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.source-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
 
 .source-chunk-text {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
   line-height: 1.65;
   font-family: var(--font-mono);
   white-space: pre-wrap;
   word-break: break-word;
+  max-height: 140px;
+  overflow-y: auto;
 }
 
-/* No-match notice */
+.source-chunk-text.expanded {
+  max-height: none;
+}
+
+.source-expand-btn {
+  background: none;
+  border: none;
+  color: var(--accent-flat);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 4px 0;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.source-expand-btn:hover {
+  opacity: 1;
+}
+
+/* ── No-match notice ────────────────────────────────────────────────────── */
 .no-match-notice {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: rgba(245, 158, 11, 0.07);
   border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: var(--radius);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: #fcd34d;
   margin-top: 8px;
+  line-height: 1.5;
 }

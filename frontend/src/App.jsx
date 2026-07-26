@@ -11,13 +11,11 @@ import './App.css';
  *   3. chat      — multi-turn Q&A interface
  */
 export default function App() {
-  // 'landing' | 'ingesting' | 'chat'
   const [view, setView] = useState('landing');
   const [sessionId, setSessionId] = useState(null);
   const [sessionInfo, setSessionInfo] = useState({});
   const [ingestingDoc, setIngestingDoc] = useState('');
 
-  // Called by UploadPanel when ingestion starts
   const handleIngesting = (active, docName = '') => {
     if (active) {
       setIngestingDoc(docName);
@@ -25,7 +23,6 @@ export default function App() {
     }
   };
 
-  // Called by UploadPanel when backend responds with session info
   const handleIngestComplete = (data) => {
     setSessionId(data.sessionId);
     setSessionInfo({
@@ -36,7 +33,6 @@ export default function App() {
     setView('chat');
   };
 
-  // Reset back to landing
   const handleReset = () => {
     setView('landing');
     setSessionId(null);
@@ -46,31 +42,39 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* ── Header ────────────────────────────────────────────────────────── */}
+      {/* ── Header ─────────────────────────────────────────────────────── */}
       <header className="header" role="banner">
-        <a className="header-logo" href="/" aria-label="Distil — home">
+        <a
+          className="header-logo"
+          href="/"
+          onClick={(e) => { e.preventDefault(); handleReset(); }}
+          aria-label="Distil — go to home"
+        >
           <div className="header-logo-mark" aria-hidden="true">✦</div>
-          <div>
-            <div className="header-logo-name gradient-text">Distil</div>
-          </div>
+          <div className="header-logo-name gradient-text">Distil</div>
         </a>
-        <span className="header-tagline">Document Q&amp;A · RAG-powered</span>
+
+        <div className="header-right">
+          <span className="header-badge" aria-label="Powered by Gemini free tier">
+            <span aria-hidden="true">⚡</span>
+            Gemini free tier
+          </span>
+          <span className="header-tagline" aria-hidden="true">Document Q&amp;A</span>
+        </div>
       </header>
 
-      {/* ── Main ──────────────────────────────────────────────────────────── */}
+      {/* ── Main ───────────────────────────────────────────────────────── */}
       <main className="main" id="main-content">
 
-        {/* ── Landing ─────────────────────────────────────────────────────── */}
+        {/* ── Landing ──────────────────────────────────────────────────── */}
         {view === 'landing' && (
-          <section className="landing" aria-label="Upload your document">
-            {/* Background glow */}
+          <section className="landing" aria-label="Upload your document to get started">
             <div className="hero-glow" aria-hidden="true" />
 
-            {/* Hero copy */}
             <div className="hero">
               <div className="hero-eyebrow">
-                <span>✦</span>
-                <span>Powered by Gemini · Free tier</span>
+                <span aria-hidden="true">✦</span>
+                <span>RAG-powered · Grounded answers · No hallucinations</span>
               </div>
 
               <h1>
@@ -80,21 +84,22 @@ export default function App() {
 
               <p className="hero-desc">
                 Upload a Terms &amp; Conditions, privacy policy, EULA, or research
-                paper. Ask natural-language questions. Get grounded answers with
-                visible source citations — no hallucinations.
+                paper. Ask in plain English. Get precise answers with visible
+                source citations — every answer traceable to the original text.
               </p>
 
-              <div className="feature-pills">
+              <div className="feature-pills" aria-label="Features">
                 <span className="pill">📄 PDF upload</span>
                 <span className="pill">📋 Paste text</span>
                 <span className="pill">⚡ Clause-aware chunking</span>
                 <span className="pill">🔍 Source citations</span>
-                <span className="pill">🔒 Session-only</span>
+                <span className="pill">💬 Multi-turn Q&amp;A</span>
+                <span className="pill">🔒 Session-only · Never stored</span>
               </div>
             </div>
 
-            {/* Upload card */}
             <div className="card upload-card">
+              <p className="upload-card-label">Get started</p>
               <UploadPanel
                 onIngestComplete={handleIngestComplete}
                 onIngesting={(active, docName) => handleIngesting(active, docName)}
@@ -103,16 +108,16 @@ export default function App() {
           </section>
         )}
 
-        {/* ── Ingesting ───────────────────────────────────────────────────── */}
+        {/* ── Ingesting ────────────────────────────────────────────────── */}
         {view === 'ingesting' && (
-          <div className="ingestion-card" aria-live="polite">
+          <div className="ingestion-card" aria-live="polite" aria-label="Ingesting document">
             <div className="card" style={{ padding: 0 }}>
               <IngestionStatus sourceDoc={ingestingDoc} />
             </div>
           </div>
         )}
 
-        {/* ── Chat ────────────────────────────────────────────────────────── */}
+        {/* ── Chat ─────────────────────────────────────────────────────── */}
         {view === 'chat' && sessionId && (
           <div className="chat-view">
             <ChatInterface
@@ -125,9 +130,10 @@ export default function App() {
 
       </main>
 
-      {/* ── Footer ────────────────────────────────────────────────────────── */}
+      {/* ── Footer ─────────────────────────────────────────────────────── */}
       <footer className="footer" role="contentinfo">
-        <span>Distil · RAG Document Q&amp;A · Built with Gemini free tier · No document is ever stored</span>
+        Distil · RAG Document Q&amp;A · Built with Gemini free tier ·
+        {' '}Your document is never saved
       </footer>
     </div>
   );
