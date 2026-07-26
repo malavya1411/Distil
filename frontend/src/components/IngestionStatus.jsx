@@ -100,11 +100,6 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
 
         {/* Header */}
         <div className="distil-loader-header">
-          <div className="ai-processing-badge">
-            <span className="badge-sparkle">✨</span>
-            <span>{complete ? 'Distillation Complete' : 'AI Processing'}</span>
-          </div>
-
           <h2 className="distil-loader-title">
             {complete ? 'Your document is ready' : 'Distilling your document'}
           </h2>
@@ -117,7 +112,6 @@ export default function IngestionStatus({ sourceDoc, isFinished, onOpenWorkspace
 
           {sourceDoc && (
             <div className="source-doc-pill" title={sourceDoc}>
-              <span className="doc-icon">📄</span>
               <span className="doc-name">{sourceDoc}</span>
             </div>
           )}
