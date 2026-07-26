@@ -71,21 +71,33 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const [ingestData, setIngestData] = useState(null);
+  const [isIngestFinished, setIsIngestFinished] = useState(false);
+
   const handleIngesting = (active, docName = '') => {
     if (active) {
       setIngestingDoc(docName);
+      setIsIngestFinished(false);
+      setIngestData(null);
       setView('ingesting');
     }
   };
 
   const handleIngestComplete = (data) => {
-    setSessionId(data.sessionId);
-    setSessionInfo({
-      sourceDoc: data.sourceDoc,
-      chunkCount: data.chunkCount,
-      docType: data.docType,
-    });
-    setView('chat');
+    setIngestData(data);
+    setIsIngestFinished(true);
+  };
+
+  const handleOpenWorkspace = () => {
+    if (ingestData) {
+      setSessionId(ingestData.sessionId);
+      setSessionInfo({
+        sourceDoc: ingestData.sourceDoc,
+        chunkCount: ingestData.chunkCount,
+        docType: ingestData.docType,
+      });
+      setView('chat');
+    }
   };
 
   const handleReset = () => {
@@ -93,6 +105,8 @@ export default function App() {
     setSessionId(null);
     setSessionInfo({});
     setIngestingDoc('');
+    setIsIngestFinished(false);
+    setIngestData(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -283,9 +297,11 @@ export default function App() {
       {/* ═══ INGESTING PAGE ══════════════════════════════════════════════ */}
       {view === 'ingesting' && (
         <main id="main-content" className="ingestion-view" aria-live="polite">
-          <div className="card" style={{ maxWidth: 520, width: '100%', padding: 0 }}>
-            <IngestionStatus sourceDoc={ingestingDoc} />
-          </div>
+          <IngestionStatus
+            sourceDoc={ingestingDoc}
+            isFinished={isIngestFinished}
+            onOpenWorkspace={handleOpenWorkspace}
+          />
         </main>
       )}
 
