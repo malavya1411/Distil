@@ -189,7 +189,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
   const [error, setError] = useState('');
   const [thinkingStepIdx, setThinkingStepIdx] = useState(0);
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
-  const [showRightPanel, setShowRightPanel] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
   const messagesEndRef = useRef(null);
@@ -395,15 +394,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
             <button className="top-bar-action-btn" title="Export document summary">
               Export Summary
             </button>
-            {!showRightPanel && (
-              <button
-                className="top-bar-icon-btn"
-                onClick={() => setShowRightPanel(true)}
-                title="Show document metadata panel"
-              >
-                Info
-              </button>
-            )}
           </div>
         </header>
 
@@ -534,81 +524,6 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         </div>
 
       </main>
-
-      {/* ═════════════════════════════════════════════════════════════════════
-         3. RIGHT SIDEBAR (Contextual Document Metadata Panel - 2 Clean Sections)
-      ═════════════════════════════════════════════════════════════════════ */}
-      <aside className={`workspace-sidebar-right ${showRightPanel ? 'open' : 'closed'}`}>
-        <div className="right-panel-header">
-          <h4 className="right-panel-title">Document Intelligence</h4>
-          <button
-            className="sidebar-toggle-btn"
-            onClick={() => setShowRightPanel(false)}
-            title="Collapse panel"
-          >
-            ▶
-          </button>
-        </div>
-
-        <div className="right-panel-scroll">
-
-          {/* Section 1: Executive Overview & Topics */}
-          <div className="panel-section">
-            <span className="panel-section-title">Overview</span>
-            <p className="panel-overview-text">
-              Distilled section breakdown available. Grounded responses are generated strictly from indexed chunks.
-            </p>
-            <div className="topic-tags-wrap">
-              <span className="topic-tag">#Privacy</span>
-              <span className="topic-tag">#DataSharing</span>
-              <span className="topic-tag">#Termination</span>
-              <span className="topic-tag">#Liability</span>
-              <span className="topic-tag">#GoverningLaw</span>
-            </div>
-          </div>
-
-          <div className="panel-divider" />
-
-          {/* Section 2: Document Specs & Grounding */}
-          <div className="panel-section">
-            <span className="panel-section-title">Document Specs</span>
-            <dl className="stats-list">
-              <div className="stat-row">
-                <dt>Indexed Chunks</dt>
-                <dd>{sessionInfo.chunkCount || 42}</dd>
-              </div>
-              <div className="stat-row">
-                <dt>Document Type</dt>
-                <dd>{sessionInfo.docType || 'Auto'}</dd>
-              </div>
-              <div className="stat-row">
-                <dt>Embed Model</dt>
-                <dd>gemini-embedding-001</dd>
-              </div>
-              <div className="stat-row">
-                <dt>Generation</dt>
-                <dd>Groq llama-3.3-70b</dd>
-              </div>
-              <div className="stat-row">
-                <dt>AI Confidence</dt>
-                <dd className="stat-success">98.4%</dd>
-              </div>
-              <div className="stat-row">
-                <dt>Security</dt>
-                <dd>In-Memory Only</dd>
-              </div>
-            </dl>
-
-            <div className="privacy-footnote">
-              <span className="footnote-title">Grounded &amp; Private</span>
-              <p className="footnote-desc">
-                Responses are guaranteed zero-hallucination. No document text is stored on disk or used for training.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </aside>
 
     </div>
   );
