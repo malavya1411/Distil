@@ -1,139 +1,154 @@
 /**
- * Generator service — grounded answer generation via Gemini Flash.
+ * Generator service — grounded answer generation via Groq.
  *
- * Design principles (from PRD / implementation plan):
- *  - Answer ONLY from retrieved context — never hallucinate beyond it
- *  - If context is empty or question is out-of-scope, explicitly say so
- *  - Return both the answer text and the raw sources so the UI can display them
- *  - Stay within Gemini free-tier (Flash-Lite / Flash) — no paid models
+ * Why Groq for generation:
+ *  - LPU (Language Processing Unit) inference is dramatically faster than GPU-based APIs
+ *  - Total RAG latency = retrieval + generation; Groq cuts the generation slice to near-zero
+ *  - Free tier is generous for demo/hackathon use
+ *
+ * Model: llama-3.3-70b-versatile
+ *  - Best quality/speed balance on Groq free tier
+ *  - 70B params → strong instruction-following for the strict grounding prompt
+ *  - Falls back to llama-3.1-8b-instant if rate-limited
+ *
+ * Embeddings remain on Gemini (gemini-embedding-001) — Groq doesn't offer embeddings.
  */
 
 require('dotenv').config();
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Lazy-initialize so GROQ_API_KEY is read after dotenv.config() has run
+let _groq = null;
+const getGroqClient = () => {
+  if (!_groq) {
+    if (!process.env.GROQ_API_KEY) {
+      throw new Error('GROQ_API_KEY is not set. Add it to backend/.env');
+    }
+    _groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+  return _groq;
+};
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
-// gemini-2.0-flash-lite is the most generous on the free tier for generation
-const GENERATION_MODEL = 'gemini-2.0-flash-lite';
+const PRIMARY_MODEL   = 'llama-3.3-70b-versatile';  // high quality, still fast on LPU
+const FALLBACK_MODEL  = 'llama-3.1-8b-instant';     // fastest possible if rate limited
 
-const MAX_RETRIES = 3;
-const RETRY_BASE_DELAY_MS = 2000;
+const MAX_RETRIES       = 3;
+const RETRY_BASE_DELAY  = 2000;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ─── Prompt template ─────────────────────────────────────────────────────────
 
 /**
- * Build the grounded prompt.
- * The model is instructed to answer ONLY from the provided context excerpts.
+ * Build the strict grounding prompt.
+ * The model must answer ONLY from the provided document excerpts.
  *
  * @param {string} question
  * @param {Array<{text: string, metadata: object, score: number}>} chunks
  * @returns {string}
  */
-function buildPrompt(question, chunks) {
+function buildSystemPrompt() {
+  return `You are a precise document assistant. Your only job is to answer questions about the document excerpts provided by the user.
+
+Rules you must follow without exception:
+1. Answer exclusively from the provided document excerpts. Do not draw on outside knowledge.
+2. If the excerpts do not contain enough information to answer, respond with exactly: "This question is not addressed in the uploaded document."
+3. If the answer is partially covered, answer what you can and clearly note what is missing from the document.
+4. Quote directly from the document when it adds clarity — keep quotes short and relevant.
+5. Be direct. Do not open with "Based on the document…" or similar filler — just give the answer.
+6. Do not guess, extrapolate, or hallucinate beyond what is explicitly stated in the excerpts.
+7. Format your answer clearly. Use short paragraphs. If listing multiple points, use a simple list.`;
+}
+
+function buildUserMessage(question, chunks) {
   const contextBlocks = chunks
     .map((c, i) => {
-      const label = c.metadata?.sectionLabel || `Chunk ${i + 1}`;
+      const label = c.metadata?.sectionLabel || `Excerpt ${i + 1}`;
       const score = (c.score * 100).toFixed(1);
-      return `--- Source ${i + 1}: ${label} (relevance: ${score}%) ---\n${c.text}`;
+      return `[Excerpt ${i + 1}: ${label} — relevance ${score}%]\n${c.text}`;
     })
-    .join('\n\n');
+    .join('\n\n---\n\n');
 
-  return `You are a precise document assistant. Your job is to answer the user's question using ONLY the document excerpts provided below.
-
-Rules you must follow:
-1. Base your answer exclusively on the provided excerpts. Do not use any external knowledge.
-2. If the excerpts do not contain enough information to answer the question, respond with exactly: "This question is not addressed in the uploaded document."
-3. If the answer is only partially covered, answer what you can and note what is missing.
-4. Quote directly from the document when it adds clarity — keep quotes concise.
-5. Be specific and direct. Avoid filler phrases like "Based on the document..." — just answer.
-6. Do not invent, guess, or extrapolate beyond what the excerpts state.
-
---- Document Excerpts ---
-
-${contextBlocks}
-
---- End of Excerpts ---
-
-Question: ${question}
-
-Answer:`;
+  return `Here are the relevant excerpts from the uploaded document:\n\n${contextBlocks}\n\n---\n\nQuestion: ${question}`;
 }
 
 // ─── Conversation history helpers ─────────────────────────────────────────────
 
 /**
- * Build a Gemini-compatible conversation history array from prior messages.
- * This enables multi-turn context without re-embedding old questions.
+ * Convert prior turns into Groq chat message format.
+ * Groq uses the same OpenAI-compatible message format.
  *
  * @param {Array<{role: 'user'|'assistant', text: string}>} history
- * @returns {Array<{role: string, parts: Array<{text: string}>}>}
+ * @returns {Array<{role: string, content: string}>}
  */
 function buildHistory(history = []) {
   return history.map((msg) => ({
-    role: msg.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: msg.text }],
+    role: msg.role === 'assistant' ? 'assistant' : 'user',
+    content: msg.text,
   }));
 }
 
 // ─── Generation ───────────────────────────────────────────────────────────────
 
 /**
- * Generate a grounded answer from retrieved chunks.
+ * Generate a grounded answer using Groq.
  *
- * @param {string} question                  - user's question
- * @param {Array}  chunks                    - top-k retrieved chunks (with text + metadata + score)
+ * @param {string} question
+ * @param {Array}  chunks                    - top-k retrieved chunks
  * @param {Array}  [conversationHistory=[]]  - prior turns for multi-turn context
- * @returns {Promise<string>}                - generated answer text
+ * @returns {Promise<{ text: string, model: string }>}
  */
 async function generateAnswer(question, chunks, conversationHistory = []) {
-  const model = genAI.getGenerativeModel({
-    model: GENERATION_MODEL,
-    generationConfig: {
-      temperature: 0.1,       // low temp = more faithful, less creative
-      topP: 0.8,
-      maxOutputTokens: 1024,
-    },
-  });
+  const systemPrompt = buildSystemPrompt();
+  const userMessage  = buildUserMessage(question, chunks);
 
-  const prompt = buildPrompt(question, chunks);
+  // Build message array: system → prior history → current question
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...buildHistory(conversationHistory),
+    { role: 'user',   content: userMessage },
+  ];
 
-  // Use chat with history for multi-turn support
-  const history = buildHistory(conversationHistory);
+  let modelToUse = PRIMARY_MODEL;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      let result;
+      console.log(`[generator] Calling Groq (${modelToUse}), attempt ${attempt}/${MAX_RETRIES}`);
 
-      if (history.length > 0) {
-        // Multi-turn: start a chat session with prior context
-        const chat = model.startChat({ history });
-        result = await chat.sendMessage(prompt);
-      } else {
-        // First turn: simple content generation
-        result = await model.generateContent(prompt);
-      }
+      const completion = await getGroqClient().chat.completions.create({
+        model: modelToUse,
+        messages,
+        temperature: 0.15,      // low temperature = faithful, grounded answers
+        max_tokens: 1024,
+        top_p: 0.85,
+      });
 
-      const text = result.response.text().trim();
+      const text = completion.choices?.[0]?.message?.content?.trim();
 
       if (!text) {
-        throw new Error('Empty response from generation model.');
+        throw new Error('Empty response from Groq.');
       }
 
-      return text;
+      console.log(`[generator] ✅ Generated ${text.length} chars via ${modelToUse}`);
+      return { text, model: modelToUse };
 
     } catch (err) {
       const isRateLimit =
         err?.status === 429 ||
-        err?.message?.includes('429') ||
-        err?.message?.includes('RESOURCE_EXHAUSTED');
+        err?.message?.includes('rate_limit') ||
+        err?.message?.includes('Rate limit');
 
+      // On rate limit: switch to faster/smaller fallback model first, then wait
       if (isRateLimit && attempt < MAX_RETRIES) {
-        const delay = RETRY_BASE_DELAY_MS * Math.pow(2, attempt - 1);
-        console.warn(`[generator] Rate limit hit. Retrying in ${delay}ms (attempt ${attempt}/${MAX_RETRIES})`);
+        if (modelToUse === PRIMARY_MODEL) {
+          console.warn(`[generator] Rate limit on ${PRIMARY_MODEL}. Switching to ${FALLBACK_MODEL}.`);
+          modelToUse = FALLBACK_MODEL;
+          continue;
+        }
+        const delay = RETRY_BASE_DELAY * Math.pow(2, attempt - 1);
+        console.warn(`[generator] Rate limit on ${FALLBACK_MODEL}. Waiting ${delay}ms...`);
         await sleep(delay);
         continue;
       }

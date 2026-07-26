@@ -18,7 +18,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
-const EMBEDDING_MODEL = 'text-embedding-004'; // Gemini free-tier embedding model
+const EMBEDDING_MODEL = 'gemini-embedding-001'; // confirmed available on free tier
 const BATCH_SIZE = 5;           // chunks per batch (stay under RPM ceiling)
 const BATCH_DELAY_MS = 1200;    // ~1.2s between batches → safe for 5 RPM floor
 const MAX_RETRIES = 3;

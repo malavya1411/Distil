@@ -75,7 +75,7 @@ router.post('/query', express.json(), async (req, res) => {
 
     console.log(`[query] Retrieved ${sources.length} chunks. Generating answer...`);
 
-    const answer = await generateAnswer(question.trim(), sources, history);
+    const { text: answer, model } = await generateAnswer(question.trim(), sources, history);
 
     // Safety net — if the model somehow returns empty, treat as no-match
     const effectiveAnswer = answer || NO_MATCH_ANSWER;
@@ -88,7 +88,7 @@ router.post('/query', express.json(), async (req, res) => {
       sources,
       noMatch,
       threshold: SIMILARITY_THRESHOLD,
-      model: 'gemini-2.0-flash-lite',
+      model,
     });
 
   } catch (err) {
