@@ -458,101 +458,117 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           </div>
         </header>
 
-        {/* Conversation Area */}
+        {/* Scrollable Main Area */}
         <div className="workspace-scroll-area">
           <div className="workspace-content-max">
-
-            {/* Empty Workspace Greeting */}
-            {messages.length === 0 && !loading && (
-              <div className="workspace-greeting-container">
-                <div className="greeting-header">
-                  <h1 className="greeting-title">Good afternoon.</h1>
-                  <p className="greeting-sub">
-                    What would you like to understand about this document today?
-                  </p>
-                </div>
-
-                {/* Suggested AI Prompt Cards Grid */}
-                <div className="prompt-cards-section">
-                  <span className="prompt-cards-label">Recommended Queries</span>
-                  <div className="prompt-cards-grid">
-                    {promptCards.map((card, idx) => (
-                      <div
-                        key={idx}
-                        className="prompt-card"
-                        onClick={() => handleCardClick(card.question)}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <div className="card-top-row">
-                          <span className="card-category">{card.category}</span>
-                        </div>
-                        <h4 className="card-question">{card.question}</h4>
-                        <p className="card-desc">{card.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Conversation Messages (Claude style) */}
-            <div className="messages-flow">
-              {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`workspace-message ${msg.role}`}
-                >
-                  <div className="message-header-row">
-                    <div className="message-avatar-badge">
-                      {msg.role === 'user' ? 'U' : '✦'}
+            {activePanel === 'none' && (
+              <>
+                {/* Empty Workspace Greeting */}
+                {messages.length === 0 && !loading && (
+                  <div className="workspace-greeting-container">
+                    <div className="greeting-header">
+                      <h1 className="greeting-title">Good afternoon.</h1>
+                      <p className="greeting-sub">
+                        What would you like to understand about this document today?
+                      </p>
                     </div>
-                    <span className="message-sender-name">
-                      {msg.role === 'user' ? 'You' : 'Distil'}
-                    </span>
-                  </div>
 
-                  <div className="message-card-bubble">
-                    {msg.role === 'assistant' ? (
-                      <AnswerText text={msg.text} />
-                    ) : (
-                      <p className="user-message-text">{msg.text}</p>
-                    )}
+                    {/* Suggested AI Prompt Cards Grid */}
+                    <div className="prompt-cards-section">
+                      <span className="prompt-cards-label">Recommended Queries</span>
+                      <div className="prompt-cards-grid">
+                        {promptCards.map((card, idx) => (
+                          <div
+                            key={idx}
+                            className="prompt-card"
+                            onClick={() => handleCardClick(card.question)}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            <div className="card-top-row">
+                              <span className="card-category">{card.category}</span>
+                            </div>
+                            <h4 className="card-question">{card.question}</h4>
+                            <p className="card-desc">{card.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
+                )}
 
-                  {/* Assistant Actions & Evidence Citations */}
-                  {msg.role === 'assistant' && (
-                    <div className="assistant-meta-block">
-                      <SourcesPanel
-                        sources={msg.sources}
-                        noMatch={msg.noMatch}
-                        actions={<MessageActions text={msg.text} />}
-                      />
+                {/* Conversation Messages */}
+                <div className="messages-flow">
+                  {messages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={`workspace-message ${msg.role}`}
+                    >
+                      <div className="message-header-row">
+                        <div className="message-avatar-badge">
+                          {msg.role === 'user' ? 'U' : '✦'}
+                        </div>
+                        <span className="message-sender-name">
+                          {msg.role === 'user' ? 'You' : 'Distil'}
+                        </span>
+                      </div>
+
+                      <div className="message-card-bubble">
+                        {msg.role === 'assistant' ? (
+                          <AnswerText text={msg.text} />
+                        ) : (
+                          <p className="user-message-text">{msg.text}</p>
+                        )}
+                      </div>
+
+                      {/* Assistant Actions & Evidence Citations */}
+                      {msg.role === 'assistant' && (
+                        <div className="assistant-meta-block">
+                          <SourcesPanel
+                            sources={msg.sources}
+                            noMatch={msg.noMatch}
+                            actions={<MessageActions text={msg.text} />}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Live Reasoning Thinking Animation */}
+                  {loading && (
+                    <div className="workspace-message assistant thinking">
+                      <div className="message-header-row">
+                        <div className="message-avatar-badge spinning">✦</div>
+                        <span className="message-sender-name">Distil</span>
+                        <span className="thinking-step-text">{THINKING_STEPS[thinkingStepIdx]}</span>
+                      </div>
+
+                      <div className="message-card-bubble shimmer-placeholder">
+                        <div className="shimmer-line line-1" />
+                        <div className="shimmer-line line-2" />
+                        <div className="shimmer-line line-3" />
+                      </div>
                     </div>
                   )}
+
+                  <div ref={messagesEndRef} />
                 </div>
-              ))}
+              </>
+            )}
 
-              {/* Live Reasoning Thinking Animation */}
-              {loading && (
-                <div className="workspace-message assistant thinking">
-                  <div className="message-header-row">
-                    <div className="message-avatar-badge spinning">✦</div>
-                    <span className="message-sender-name">Distil</span>
-                    <span className="thinking-step-text">{THINKING_STEPS[thinkingStepIdx]}</span>
-                  </div>
+            {activePanel === 'clauses' && (
+              <ClausesPanel
+                sessionId={sessionId}
+                docType={docType}
+              />
+            )}
 
-                  <div className="message-card-bubble shimmer-placeholder">
-                    <div className="shimmer-line line-1" />
-                    <div className="shimmer-line line-2" />
-                    <div className="shimmer-line line-3" />
-                  </div>
-                </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
+            {activePanel === 'risk' && (
+              <RiskMatrix
+                sessionId={sessionId}
+                docType={docType}
+              />
+            )}
           </div>
         </div>
 
@@ -563,47 +579,33 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           </div>
         )}
 
-        {/* Floating AI Composer */}
-        <div className="floating-composer-wrap">
-          <div className="floating-composer-inner">
-            <textarea
-              ref={textareaRef}
-              id="composer-input"
-              value={input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask anything about this document... (Enter to send, Shift+Enter for newline)"
-              disabled={loading}
-              rows={1}
-            />
-            <button
-              className="gradient-btn composer-send-btn"
-              onClick={() => handleSend()}
-              disabled={loading || !input.trim()}
-              title="Send question"
-            >
-              ↑
-            </button>
+        {/* Floating Composer (only in chat view) */}
+        {activePanel === 'none' && (
+          <div className="floating-composer-wrap">
+            <div className="floating-composer-inner">
+              <textarea
+                ref={textareaRef}
+                id="composer-input"
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask anything about this document... (Enter to send, Shift+Enter for newline)"
+                disabled={loading}
+                rows={1}
+              />
+              <button
+                className="gradient-btn composer-send-btn"
+                onClick={() => handleSend()}
+                disabled={loading || !input.trim()}
+                title="Send question"
+              >
+                ↑
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
       </main>
-
-      {/* ── Panels (modals) ── */}
-      {activePanel === 'clauses' && (
-        <ClausesPanel
-          sessionId={sessionId}
-          docType={docType}
-          onClose={() => setActivePanel('none')}
-        />
-      )}
-      {activePanel === 'risk' && (
-        <RiskMatrix
-          sessionId={sessionId}
-          docType={docType}
-          onClose={() => setActivePanel('none')}
-        />
-      )}
 
     </div>
   );

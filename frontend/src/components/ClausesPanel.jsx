@@ -55,7 +55,7 @@ function ClauseCard({ clause, index }) {
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-export default function ClausesPanel({ sessionId, docType, onClose }) {
+export default function ClausesPanel({ sessionId, docType }) {
   const [clauses, setClauses] = useState([]);
   const [rawAnswer, setRawAnswer] = useState('');
   const [loading, setLoading] = useState(true);
@@ -93,47 +93,40 @@ export default function ClausesPanel({ sessionId, docType, onClose }) {
   }, [sessionId, docType]);
 
   return (
-    <div className="clauses-overlay" role="dialog" aria-modal="true" aria-label="Key Extracted Clauses">
-      <div className="clauses-modal">
-        <div className="clauses-modal-header">
-          <div className="clauses-header-left">
-            <div>
-              <h2 className="clauses-modal-title">Key Extracted Clauses</h2>
-              <p className="clauses-modal-sub">AI-extracted plain-English summary of every key clause</p>
-            </div>
+    <div className="collection-view-container">
+      <div className="collection-view-header">
+        <h2 className="collection-view-title">Key Extracted Clauses</h2>
+        <p className="collection-view-sub">Plain-English AI summary of every key clause extracted from this document</p>
+      </div>
+
+      <div className="collection-view-body">
+        {loading && (
+          <div className="clauses-loading">
+            <div className="clauses-spinner" />
+            <p>Scanning document for key clauses…</p>
           </div>
-          <button className="clauses-close-btn" onClick={onClose} aria-label="Close panel">✕</button>
-        </div>
+        )}
 
-        <div className="clauses-modal-body">
-          {loading && (
-            <div className="clauses-loading">
-              <div className="clauses-spinner" />
-              <p>Scanning document for key clauses…</p>
+        {!loading && error && (
+          <div className="clauses-error">{error}</div>
+        )}
+
+        {!loading && !error && clauses.length > 0 && (
+          <div className="clauses-list">
+            <div className="clauses-count-bar">
+              <span>{clauses.length} clauses extracted</span>
             </div>
-          )}
+            {clauses.map((clause, i) => (
+              <ClauseCard key={i} clause={clause} index={i} />
+            ))}
+          </div>
+        )}
 
-          {!loading && error && (
-            <div className="clauses-error">{error}</div>
-          )}
-
-          {!loading && !error && clauses.length > 0 && (
-            <div className="clauses-list">
-              <div className="clauses-count-bar">
-                <span>{clauses.length} clauses extracted</span>
-              </div>
-              {clauses.map((clause, i) => (
-                <ClauseCard key={i} clause={clause} index={i} />
-              ))}
-            </div>
-          )}
-
-          {!loading && !error && clauses.length === 0 && rawAnswer && (
-            <div className="clauses-fallback-answer">
-              <p>{rawAnswer}</p>
-            </div>
-          )}
-        </div>
+        {!loading && !error && clauses.length === 0 && rawAnswer && (
+          <div className="clauses-fallback-answer">
+            <p>{rawAnswer}</p>
+          </div>
+        )}
       </div>
     </div>
   );

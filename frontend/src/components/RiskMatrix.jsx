@@ -91,7 +91,7 @@ function RiskSummaryBar({ rows }) {
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-export default function RiskMatrix({ sessionId, docType, onClose }) {
+export default function RiskMatrix({ sessionId, docType }) {
   const [rows, setRows]         = useState([]);
   const [rawAnswer, setRawAnswer] = useState('');
   const [loading, setLoading]   = useState(true);
@@ -128,68 +128,59 @@ export default function RiskMatrix({ sessionId, docType, onClose }) {
   }, [sessionId, docType]);
 
   return (
-    <div className="risk-overlay" role="dialog" aria-modal="true" aria-label="Risk & Compliance Matrix">
-      <div className="risk-modal">
-        {/* Header */}
-        <div className="risk-modal-header">
-          <div className="risk-header-left">
-            <div>
-              <h2 className="risk-modal-title">Risk &amp; Compliance Matrix</h2>
-              <p className="risk-modal-sub">AI-identified risk areas with severity ratings</p>
-            </div>
+    <div className="collection-view-container">
+      <div className="collection-view-header">
+        <h2 className="collection-view-title">Risk &amp; Compliance Matrix</h2>
+        <p className="collection-view-sub">AI-identified risk areas with severity ratings and clause citations</p>
+      </div>
+
+      <div className="collection-view-body">
+        {loading && (
+          <div className="risk-loading">
+            <div className="risk-spinner" />
+            <p>Analyzing document for risk factors…</p>
           </div>
-          <button className="risk-close-btn" onClick={onClose} aria-label="Close panel">✕</button>
-        </div>
+        )}
 
-        {/* Body */}
-        <div className="risk-modal-body">
-          {loading && (
-            <div className="risk-loading">
-              <div className="risk-spinner" />
-              <p>Analyzing document for risk factors…</p>
-            </div>
-          )}
+        {!loading && error && (
+          <div className="risk-error">{error}</div>
+        )}
 
-          {!loading && error && (
-            <div className="risk-error">{error}</div>
-          )}
-
-          {!loading && !error && rows.length > 0 && (
-            <>
-              <RiskSummaryBar rows={rows} />
-              <div className="risk-table-wrap">
-                <table className="risk-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Risk Area</th>
-                      <th>Level</th>
-                      <th>Description</th>
-                      <th>Clause / Section</th>
+        {!loading && !error && rows.length > 0 && (
+          <>
+            <RiskSummaryBar rows={rows} />
+            <div className="risk-table-wrap">
+              <table className="risk-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Risk Area</th>
+                    <th>Level</th>
+                    <th>Description</th>
+                    <th>Clause / Section</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row, i) => (
+                    <tr key={i} className={`risk-row risk-row-${row.level.toLowerCase()}`}>
+                      <td className="risk-row-num">{i + 1}</td>
+                      <td className="risk-row-area">{row.area}</td>
+                      <td><LevelBadge level={row.level} /></td>
+                      <td className="risk-row-desc">{row.desc}</td>
+                      <td className="risk-row-clause">{row.clause || '—'}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row, i) => (
-                      <tr key={i} className={`risk-row risk-row-${row.level.toLowerCase()}`}>
-                        <td className="risk-row-num">{i + 1}</td>
-                        <td className="risk-row-area">{row.area}</td>
-                        <td><LevelBadge level={row.level} /></td>
-                        <td className="risk-row-desc">{row.desc}</td>
-                        <td className="risk-row-clause">{row.clause || '—'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
-          )}
-
-          {!loading && !error && rows.length === 0 && rawAnswer && (
-            <div className="risk-fallback-answer">
-              <p>{rawAnswer}</p>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
-        </div>
+          </>
+        )}
+
+        {!loading && !error && rows.length === 0 && rawAnswer && (
+          <div className="risk-fallback-answer">
+            <p>{rawAnswer}</p>
+          </div>
+        )}
       </div>
     </div>
   );
