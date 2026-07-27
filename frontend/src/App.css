@@ -248,16 +248,9 @@
   width: 100%;
 }
 
-.hero-brand-img {
-  width: 100%;
-  max-width: 580px;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.hero-brand-img:hover {
-  transform: scale(1.02);
+/* Animated logo container in hero right column */
+.hero-animated-logo {
+  display: inline-block;
 }
 
 .hero-trust-item span:first-child {

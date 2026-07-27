@@ -2,6 +2,7 @@ import { useState } from 'react';
 import UploadPanel from './components/UploadPanel';
 import IngestionStatus from './components/IngestionStatus';
 import ChatInterface from './components/ChatInterface';
+import DistilLogoAnimated from './components/DistilLogoAnimated';
 import './App.css';
 
 // ─── Landing page data ────────────────────────────────────────────────────
@@ -201,13 +202,9 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Right Column: Complete Vector Brand Identity */}
+              {/* Right Column: Animated Brand Identity */}
               <div className="hero-image-col">
-                <img
-                  src="/distil-brand-logo.svg"
-                  alt="Distil - Document Intelligence Platform Logo & Funnel"
-                  className="hero-brand-img"
-                />
+                <DistilLogoAnimated size={620} className="hero-animated-logo" />
               </div>
             </div>
           </section>
