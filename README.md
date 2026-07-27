@@ -58,8 +58,8 @@ Distil is built on a high-throughput Retrieval-Augmented Generation (RAG) archit
 └─────────┬────────┘     Fallback: llama-3.1-8b-instant
           │
           ▼
-┌──────────────────┐     Claude-style Sectioned Workspace
-│ UI Presentation  │ ──► Perplexity-style Evidence Citations & Scores
+┌──────────────────┐     Warm Parchment 2-Column Workspace
+│ UI Presentation  │ ──► In-Page View Switching: RAG Chat, Clauses & Risk Matrix
 └──────────────────┘
 ```
 
@@ -92,34 +92,42 @@ Standard fixed-length character chunking frequently chops sentences across claus
 
 ---
 
-## Verifying RAG Grounding vs Model Hallucination
+## Workspace Features & In-Page Collections
 
-Users can verify that answers originate from document context rather than parametric LLM memory:
+Distil provides three integrated workspace view modes available from the sidebar collections menu:
 
-1. **Perplexity-Style Evidence Cards**: Clicking *"Evidence Sources"* beneath any answer reveals exact source passages, page numbers, section headers, and the calculated similarity match percentage (e.g. `98.4% match`).
-2. **The Refusal Test**: Asking a question out of scope (e.g., *"What is the capital of Japan?"*) returns an explicit notice:
-   > *"No relevant content was found in the document for this question — the response reflects that absence rather than guessing."*
-3. **Direct Quotations**: Grounded responses quote specific clause numbers and legal terms word-for-word from the original document.
+1. **RAG Document Chat**:
+   - Multi-turn grounded Q&A interface.
+   - Perplexity-style Evidence Citations cards showing exact source passages, page numbers, section headers, and similarity score (e.g., `98% match`).
+   - Integrated single-row answer toolbar with Copy SVG button and evidence pill toggle.
+   - Export Summary button to download full markdown exports (`.md`).
+2. **Key Extracted Clauses**:
+   - In-page structured view scanning the document for key legal/academic clauses.
+   - Renders color-coded clause cards with clause number badges and plain-English summaries.
+3. **Risk & Compliance Matrix**:
+   - In-page risk analysis view extracting risk factors across Data Privacy, Liability, Termination, Financial Terms, and Intellectual Property.
+   - Includes a severity summary bar (`HIGH`, `MEDIUM`, `LOW`) and a structured interactive matrix table linking risks directly to document clauses.
 
 ---
 
 ## Design System & UX Architecture
 
-Distil features a flat, high-contrast design language built for focus, readability, and trust:
+Distil features a warm parchment design language built for long-form reading, readability, and legal trust:
 
-- **Flat Palette Token System** (`index.css` & `ChatInterface.css`):
-  - **Background**: `#F7F8FA`
-  - **Surface**: `#FFFFFF`
-  - **Border**: `#E3E6EA` (1px solid hairline borders across all cards)
-  - **Text Primary**: `#14181F`
-  - **Text Secondary**: `#5B6472`
-  - **Accent**: `#1F4E79` *(Deep Navy-Ink — reserved strictly for interactive controls)*
-  - **Success**: `#2F855A`
-  - **Warning**: `#B7791F`
-  - **Danger**: `#B23A34`
-- **Zero Gradients**: No decorative gradient washes or background glow meshes.
-- **Distil Knowledge Funnel Loading Screen**: SVG clockwise fill ring, converging particle keyframes, live rotating status messages, and self-drawing SVG completion checkmark.
-- **2-Column AI Workspace Layout**: Collapsible desktop sidebar, top header status indicators (`● Indexed`, `42 chunks`), Claude-style sectioned answers, recommended query cards, and floating AI composer.
+- **Warm Parchment Color Palette** (`index.css`):
+  - **Background (`--bg-base`)**: `#f5f1e6` (Warm Parchment)
+  - **Surface (`--bg-surface`)**: `#fffcf5` (Cream Card Surface)
+  - **Border (`--border`)**: `#dbd0ba` (Soft Tan Borders)
+  - **Text Primary (`--text-primary`)**: `#4a3f35` (Deep Espresso Brown)
+  - **Text Secondary (`--text-secondary`)**: `#7d6b56` (Warm Taupe)
+  - **Accent (`--accent-flat`)**: `#a67c52` (Terracotta Wood)
+  - **Success (`--success`)**: `#4a7c59`
+  - **Error (`--error`)**: `#b54a35`
+- **Typography System**:
+  - **Headings**: `Libre Baskerville` (Classic Serif)
+  - **Body**: `Lora` (Book Serif)
+  - **Monospace / Code / Scores**: `IBM Plex Mono`
+- **In-Page SPA View Switching**: No popups or modal overlays — selecting collections switches views smoothly within the main workspace canvas.
 
 ---
 
@@ -134,13 +142,17 @@ Distil/
 │       │   ├── UploadPanel.css       # Dropzone & textarea styling
 │       │   ├── IngestionStatus.jsx   # SVG Distillation Funnel loading screen
 │       │   ├── IngestionStatus.css   # Loading screen CSS & keyframe animations
-│       │   ├── ChatInterface.jsx     # 2-column AI Knowledge Workspace & Claude messages
-│       │   ├── ChatInterface.css     # Workspace layout grid & composer styling
-│       │   ├── SourcesPanel.jsx      # Perplexity-style Evidence Citations cards
-│       │   └── SourcesPanel.css      # Citation cards & score badges styling
+│       │   ├── ChatInterface.jsx     # 2-column RAG Workspace, header & floating composer
+│       │   ├── ChatInterface.css     # Workspace layout grid & parchment styling
+│       │   ├── SourcesPanel.jsx      # Perplexity-style Evidence Citations & toolbar
+│       │   ├── SourcesPanel.css      # Citation cards & score badges styling
+│       │   ├── ClausesPanel.jsx      # Key Extracted Clauses in-page view component
+│       │   ├── ClausesPanel.css      # Clause cards & badge styling
+│       │   ├── RiskMatrix.jsx        # Risk & Compliance Matrix in-page view component
+│       │   └── RiskMatrix.css        # Risk matrix table & severity summary bar
 │       ├── App.jsx                   # View state manager ('landing'|'upload'|'ingesting'|'chat')
 │       ├── App.css                   # Landing page shell styling
-│       └── index.css                 # Global CSS tokens & flat design system
+│       └── index.css                 # Global CSS design tokens & warm parchment theme
 ├── backend/                       # Node.js + Express API server (port 3001)
 │   ├── routes/
 │   │   ├── upload.js         # POST /api/upload, POST /api/ingest-text
