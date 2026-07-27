@@ -14,12 +14,12 @@ export default function SourcesPanel({ sources, noMatch, actions }) {
     return (
       <div className="perplexity-sources-panel">
         <div className="sources-toolbar-row">
+          {actions && <div className="sources-toolbar-actions">{actions}</div>}
           <div className="no-match-notice" role="note" aria-label="No matching content found">
             <span>
               No relevant content was found in the document for this question — the response reflects that absence rather than guessing.
             </span>
           </div>
-          {actions && <div className="sources-toolbar-actions">{actions}</div>}
         </div>
       </div>
     );
@@ -60,6 +60,8 @@ export default function SourcesPanel({ sources, noMatch, actions }) {
   return (
     <div className="perplexity-sources-panel">
       <div className="sources-toolbar-row">
+        {actions && <div className="sources-toolbar-actions">{actions}</div>}
+
         <button
           className={`sources-toggle-pill${open ? ' open' : ''}`}
           onClick={() => setOpen((o) => !o)}
@@ -76,8 +78,6 @@ export default function SourcesPanel({ sources, noMatch, actions }) {
           </div>
           <span className="toggle-chevron" aria-hidden="true">▾</span>
         </button>
-
-        {actions && <div className="sources-toolbar-actions">{actions}</div>}
       </div>
 
       {open && (

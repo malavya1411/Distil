@@ -10,13 +10,13 @@
 .sources-toolbar-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: flex-start;
+  gap: 8px;
   width: 100%;
 }
 
 .sources-toolbar-row.actions-only {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .sources-toggle-pill {
