@@ -540,14 +540,12 @@
 .action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
   background: var(--bg-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 4px 10px;
+  padding: 5px 7px;
   font-size: 0.75rem;
-  font-family: var(--font-body);
-  font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
