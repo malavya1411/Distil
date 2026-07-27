@@ -27,7 +27,7 @@
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 28px;
-  height: 60px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,8 +43,8 @@
 }
 
 .nav-logo-mark-img {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -562,8 +562,8 @@
 }
 
 .footer-logo-mark-img {
-  width: 26px;
-  height: 26px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
   flex-shrink: 0;
 }
