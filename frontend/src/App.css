@@ -453,7 +453,7 @@
 
 .upload-page {
   flex: 1;
-  padding: 64px 24px 96px;
+  padding: 36px 24px 72px;
   background: var(--bg-base);
   display: flex;
   flex-direction: column;
@@ -462,31 +462,32 @@
 }
 
 .upload-page-inner {
-  max-width: 660px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
 }
 
 .upload-page-header {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 22px;
 }
 
 .upload-page-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.6rem, 6vw, 3.8rem);
+  font-size: clamp(2.2rem, 4.8vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -0.015em;
   color: var(--text-primary);
-  margin: 8px 0 12px;
-  line-height: 1.08;
+  margin: 0 0 8px;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .upload-page-sub {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
-  line-height: 1.65;
-  max-width: 480px;
+  line-height: 1.55;
+  max-width: 540px;
   margin: 0 auto;
 }
 
