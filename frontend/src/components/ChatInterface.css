@@ -538,6 +538,9 @@
 }
 
 .action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   background: var(--bg-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
