@@ -201,10 +201,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Right Column: Complete Brand Identity Illustration */}
+              {/* Right Column: Complete Vector Brand Identity */}
               <div className="hero-image-col">
                 <img
-                  src="/distil-brand-hero.png"
+                  src="/distil-brand-logo.svg"
                   alt="Distil - Document Intelligence Platform Logo & Funnel"
                   className="hero-brand-img"
                 />

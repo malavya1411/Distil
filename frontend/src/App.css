@@ -258,16 +258,14 @@
 
 .hero-brand-img {
   width: 100%;
-  max-width: 560px;
+  max-width: 580px;
   height: auto;
-  max-height: 480px;
   object-fit: contain;
-  border-radius: var(--radius-xl);
   transition: transform 0.3s ease;
 }
 
 .hero-brand-img:hover {
-  transform: translateY(-2px);
+  transform: scale(1.02);
 }
 
 .hero-trust-item span:first-child {
