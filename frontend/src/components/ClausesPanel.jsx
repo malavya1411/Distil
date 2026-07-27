@@ -97,7 +97,6 @@ export default function ClausesPanel({ sessionId, docType, onClose }) {
       <div className="clauses-modal">
         <div className="clauses-modal-header">
           <div className="clauses-header-left">
-            <div className="clauses-icon">📋</div>
             <div>
               <h2 className="clauses-modal-title">Key Extracted Clauses</h2>
               <p className="clauses-modal-sub">AI-extracted plain-English summary of every key clause</p>

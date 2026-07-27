@@ -133,7 +133,6 @@ export default function RiskMatrix({ sessionId, docType, onClose }) {
         {/* Header */}
         <div className="risk-modal-header">
           <div className="risk-header-left">
-            <div className="risk-icon">⚠️</div>
             <div>
               <h2 className="risk-modal-title">Risk &amp; Compliance Matrix</h2>
               <p className="risk-modal-sub">AI-identified risk areas with severity ratings</p>

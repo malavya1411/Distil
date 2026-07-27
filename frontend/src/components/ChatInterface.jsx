@@ -390,19 +390,19 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
               className={`sidebar-nav-item ${activePanel === 'none' ? 'active' : ''}`}
               onClick={() => setActivePanel('none')}
             >
-              <span>💬 AI Research Chat</span>
+              <span>AI Research Chat</span>
             </button>
             <button
               className={`sidebar-nav-item ${activePanel === 'clauses' ? 'active' : ''}`}
               onClick={() => setActivePanel('clauses')}
             >
-              <span>📋 Key Extracted Clauses</span>
+              <span>Key Extracted Clauses</span>
             </button>
             <button
               className={`sidebar-nav-item ${activePanel === 'risk' ? 'active' : ''}`}
               onClick={() => setActivePanel('risk')}
             >
-              <span>⚠️ Risk &amp; Compliance Matrix</span>
+              <span>Risk &amp; Compliance Matrix</span>
             </button>
           </nav>
         </div>
