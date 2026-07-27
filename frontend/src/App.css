@@ -123,13 +123,13 @@
 }
 
 .hero-container {
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
-  gap: 48px;
+  gap: 56px;
 }
 
 .hero-text-col {
@@ -142,21 +142,21 @@
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 16px;
+  gap: 8px;
+  padding: 8px 18px;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   box-shadow: var(--shadow-sm);
 }
 
 .hero-badge-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--success);
   animation: badge-pulse 2s ease-in-out infinite;
@@ -169,20 +169,20 @@
 
 .hero-headline {
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-size: clamp(3.6rem, 6.2vw, 5.4rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero-sub {
-  font-size: 1.08rem;
+  font-size: 1.25rem;
   color: var(--text-secondary);
-  max-width: 500px;
-  margin: 0 0 32px 0;
-  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 0 36px 0;
+  line-height: 1.65;
   font-weight: 400;
 }
 
@@ -190,21 +190,21 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .hero-primary-btn {
-  padding: 14px 28px;
-  font-size: 1rem;
+  padding: 16px 34px;
+  font-size: 1.1rem;
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .hero-secondary-btn {
-  padding: 13px 24px;
-  font-size: 0.95rem;
+  padding: 15px 28px;
+  font-size: 1.05rem;
   border-radius: var(--radius-lg);
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -227,15 +227,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
 .hero-trust-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
+  gap: 8px;
+  font-size: 0.95rem;
   color: var(--text-muted);
   font-weight: 500;
 }
