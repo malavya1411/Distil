@@ -160,7 +160,7 @@ function useCopyToClipboard(timeout = 1800) {
 
 // ─── Message Action Bar ───────────────────────────────────────────────────
 
-function MessageActions({ text, model }) {
+function MessageActions({ text }) {
   const { copy, copied } = useCopyToClipboard();
 
   return (
@@ -182,11 +182,6 @@ function MessageActions({ text, model }) {
           </svg>
         )}
       </button>
-      {model && (
-        <span className="model-badge" title="Generation model">
-          {model}
-        </span>
-      )}
     </div>
   );
 }
@@ -528,7 +523,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                   {/* Assistant Actions & Evidence Citations */}
                   {msg.role === 'assistant' && (
                     <div className="assistant-meta-block">
-                      <MessageActions text={msg.text} model={msg.model} />
+                      <MessageActions text={msg.text} />
                       <SourcesPanel sources={msg.sources} noMatch={msg.noMatch} />
                     </div>
                   )}
