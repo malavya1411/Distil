@@ -6,21 +6,34 @@ import './SourcesPanel.css';
  * Displays retrieved source passages with confidence score, page/section metadata,
  * and expandable text snippets.
  */
-export default function SourcesPanel({ sources, noMatch }) {
+export default function SourcesPanel({ sources, noMatch, actions }) {
   const [open, setOpen] = useState(false);
   const [expandedChunks, setExpandedChunks] = useState(new Set());
 
   if (noMatch) {
     return (
-      <div className="no-match-notice" role="note" aria-label="No matching content found">
-        <span>
-          No relevant content was found in the document for this question — the response reflects that absence rather than guessing.
-        </span>
+      <div className="perplexity-sources-panel">
+        <div className="sources-toolbar-row">
+          <div className="no-match-notice" role="note" aria-label="No matching content found">
+            <span>
+              No relevant content was found in the document for this question — the response reflects that absence rather than guessing.
+            </span>
+          </div>
+          {actions && <div className="sources-toolbar-actions">{actions}</div>}
+        </div>
       </div>
     );
   }
 
-  if (!sources || sources.length === 0) return null;
+  if (!sources || sources.length === 0) {
+    return actions ? (
+      <div className="perplexity-sources-panel">
+        <div className="sources-toolbar-row actions-only">
+          <div className="sources-toolbar-actions">{actions}</div>
+        </div>
+      </div>
+    ) : null;
+  }
 
   const scoreClass = (score) => {
     if (score >= 0.75) return 'high';
@@ -46,22 +59,26 @@ export default function SourcesPanel({ sources, noMatch }) {
 
   return (
     <div className="perplexity-sources-panel">
-      <button
-        className={`sources-toggle-pill${open ? ' open' : ''}`}
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        id="sources-toggle-btn"
-      >
-        <div className="toggle-left">
-          <span>
-            {sources.length} Evidence Source{sources.length !== 1 ? 's' : ''}
-          </span>
-          <span className="confidence-pill" style={{ color: scoreColor(topScore) }}>
-            {(topScore * 100).toFixed(0)}% match
-          </span>
-        </div>
-        <span className="toggle-chevron" aria-hidden="true">▾</span>
-      </button>
+      <div className="sources-toolbar-row">
+        <button
+          className={`sources-toggle-pill${open ? ' open' : ''}`}
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          id="sources-toggle-btn"
+        >
+          <div className="toggle-left">
+            <span>
+              {sources.length} Evidence Source{sources.length !== 1 ? 's' : ''}
+            </span>
+            <span className="confidence-pill" style={{ color: scoreColor(topScore) }}>
+              {(topScore * 100).toFixed(0)}% match
+            </span>
+          </div>
+          <span className="toggle-chevron" aria-hidden="true">▾</span>
+        </button>
+
+        {actions && <div className="sources-toolbar-actions">{actions}</div>}
+      </div>
 
       {open && (
         <div className="sources-cards-grid" role="list">

@@ -7,17 +7,29 @@
   width: 100%;
 }
 
-.sources-toggle-pill {
+.sources-toolbar-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   width: 100%;
-  padding: 8px 14px;
+}
+
+.sources-toolbar-row.actions-only {
+  justify-content: flex-end;
+}
+
+.sources-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 14px;
   background: var(--bg-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
@@ -27,6 +39,14 @@
 .sources-toggle-pill:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.sources-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .toggle-left {

@@ -523,8 +523,11 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                   {/* Assistant Actions & Evidence Citations */}
                   {msg.role === 'assistant' && (
                     <div className="assistant-meta-block">
-                      <MessageActions text={msg.text} />
-                      <SourcesPanel sources={msg.sources} noMatch={msg.noMatch} />
+                      <SourcesPanel
+                        sources={msg.sources}
+                        noMatch={msg.noMatch}
+                        actions={<MessageActions text={msg.text} />}
+                      />
                     </div>
                   )}
                 </div>
