@@ -157,40 +157,57 @@ export default function App() {
 
           {/* ── Hero ───────────────────────────────────────────────────── */}
           <section className="hero-section" aria-labelledby="hero-headline">
-            <div className="hero-inner">
-              <h1 className="hero-headline" id="hero-headline">
-                Read less.<br />
-                <span className="gradient-text">Understand more.</span>
-              </h1>
+            <div className="hero-container">
+              {/* Left Column: Text & CTAs */}
+              <div className="hero-text-col">
+                <div className="hero-badge">
+                  <span className="hero-badge-dot" />
+                  Grounded Document RAG
+                </div>
 
-              <p className="hero-sub">
-                Upload a Terms &amp; Conditions, privacy policy, or research paper.
-                Ask any question in plain English — get a grounded answer with
-                the exact source passage.
-              </p>
+                <h1 className="hero-headline" id="hero-headline">
+                  Read less.<br />
+                  <span className="gradient-text">Understand more.</span>
+                </h1>
 
-              <div className="hero-actions">
-                <button
-                  className="gradient-btn hero-primary-btn"
-                  onClick={goToUpload}
-                  id="hero-try-btn"
-                  aria-label="Get started — navigate to upload page"
-                >
-                  Get started
-                </button>
-                <button
-                  className="hero-secondary-btn"
-                  onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                  aria-label="See how it works"
-                >
-                  See how it works
-                </button>
+                <p className="hero-sub">
+                  Upload a Terms &amp; Conditions, privacy policy, or research paper.
+                  Ask any question in plain English — get a grounded answer with
+                  the exact source passage.
+                </p>
+
+                <div className="hero-actions">
+                  <button
+                    className="gradient-btn hero-primary-btn"
+                    onClick={goToUpload}
+                    id="hero-try-btn"
+                    aria-label="Get started — navigate to upload page"
+                  >
+                    Get started
+                  </button>
+                  <button
+                    className="hero-secondary-btn"
+                    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                    aria-label="See how it works"
+                  >
+                    See how it works
+                  </button>
+                </div>
+
+                <div className="hero-trust" aria-label="Key features">
+                  <span className="hero-trust-item">Session-only privacy</span>
+                  <span className="hero-trust-item">Fast response time</span>
+                  <span className="hero-trust-item">Grounded in source text</span>
+                </div>
               </div>
 
-              <div className="hero-trust" aria-label="Key features">
-                <span className="hero-trust-item">Session-only privacy</span>
-                <span className="hero-trust-item">Fast response time</span>
-                <span className="hero-trust-item">Grounded in source text</span>
+              {/* Right Column: Complete Brand Identity Illustration */}
+              <div className="hero-image-col">
+                <img
+                  src="/distil-brand-hero.png"
+                  alt="Distil - Document Intelligence Platform Logo & Funnel"
+                  className="hero-brand-img"
+                />
               </div>
             </div>
           </section>
