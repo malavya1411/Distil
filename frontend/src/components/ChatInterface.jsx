@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import SourcesPanel from './SourcesPanel';
+import ClausesPanel from './ClausesPanel';
+import RiskMatrix from './RiskMatrix';
 import './ChatInterface.css';
 
 // ─── AI Prompt Cards Data ──────────────────────────────────────────────────
@@ -190,6 +192,8 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
   const [thinkingStepIdx, setThinkingStepIdx] = useState(0);
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  // 'none' | 'clauses' | 'risk'
+  const [activePanel, setActivePanel] = useState('none');
 
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
@@ -292,6 +296,45 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
     handleSend(question);
   };
 
+  // ─── Export conversation as markdown file ─────────────────────────────────
+  const handleExport = () => {
+    if (messages.length === 0) {
+      alert('No conversation to export yet. Ask a question first!');
+      return;
+    }
+
+    const date = new Date().toLocaleString();
+    let md = `# Distil — Document Q&A Export\n`;
+    md += `**Document:** ${sessionInfo.sourceDoc || 'Unknown'}\n`;
+    md += `**Type:** ${docType}  |  **Chunks indexed:** ${sessionInfo.chunkCount || '?'}\n`;
+    md += `**Exported:** ${date}\n\n---\n\n`;
+
+    messages.forEach((msg, i) => {
+      if (msg.role === 'user') {
+        md += `## Q${Math.ceil((i + 1) / 2)}: ${msg.text}\n\n`;
+      } else {
+        md += `**Distil AI:**\n\n${msg.text}\n\n`;
+        if (msg.sources && msg.sources.length > 0) {
+          md += `**Sources:**\n`;
+          msg.sources.forEach((s, si) => {
+            md += `- [${si + 1}] ${s.metadata?.sectionLabel || 'Section'} (score: ${(s.score * 100).toFixed(0)}%)\n`;
+          });
+          md += '\n';
+        }
+        md += '---\n\n';
+      }
+    });
+
+    const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const safeName = (sessionInfo.sourceDoc || 'distil-export').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    a.download = `${safeName}-summary.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="workspace-container">
 
@@ -343,14 +386,23 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         <div className="sidebar-section flex-1">
           <span className="sidebar-section-label">Collections</span>
           <nav className="sidebar-nav-list">
-            <button className="sidebar-nav-item active">
-              <span>AI Research Chat</span>
+            <button
+              className={`sidebar-nav-item ${activePanel === 'none' ? 'active' : ''}`}
+              onClick={() => setActivePanel('none')}
+            >
+              <span>💬 AI Research Chat</span>
             </button>
-            <button className="sidebar-nav-item">
-              <span>Key Extracted Clauses</span>
+            <button
+              className={`sidebar-nav-item ${activePanel === 'clauses' ? 'active' : ''}`}
+              onClick={() => setActivePanel('clauses')}
+            >
+              <span>📋 Key Extracted Clauses</span>
             </button>
-            <button className="sidebar-nav-item">
-              <span>Risk &amp; Compliance Matrix</span>
+            <button
+              className={`sidebar-nav-item ${activePanel === 'risk' ? 'active' : ''}`}
+              onClick={() => setActivePanel('risk')}
+            >
+              <span>⚠️ Risk &amp; Compliance Matrix</span>
             </button>
           </nav>
         </div>
@@ -391,8 +443,13 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           </div>
 
           <div className="top-bar-right">
-            <button className="top-bar-action-btn" title="Export document summary">
-              Export Summary
+            <button
+              className="top-bar-action-btn"
+              onClick={handleExport}
+              title={messages.length === 0 ? 'Ask a question first to enable export' : 'Export conversation as Markdown'}
+              style={messages.length === 0 ? { opacity: 0.5 } : {}}
+            >
+              ↓ Export Summary
             </button>
           </div>
         </header>
@@ -524,6 +581,22 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         </div>
 
       </main>
+
+      {/* ── Panels (modals) ── */}
+      {activePanel === 'clauses' && (
+        <ClausesPanel
+          sessionId={sessionId}
+          docType={docType}
+          onClose={() => setActivePanel('none')}
+        />
+      )}
+      {activePanel === 'risk' && (
+        <RiskMatrix
+          sessionId={sessionId}
+          docType={docType}
+          onClose={() => setActivePanel('none')}
+        />
+      )}
 
     </div>
   );
