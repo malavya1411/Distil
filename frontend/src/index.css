@@ -1,62 +1,88 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   Distil — Design System (Flat Palette)
-   Solid colors only — zero gradients.
+   Distil — Design System (Warm Parchment Palette)
+   Source palette: Libre Baskerville + Lora, warm browns & cream
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 /* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Backgrounds */
-  --bg-base:        #F7F8FA;
-  --bg-surface:     #FFFFFF;
-  --bg-elevated:    #FFFFFF;
-  --bg-hover:       #F1F3F6;
-  --bg-muted:       #F7F8FA;
+  /* ── Raw palette variables (user's theme) ── */
+  --card:                      #fffcf5;
+  --ring:                      #a67c52;
+  --input:                     #dbd0ba;
+  --muted:                     #ece5d8;
+  --accent:                    #d4c8aa;
+  --border:                    #dbd0ba;
+  --chart-1:                   #a67c52;
+  --chart-2:                   #8d6e4c;
+  --chart-3:                   #735a3a;
+  --chart-4:                   #b3906f;
+  --chart-5:                   #c0a080;
+  --popover:                   #fffcf5;
+  --primary:                   #a67c52;
+  --sidebar:                   #ece5d8;
+  --secondary:                 #e2d8c3;
+  --background:                #f5f1e6;
+  --foreground:                #4a3f35;
+  --destructive:               #b54a35;
+  --sidebar-ring:              #a67c52;
+  --sidebar-accent:            #d4c8aa;
+  --sidebar-border:            #dbd0ba;
+  --card-foreground:           #4a3f35;
+  --sidebar-primary:           #a67c52;
+  --muted-foreground:          #7d6b56;
+  --accent-foreground:         #4a3f35;
+  --popover-foreground:        #4a3f35;
+  --primary-foreground:        #ffffff;
+  --sidebar-foreground:        #4a3f35;
+  --secondary-foreground:      #5c4d3f;
+  --destructive-foreground:    #ffffff;
+  --sidebar-accent-foreground: #4a3f35;
+  --sidebar-primary-foreground:#ffffff;
 
-  /* Borders */
-  --border:         #E3E6EA;
-  --border-strong:  #CBD1D8;
+  /* ── Distil semantic tokens mapped to palette ── */
+  --bg-base:        #f5f1e6;
+  --bg-surface:     #fffcf5;
+  --bg-elevated:    #fffcf5;
+  --bg-hover:       #ece5d8;
+  --bg-muted:       #ece5d8;
 
-  /* Accent — Deep Navy-Ink */
-  --accent-from:    #1F4E79;
-  --accent-to:      #1F4E79;
-  --accent-flat:    #1F4E79;
-  --accent-light:   #F7F8FA;
-  --accent-glow:    transparent;
+  --border-strong:  #c8bba0;
 
-  /* Text */
-  --text-primary:   #14181F;
-  --text-secondary: #5B6472;
-  --text-muted:     #8C96A5;
+  --accent-from:    #a67c52;
+  --accent-to:      #8d6e4c;
+  --accent-flat:    #a67c52;
+  --accent-light:   #f0e9d8;
+  --accent-glow:    rgba(166, 124, 82, 0.20);
 
-  /* Status */
-  --success:        #2F855A;
-  --success-bg:     #F0FDF4;
-  --success-border: #BBF7D0;
-  --warning:        #B7791F;
-  --warning-bg:     #FFFBEB;
-  --error:          #B23A34;
-  --error-bg:       #FEF2F2;
-  --error-border:   #FECACA;
+  --text-primary:   #4a3f35;
+  --text-secondary: #7d6b56;
+  --text-muted:     #a08c73;
 
-  /* Typography */
-  --font-heading:   'Playfair Display', 'Instrument Serif', Georgia, serif;
-  --font-body:      'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono:      'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --success:        #4a7c59;
+  --success-bg:     #eef5ec;
+  --success-border: #b5d4be;
+  --warning:        #b45309;
+  --warning-bg:     #fef3c7;
+  --error:          #b54a35;
+  --error-bg:       #fdf0ed;
+  --error-border:   #f2b9ad;
 
-  /* Spacing / radius */
-  --radius-sm:      6px;
-  --radius:         10px;
-  --radius-lg:      14px;
-  --radius-xl:      20px;
+  --font-heading:   'Libre Baskerville', 'Lora', Georgia, serif;
+  --font-body:      'Lora', 'Libre Baskerville', Georgia, serif;
+  --font-mono:      'IBM Plex Mono', 'Fira Code', ui-monospace, monospace;
 
-  /* Clean Shadows */
-  --shadow-sm:      0 1px 2px rgba(20, 24, 31, 0.04);
-  --shadow:         0 2px 4px rgba(20, 24, 31, 0.05);
-  --shadow-md:      0 4px 12px rgba(20, 24, 31, 0.06);
-  --shadow-lg:      0 8px 24px rgba(20, 24, 31, 0.08);
-  --shadow-xl:      0 16px 40px rgba(20, 24, 31, 0.10);
+  --radius-sm:  4px;
+  --radius:     6px;
+  --radius-lg:  10px;
+  --radius-xl:  16px;
+
+  --shadow-sm:  0 1px 3px  rgba(74, 63, 53, 0.06);
+  --shadow:     0 2px 6px  rgba(74, 63, 53, 0.08);
+  --shadow-md:  0 4px 14px rgba(74, 63, 53, 0.10);
+  --shadow-lg:  0 8px 28px rgba(74, 63, 53, 0.12);
+  --shadow-xl:  0 16px 48px rgba(74, 63, 53, 0.14);
 }
 
 /* ── Reset ───────────────────────────────────────────────────────────────── */
@@ -77,7 +103,7 @@ body {
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-body);
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100vh;
 }
 
@@ -89,46 +115,46 @@ body {
 
 /* ── Scrollbar ────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-base); }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-track { background: var(--bg-muted); }
+::-webkit-scrollbar-thumb { background: #c8bba0; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #a67c52; }
 
 /* ── Typography ──────────────────────────────────────────────────────────── */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  line-height: 1.12;
+  line-height: 1.14;
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
 code, pre { font-family: var(--font-mono); }
 a { color: var(--accent-flat); text-decoration: none; }
 
-/* ── Uniform Solid Text (No Gradients) ────────────────────────────────────── */
+/* ── Gradient text (warm accent) ─────────────────────────────────────────── */
 .gradient-text {
-  color: var(--text-primary);
+  color: var(--accent-flat);
   background: none;
   -webkit-background-clip: unset;
-  -webkit-text-fill-color: var(--text-primary);
+  -webkit-text-fill-color: var(--accent-flat);
   background-clip: unset;
 }
 
-/* ── Solid Button (No Gradients) ─────────────────────────────────────────── */
+/* ── Primary button ──────────────────────────────────────────────────────── */
 .gradient-btn {
   background: var(--accent-flat);
-  color: #FFFFFF;
+  color: var(--primary-foreground);
   border: none;
   cursor: pointer;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 700;
   border-radius: var(--radius);
   transition: background 0.15s, opacity 0.15s, transform 0.12s;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
 }
 
 .gradient-btn:hover:not(:disabled) {
-  background: #173B5C;
+  background: var(--accent-to);
   transform: translateY(-1px);
 }
 
@@ -137,14 +163,15 @@ a { color: var(--accent-flat); text-decoration: none; }
 }
 
 .gradient-btn:disabled {
-  background: var(--border);
-  color: var(--text-muted);
+  background: var(--accent);
+  color: var(--muted-foreground);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* ── Card ────────────────────────────────────────────────────────────────── */
 .card {
-  background: var(--bg-surface);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);

@@ -1,6 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   App.css — Light-theme landing page shell
-   Sections: Nav → Hero → How It Works → Features → Upload → Footer
+   App.css — Warm parchment landing page shell
 ───────────────────────────────────────────────────────────────────────────── */
 
 .app {
@@ -18,7 +17,7 @@
   position: sticky;
   top: 0;
   z-index: 200;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 252, 245, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
@@ -47,7 +46,7 @@
   width: 32px;
   height: 32px;
   border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+  background: var(--accent-flat);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,9 +59,9 @@
 
 .nav-logo-name {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
@@ -78,7 +77,7 @@
   gap: 5px;
   padding: 4px 12px;
   background: var(--accent-light);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 600;
@@ -108,7 +107,7 @@
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: var(--bg-surface);
+  background: var(--bg-hover);
 }
 
 .nav-cta {
@@ -141,7 +140,7 @@
   align-items: center;
   gap: 7px;
   padding: 6px 16px;
-  background: var(--bg-base);
+  background: var(--bg-muted);
   border: 1px solid var(--border-strong);
   border-radius: 999px;
   font-size: 0.75rem;
@@ -203,19 +202,19 @@
   padding: 13px 24px;
   font-size: 0.95rem;
   border-radius: var(--radius-lg);
-  background: var(--bg-base);
+  background: var(--bg-muted);
   border: 1px solid var(--border-strong);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, transform 0.12s;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .hero-secondary-btn:hover {
-  background: var(--bg-surface);
-  border-color: var(--border-strong);
+  background: var(--bg-hover);
+  border-color: var(--accent-flat);
   transform: translateY(-1px);
 }
 
@@ -299,7 +298,7 @@
 }
 
 .step-card {
-  background: var(--bg-base);
+  background: var(--bg-surface);
   padding: 36px 32px;
   display: flex;
   flex-direction: column;
@@ -310,7 +309,7 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+  background: var(--accent-flat);
   color: white;
   font-size: 0.85rem;
   font-weight: 800;
@@ -325,7 +324,7 @@
 
 .step-title {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 400;
   color: var(--text-primary);
 }
@@ -341,7 +340,7 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .section-alt {
-  background: var(--bg-surface);
+  background: var(--bg-muted);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -353,7 +352,7 @@
 }
 
 .feature-card {
-  background: var(--bg-base);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -381,15 +380,15 @@
 }
 
 .feature-icon-wrap.indigo { background: var(--accent-light); }
-.feature-icon-wrap.green  { background: #dcfce7; }
+.feature-icon-wrap.green  { background: #e6f2eb; }
 .feature-icon-wrap.amber  { background: #fef3c7; }
-.feature-icon-wrap.sky    { background: #e0f2fe; }
-.feature-icon-wrap.rose   { background: #ffe4e6; }
-.feature-icon-wrap.violet { background: #f3e8ff; }
+.feature-icon-wrap.sky    { background: #e6f0f7; }
+.feature-icon-wrap.rose   { background: #f7e6e3; }
+.feature-icon-wrap.violet { background: #ede6f5; }
 
 .feature-title {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 400;
   color: var(--text-primary);
 }
@@ -401,12 +400,12 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CTA BANNER SECTION (ON LANDING PAGE)
+   CTA BANNER SECTION
 ═══════════════════════════════════════════════════════════════════════════ */
 
 .cta-banner-section {
   padding: 80px 24px;
-  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+  background: var(--bg-surface);
   border-top: 1px solid var(--border);
   text-align: center;
 }
@@ -479,7 +478,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: 40px;
-  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.09), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  box-shadow: var(--shadow-lg);
   text-align: left;
 }
 
@@ -542,7 +541,7 @@
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+  background: var(--accent-flat);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -553,7 +552,7 @@
 
 .footer-logo-name {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 400;
   color: var(--text-primary);
 }

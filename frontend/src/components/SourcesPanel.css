@@ -13,7 +13,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 8px 14px;
-  background: #F7F8FA;
+  background: var(--bg-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
@@ -25,7 +25,7 @@
 }
 
 .sources-toggle-pill:hover {
-  background: #E3E6EA;
+  background: var(--bg-hover);
   color: var(--text-primary);
 }
 
@@ -38,7 +38,7 @@
 .confidence-pill {
   font-size: 0.72rem;
   font-weight: 700;
-  background: #FFFFFF;
+  background: var(--bg-surface);
   padding: 2px 8px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -68,7 +68,7 @@
 }
 
 .evidence-card {
-  background: #FFFFFF;
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -85,7 +85,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: #F7F8FA;
+  background: var(--bg-muted);
   border-bottom: 1px solid var(--border);
 }
 
@@ -100,7 +100,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #E3E6EA;
+  background: var(--bg-hover);
   color: var(--text-primary);
   font-size: 0.7rem;
   font-weight: 700;
@@ -126,9 +126,9 @@
   border-radius: 999px;
 }
 
-.confidence-badge.high   { background: #F0FDF4; color: #2F855A; border: 1px solid #BBF7D0; }
-.confidence-badge.medium { background: #FFFBEB; color: #B7791F; border: 1px solid #FDE68A; }
-.confidence-badge.low    { background: #FEF2F2; color: #B23A34; border: 1px solid #FECACA; }
+.confidence-badge.high   { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+.confidence-badge.medium { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+.confidence-badge.low    { background: var(--error-bg); color: var(--error); border: 1px solid var(--error-border); }
 
 .evidence-card-body {
   padding: 12px 14px;
@@ -177,7 +177,7 @@
   gap: 8px;
   padding: 12px 14px;
   background: var(--warning-bg);
-  border: 1px solid #FDE68A;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
   color: var(--warning);
