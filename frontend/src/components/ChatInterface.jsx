@@ -313,7 +313,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
       if (msg.role === 'user') {
         md += `## Q${Math.ceil((i + 1) / 2)}: ${msg.text}\n\n`;
       } else {
-        md += `**Distil AI:**\n\n${msg.text}\n\n`;
+        md += `**Distil:**\n\n${msg.text}\n\n`;
         if (msg.sources && msg.sources.length > 0) {
           md += `**Sources:**\n`;
           msg.sources.forEach((s, si) => {
@@ -504,7 +504,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                       {msg.role === 'user' ? 'U' : '✦'}
                     </div>
                     <span className="message-sender-name">
-                      {msg.role === 'user' ? 'You' : 'Distil AI'}
+                      {msg.role === 'user' ? 'You' : 'Distil'}
                     </span>
                   </div>
 
@@ -531,7 +531,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
                 <div className="workspace-message assistant thinking">
                   <div className="message-header-row">
                     <div className="message-avatar-badge spinning">✦</div>
-                    <span className="message-sender-name">Distil AI</span>
+                    <span className="message-sender-name">Distil</span>
                     <span className="thinking-step-text">{THINKING_STEPS[thinkingStepIdx]}</span>
                   </div>
 
