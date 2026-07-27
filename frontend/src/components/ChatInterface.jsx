@@ -348,7 +348,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
       <aside className={`workspace-sidebar-left ${showLeftSidebar ? 'open' : 'closed'}`}>
         <div className="sidebar-brand-row">
           <button className="sidebar-brand-logo" onClick={onReset} title="Distil Home">
-            <div className="sidebar-logo-mark">D</div>
+            <img src="/distil-logo-mark.svg" alt="Distil Logo" className="sidebar-logo-mark-img" />
             <span className="sidebar-logo-title">Distil</span>
           </button>
           <button

@@ -122,7 +122,7 @@ export default function App() {
               aria-label="Distil home"
               style={{ background: 'none', border: 'none' }}
             >
-              <div className="nav-logo-mark" aria-hidden="true">D</div>
+              <img src="/distil-logo-mark.svg" alt="Distil Logo" className="nav-logo-mark-img" />
               <span className="nav-logo-name">Distil</span>
             </button>
 
@@ -332,7 +332,7 @@ export default function App() {
               style={{ background: 'none', border: 'none', cursor: 'pointer' }}
               aria-label="Distil home"
             >
-              <div className="footer-logo-mark" aria-hidden="true">D</div>
+              <img src="/distil-logo-mark.svg" alt="Distil Logo" className="footer-logo-mark-img" />
               <span className="footer-logo-name">Distil</span>
             </button>
             <span className="footer-tagline">

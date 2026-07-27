@@ -42,18 +42,10 @@
   cursor: pointer;
 }
 
-.nav-logo-mark {
+.nav-logo-mark-img {
   width: 32px;
   height: 32px;
-  border-radius: 9px;
-  background: var(--accent-flat);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 700;
-  box-shadow: 0 2px 8px var(--accent-glow);
+  object-fit: contain;
   flex-shrink: 0;
 }
 
@@ -569,17 +561,11 @@
   text-decoration: none;
 }
 
-.footer-logo-mark {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  background: var(--accent-flat);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  color: white;
-  font-weight: 700;
+.footer-logo-mark-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .footer-logo-name {
