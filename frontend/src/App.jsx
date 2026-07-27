@@ -168,7 +168,7 @@ export default function App() {
 
                 <h1 className="hero-headline" id="hero-headline">
                   Read less.<br />
-                  <span className="gradient-text">Understand more.</span>
+                  Understand more.
                 </h1>
 
                 <p className="hero-sub">
