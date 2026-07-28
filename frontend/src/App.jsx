@@ -3,6 +3,7 @@ import UploadPanel from './components/UploadPanel';
 import IngestionStatus from './components/IngestionStatus';
 import ChatInterface from './components/ChatInterface';
 import DistilLogoAnimated from './components/DistilLogoAnimated';
+import TermsModal from './components/TermsModal';
 import './App.css';
 
 // ─── Landing page data ────────────────────────────────────────────────────
@@ -69,6 +70,7 @@ export default function App() {
   const [ingestData, setIngestData] = useState(null);
   const [isIngestFinished, setIsIngestFinished] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   const goToUpload = () => {
     setUploadError('');
@@ -355,9 +357,30 @@ export default function App() {
             <span className="footer-tagline">
               Document QA Assistant · Session-scoped
             </span>
+
+            <div className="footer-links">
+              <button
+                type="button"
+                className="footer-link-btn"
+                onClick={() => setIsTermsOpen(true)}
+              >
+                Terms &amp; Service
+              </button>
+              <span className="footer-divider">•</span>
+              <button
+                type="button"
+                className="footer-link-btn"
+                onClick={() => setIsTermsOpen(true)}
+              >
+                Privacy Policy
+              </button>
+            </div>
           </div>
         </footer>
       )}
+
+      {/* Terms of Service & Privacy Modal */}
+      <TermsModal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
 
     </div>
   );

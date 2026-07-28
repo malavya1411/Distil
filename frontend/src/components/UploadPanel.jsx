@@ -188,17 +188,6 @@ export default function UploadPanel({ onStartIngest, onIngestComplete, onIngesti
       {/* Mode 2: Raw Text Area */}
       {mode === 'paste' && (
         <div className="paste-area-wrapper">
-          <div className="paste-header-toolbar">
-            <span className="char-count">{pastedText.length.toLocaleString()} characters</span>
-            <button
-              type="button"
-              className="sample-terms-btn"
-              onClick={handleLoadSampleTerms}
-              title="Load Distil Terms & Conditions sample document"
-            >
-              📄 Load Distil Terms &amp; Conditions
-            </button>
-          </div>
           <textarea
             className="paste-textarea"
             placeholder="Paste your Terms & Conditions, privacy policy, research paper, or any long document here..."
@@ -206,6 +195,7 @@ export default function UploadPanel({ onStartIngest, onIngestComplete, onIngesti
             onChange={(e) => setPastedText(e.target.value)}
             aria-label="Paste document text"
           />
+          <span className="char-count">{pastedText.length.toLocaleString()} characters</span>
         </div>
       )}
 

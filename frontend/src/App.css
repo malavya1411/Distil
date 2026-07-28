@@ -575,6 +575,33 @@
   color: var(--text-muted);
 }
 
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-link-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: color 0.15s ease;
+}
+
+.footer-link-btn:hover {
+  color: var(--accent-flat, #a67c52);
+  text-decoration: underline;
+}
+
+.footer-divider {
+  color: var(--border, rgba(166, 124, 82, 0.3));
+  font-size: 0.75rem;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════════════════════════════ */
