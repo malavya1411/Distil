@@ -165,7 +165,6 @@ export default function DistilLogoAnimated({ size = 620, className = '' }) {
       <svg
         viewBox="195 90 640 445"
         width="100%"
-        height="auto"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         style={{ display: 'block', width: '100%', height: 'auto', overflow: 'visible' }}
