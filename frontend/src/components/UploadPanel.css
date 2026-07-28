@@ -173,11 +173,35 @@
   color: var(--text-muted);
 }
 
+.paste-header-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
 .char-count {
-  align-self: flex-end;
   font-size: 0.78rem;
   color: var(--text-secondary);
   font-weight: 500;
+}
+
+.sample-terms-btn {
+  background: var(--bg-surface-elevated, rgba(166, 124, 82, 0.08));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sample-terms-btn:hover {
+  background: var(--bg-hover, rgba(166, 124, 82, 0.15));
+  border-color: var(--accent-flat, #a67c52);
+  color: var(--accent-flat, #a67c52);
 }
 
 .privacy-note {
