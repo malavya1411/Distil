@@ -5,10 +5,10 @@ import './UploadPanel.css';
  * UploadPanel — handles both PDF file upload and raw text paste.
  *
  * Props:
- *   onIngestComplete(sessionInfo) — called after successful ingestion
- *   onIngesting(bool)             — called to show/hide ingestion spinner in parent
+ *   onStartIngest({ mode, file, text, docType, sourceDoc }) — called to trigger ingestion in parent
+ *   externalError — error passed back from parent ingestion handler
  */
-export default function UploadPanel({ onIngestComplete, onIngesting }) {
+export default function UploadPanel({ onStartIngest, onIngestComplete, onIngesting, externalError }) {
   const [mode, setMode] = useState('paste');         // 'pdf' | 'paste'
   const [docType, setDocType] = useState('auto');    // 'legal' | 'academic' | 'auto'
   const [file, setFile] = useState(null);
@@ -43,54 +43,55 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
 
   const handleSubmit = async () => {
     setError('');
-    onIngesting(true);
 
+    if (mode === 'pdf') {
+      if (!file) {
+        setError('Please select a PDF file first.');
+        return;
+      }
+      if (onStartIngest) {
+        onStartIngest({ mode: 'pdf', file, docType, sourceDoc: file.name });
+        return;
+      }
+    } else {
+      if (!pastedText.trim() || pastedText.trim().length < 50) {
+        setError('Please paste at least 50 characters of text.');
+        return;
+      }
+      if (onStartIngest) {
+        onStartIngest({ mode: 'paste', text: pastedText, docType, sourceDoc: 'pasted-document' });
+        return;
+      }
+    }
+
+    // Legacy fallback if onStartIngest is not passed
+    if (onIngesting) onIngesting(true, mode === 'pdf' ? file?.name : 'pasted-document');
     try {
       let res;
-
       if (mode === 'pdf') {
-        if (!file) {
-          setError('Please select a PDF file first.');
-          onIngesting(false);
-          return;
-        }
         const formData = new FormData();
         formData.append('file', file);
         formData.append('docType', docType);
-
         res = await fetch('/api/upload', { method: 'POST', body: formData });
-
       } else {
-        if (!pastedText.trim() || pastedText.trim().length < 50) {
-          setError('Please paste at least 50 characters of text.');
-          onIngesting(false);
-          return;
-        }
         res = await fetch('/api/ingest-text', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: pastedText,
-            docType,
-            sourceDoc: 'pasted-document',
-          }),
+          body: JSON.stringify({ text: pastedText, docType, sourceDoc: 'pasted-document' }),
         });
       }
-
       const data = await res.json();
-
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Ingestion failed. Please try again.');
       }
-
-      onIngestComplete(data);
-
+      if (onIngestComplete) onIngestComplete(data);
     } catch (err) {
       setError(err.message);
-    } finally {
-      onIngesting(false);
+      if (onIngesting) onIngesting(false);
     }
   };
+
+  const activeError = error || externalError;
 
   // ─── Render ────────────────────────────────────────────────────────────────
 
@@ -101,81 +102,88 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
         <button
           role="tab"
           aria-selected={mode === 'paste'}
-          className={mode === 'paste' ? 'active' : ''}
+          className={`toggle-tab ${mode === 'paste' ? 'active' : ''}`}
           onClick={() => { setMode('paste'); setError(''); }}
-          id="tab-paste"
         >
           Paste Text
         </button>
         <button
           role="tab"
           aria-selected={mode === 'pdf'}
-          className={mode === 'pdf' ? 'active' : ''}
+          className={`toggle-tab ${mode === 'pdf' ? 'active' : ''}`}
           onClick={() => { setMode('pdf'); setError(''); }}
-          id="tab-pdf"
         >
           Upload PDF
         </button>
       </div>
 
-      {/* Doc type toggle */}
-      <div className="doctype-toggle">
-        <label htmlFor="doctype-select">Document type:</label>
+      {/* Doc type hint selector */}
+      <div className="doc-type-selector">
+        <label htmlFor="doc-type-select" className="selector-label">Document type:</label>
         <select
-          id="doctype-select"
+          id="doc-type-select"
+          className="doc-type-select"
           value={docType}
           onChange={(e) => setDocType(e.target.value)}
         >
           <option value="auto">Auto-detect</option>
-          <option value="legal">Legal / T&amp;C</option>
-          <option value="academic">Research Paper</option>
+          <option value="legal">Legal (Terms / Privacy / Contracts)</option>
+          <option value="academic">Academic / Research Paper</option>
         </select>
       </div>
 
-      {/* Input area */}
-      {mode === 'pdf' ? (
+      {/* Mode 1: PDF File Drop Zone */}
+      {mode === 'pdf' && (
         <div
-          className={`dropzone${dragging ? ' dragging' : ''}`}
+          className={`dropzone ${dragging ? 'dragging' : ''} ${file ? 'has-file' : ''}`}
           onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
           onDrop={handleFileDrop}
-          onClick={() => !file && fileInputRef.current?.click()}
-          role="button"
-          aria-label="PDF upload dropzone"
-          tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
+          onClick={() => fileInputRef.current?.click()}
+          role="region"
+          aria-label="PDF drop zone"
         >
           <input
             ref={fileInputRef}
             type="file"
-            accept="application/pdf"
+            accept=".pdf,application/pdf"
             onChange={handleFileChange}
-            id="pdf-file-input"
-            aria-label="Select PDF file"
+            style={{ display: 'none' }}
           />
 
           {file ? (
-            <div className="dropzone-file-selected" onClick={(e) => e.stopPropagation()}>
-              <span>{file.name}</span>
+            <div className="file-selected-state">
+              <span className="file-icon">📄</span>
+              <div className="file-info">
+                <span className="file-name">{file.name}</span>
+                <span className="file-size">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+              </div>
               <button
+                type="button"
+                className="change-file-btn"
                 onClick={(e) => { e.stopPropagation(); setFile(null); }}
-                aria-label="Remove selected file"
-                title="Remove file"
-              >✕</button>
+              >
+                Change
+              </button>
             </div>
           ) : (
-            <>
-              <p className="dropzone-label">Drop your PDF here, or click to browse</p>
-              <p className="dropzone-hint">PDF files only · Max 20 MB</p>
-            </>
+            <div className="dropzone-prompt">
+              <span className="upload-icon">📄</span>
+              <p className="primary-prompt">
+                <strong>Click to upload</strong> or drag and drop a PDF file
+              </p>
+              <p className="secondary-prompt">Terms &amp; Conditions, Privacy Policies, Research Papers (max 20 MB)</p>
+            </div>
           )}
         </div>
-      ) : (
-        <div className="paste-area">
+      )}
+
+      {/* Mode 2: Raw Text Area */}
+      {mode === 'paste' && (
+        <div className="paste-area-wrapper">
           <textarea
-            id="paste-text-input"
             className="paste-textarea"
-            placeholder="Paste your Terms & Conditions, privacy policy, research paper, or any long document here…"
+            placeholder="Paste your Terms & Conditions, privacy policy, research paper, or any long document here..."
             value={pastedText}
             onChange={(e) => setPastedText(e.target.value)}
             aria-label="Paste document text"
@@ -185,9 +193,9 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
       )}
 
       {/* Error */}
-      {error && (
+      {activeError && (
         <div className="upload-error" role="alert" aria-live="assertive">
-          <span>{error}</span>
+          <span>{activeError}</span>
         </div>
       )}
 

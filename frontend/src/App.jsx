@@ -68,24 +68,49 @@ export default function App() {
   const [ingestingDoc, setIngestingDoc] = useState('');
   const [ingestData, setIngestData] = useState(null);
   const [isIngestFinished, setIsIngestFinished] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const goToUpload = () => {
+    setUploadError('');
     setView('upload');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleIngesting = (active, docName = '') => {
-    if (active) {
-      setIngestingDoc(docName);
-      setIsIngestFinished(false);
-      setIngestData(null);
-      setView('ingesting');
-    }
-  };
+  const handleStartIngest = async ({ mode, file, text, docType, sourceDoc }) => {
+    setUploadError('');
+    setIngestingDoc(sourceDoc);
+    setIsIngestFinished(false);
+    setIngestData(null);
+    setView('ingesting');
 
-  const handleIngestComplete = (data) => {
-    setIngestData(data);
-    setIsIngestFinished(true);
+    try {
+      let res;
+      if (mode === 'pdf') {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('docType', docType);
+        res = await fetch('/api/upload', { method: 'POST', body: formData });
+      } else {
+        res = await fetch('/api/ingest-text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, docType, sourceDoc }),
+        });
+      }
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Ingestion failed. Please try again.');
+      }
+
+      setIngestData(data);
+      setIsIngestFinished(true);
+
+    } catch (err) {
+      console.error('[App] Ingestion error:', err.message);
+      setUploadError(err.message || 'Ingestion failed. Please try again.');
+      setView('upload');
+    }
   };
 
   const handleOpenWorkspace = () => {
@@ -284,8 +309,8 @@ export default function App() {
 
             <div className="upload-widget">
               <UploadPanel
-                onIngestComplete={handleIngestComplete}
-                onIngesting={(active, docName) => handleIngesting(active, docName)}
+                onStartIngest={handleStartIngest}
+                externalError={uploadError}
               />
             </div>
           </div>
