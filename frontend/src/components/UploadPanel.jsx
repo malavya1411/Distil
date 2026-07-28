@@ -100,21 +100,21 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
       <div className="mode-toggle" role="tablist" aria-label="Input mode">
         <button
           role="tab"
-          aria-selected={mode === 'pdf'}
-          className={mode === 'pdf' ? 'active' : ''}
-          onClick={() => { setMode('pdf'); setError(''); }}
-          id="tab-pdf"
-        >
-          Upload PDF
-        </button>
-        <button
-          role="tab"
           aria-selected={mode === 'paste'}
           className={mode === 'paste' ? 'active' : ''}
           onClick={() => { setMode('paste'); setError(''); }}
           id="tab-paste"
         >
           Paste Text
+        </button>
+        <button
+          role="tab"
+          aria-selected={mode === 'pdf'}
+          className={mode === 'pdf' ? 'active' : ''}
+          onClick={() => { setMode('pdf'); setError(''); }}
+          id="tab-pdf"
+        >
+          Upload PDF
         </button>
       </div>
 
