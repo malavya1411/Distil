@@ -161,11 +161,6 @@ export default function App() {
             <div className="hero-container">
               {/* Left Column: Text & CTAs */}
               <div className="hero-text-col">
-                <div className="hero-badge">
-                  <span className="hero-badge-dot" />
-                  Grounded Document RAG
-                </div>
-
                 <h1 className="hero-headline" id="hero-headline">
                   Read less.<br />
                   Understand more.
