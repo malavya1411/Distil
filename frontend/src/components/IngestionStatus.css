@@ -6,10 +6,10 @@
 .distil-loader-wrapper {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
-  padding: 40px 20px;
+  padding: 12px 20px 40px;
   overflow: hidden;
 }
 

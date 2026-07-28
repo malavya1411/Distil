@@ -507,9 +507,10 @@
 .ingestion-view {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 60px 24px;
+  justify-content: flex-start;
+  padding: 36px 24px 60px;
   background: var(--bg-surface);
 }
 
