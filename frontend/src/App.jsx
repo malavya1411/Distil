@@ -183,7 +183,7 @@ export default function App() {
               )}
               {view === 'ingesting' && (
                 <button className="nav-link" onClick={goToUpload}>
-                  New document
+                  New analysis
                 </button>
               )}
             </div>

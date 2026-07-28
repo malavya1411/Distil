@@ -414,7 +414,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
         {/* Sidebar Footer */}
         <div className="sidebar-footer">
           <button className="gradient-btn sidebar-new-doc-btn" onClick={onReset}>
-            + New Document
+            + New Analysis
           </button>
         </div>
       </aside>
