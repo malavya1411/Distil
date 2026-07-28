@@ -37,25 +37,22 @@
 .sidebar-brand-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: space-between;
   width: 100%;
-  padding-bottom: 4px;
 }
 
 .sidebar-brand-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 10px;
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .sidebar-logo-mark-img {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -67,17 +64,13 @@
 
 .sidebar-logo-title {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.015em;
 }
 
 .sidebar-toggle-btn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   color: var(--text-secondary);
