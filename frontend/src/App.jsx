@@ -127,6 +127,17 @@ export default function App() {
     }
   };
 
+  const handleNewDocument = () => {
+    setView('upload');
+    setSessionId(null);
+    setSessionInfo({});
+    setIngestingDoc('');
+    setIsIngestFinished(false);
+    setIngestData(null);
+    setUploadError('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleReset = () => {
     setView('landing');
     setSessionId(null);
@@ -134,6 +145,7 @@ export default function App() {
     setIngestingDoc('');
     setIsIngestFinished(false);
     setIngestData(null);
+    setUploadError('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -336,7 +348,7 @@ export default function App() {
           <ChatInterface
             sessionId={sessionId}
             sessionInfo={sessionInfo}
-            onReset={handleReset}
+            onReset={handleNewDocument}
           />
         </main>
       )}
