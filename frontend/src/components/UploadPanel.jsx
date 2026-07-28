@@ -9,7 +9,7 @@ import './UploadPanel.css';
  *   onIngesting(bool)             — called to show/hide ingestion spinner in parent
  */
 export default function UploadPanel({ onIngestComplete, onIngesting }) {
-  const [mode, setMode] = useState('pdf');           // 'pdf' | 'paste'
+  const [mode, setMode] = useState('paste');         // 'pdf' | 'paste'
   const [docType, setDocType] = useState('auto');    // 'legal' | 'academic' | 'auto'
   const [file, setFile] = useState(null);
   const [pastedText, setPastedText] = useState('');
