@@ -204,7 +204,7 @@ export default function UploadPanel({ onIngestComplete, onIngesting }) {
         disabled={mode === 'pdf' ? !file : pastedText.trim().length < 50}
         aria-label="Start document ingestion"
       >
-        Analyse Document
+        {mode === 'paste' ? 'Analyse Text' : 'Analyse Document'}
       </button>
     </div>
   );
