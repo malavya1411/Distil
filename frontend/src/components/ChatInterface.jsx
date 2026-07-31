@@ -188,7 +188,7 @@ function MessageActions({ text }) {
 
 // ─── Main AI Knowledge Workspace Component ─────────────────────────────────
 
-export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
+export default function ChatInterface({ sessionId, sessionInfo, vectors, onReset }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -266,6 +266,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
           question,
           k: 4,
           history: buildHistory(),
+          vectors,
         }),
       });
 
@@ -560,6 +561,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
               <ClausesPanel
                 sessionId={sessionId}
                 docType={docType}
+                vectors={vectors}
               />
             )}
 
@@ -567,6 +569,7 @@ export default function ChatInterface({ sessionId, sessionInfo, onReset }) {
               <RiskMatrix
                 sessionId={sessionId}
                 docType={docType}
+                vectors={vectors}
               />
             )}
           </div>

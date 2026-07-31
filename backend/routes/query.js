@@ -23,7 +23,7 @@
 const express = require('express');
 const { retrieveTopK, SIMILARITY_THRESHOLD } = require('../services/retriever');
 const { generateAnswer } = require('../services/generator');
-const { hasSession } = require('../store/vectorStore');
+const { hasSession, storeVectors } = require('../store/vectorStore');
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ const NO_MATCH_ANSWER =
  */
 router.post('/query', express.json(), async (req, res) => {
   try {
-    const { sessionId, question, k = 4, history = [] } = req.body;
+    const { sessionId, question, k = 4, history = [], vectors } = req.body;
 
     // ── Validation ────────────────────────────────────────────────────────────
 
@@ -50,9 +50,13 @@ router.post('/query', express.json(), async (req, res) => {
     }
 
     if (!hasSession(sessionId)) {
-      return res.status(404).json({
-        error: 'Session not found or has expired. Please re-upload your document.',
-      });
+      if (vectors && Array.isArray(vectors) && vectors.length > 0) {
+        storeVectors(sessionId, vectors);
+      } else {
+        return res.status(404).json({
+          error: 'Session not found or has expired. Please re-upload your document.',
+        });
+      }
     }
 
     // ── Retrieval ─────────────────────────────────────────────────────────────

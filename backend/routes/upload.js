@@ -110,6 +110,7 @@ async function ingestText(rawText, sourceDoc, docType) {
     chunkCount: vectors.length,
     docType: resolvedType,
     sourceDoc,
+    vectors,
   };
 }
 

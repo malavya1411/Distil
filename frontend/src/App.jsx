@@ -122,6 +122,7 @@ export default function App() {
         sourceDoc: ingestData.sourceDoc,
         chunkCount: ingestData.chunkCount,
         docType: ingestData.docType,
+        vectors: ingestData.vectors,
       });
       setView('chat');
     }
@@ -348,6 +349,7 @@ export default function App() {
           <ChatInterface
             sessionId={sessionId}
             sessionInfo={sessionInfo}
+            vectors={sessionInfo.vectors}
             onReset={handleNewDocument}
           />
         </main>

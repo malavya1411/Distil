@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3001;
 // ─── Middleware ───────────────────────────────────────────────────────────────
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: true,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
 }));
@@ -63,13 +63,15 @@ app.use((err, _req, res, _next) => {
 
 // ─── Start ────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Distil backend running on http://localhost:${PORT}`);
-  console.log(`   Gemini API key : ${process.env.GEMINI_API_KEY ? '✅ set' : '❌ NOT SET — embeddings will fail'}`);
-  console.log(`   Groq API key   : ${process.env.GROQ_API_KEY   ? '✅ set' : '❌ NOT SET — generation will fail'}`);
-  console.log(`   Embeddings     : gemini-embedding-001`);
-  console.log(`   Generation     : llama-3.3-70b-versatile (Groq LPU)`);
-  console.log(`   Health check   : http://localhost:${PORT}/api/health\n`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Distil backend running on http://localhost:${PORT}`);
+    console.log(`   Gemini API key : ${process.env.GEMINI_API_KEY ? '✅ set' : '❌ NOT SET — embeddings will fail'}`);
+    console.log(`   Groq API key   : ${process.env.GROQ_API_KEY   ? '✅ set' : '❌ NOT SET — generation will fail'}`);
+    console.log(`   Embeddings     : gemini-embedding-001`);
+    console.log(`   Generation     : llama-3.3-70b-versatile (Groq LPU)`);
+    console.log(`   Health check   : http://localhost:${PORT}/api/health\n`);
+  });
+}
 
 module.exports = app;

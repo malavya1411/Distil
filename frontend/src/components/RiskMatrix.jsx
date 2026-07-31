@@ -91,7 +91,7 @@ function RiskSummaryBar({ rows }) {
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-export default function RiskMatrix({ sessionId, docType }) {
+export default function RiskMatrix({ sessionId, docType, vectors }) {
   const [rows, setRows]         = useState([]);
   const [rawAnswer, setRawAnswer] = useState('');
   const [loading, setLoading]   = useState(true);
@@ -107,7 +107,7 @@ export default function RiskMatrix({ sessionId, docType }) {
         const res = await fetch('/api/query', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId, question, k: 6 }),
+          body: JSON.stringify({ sessionId, question, k: 6, vectors }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to generate risk matrix.');
