@@ -1,7 +1,7 @@
 # Distil — Production-Grade Document Intelligence & Grounded RAG Platform
 
 > **Read Less. Understand More.**  
-> Upload complex legal agreements, Terms & Conditions, privacy policies, or academic research papers. Ask natural-language questions and receive sub-second grounded answers backed by verbatim source passage citations — with zero hallucinations.
+> Upload complex legal agreements, Terms & Conditions, privacy policies, or academic research papers. Ask natural language questions and receive sub second grounded answers backed by verbatim source passage citations with zero hallucinations.
 
 ---
 
