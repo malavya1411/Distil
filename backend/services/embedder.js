@@ -11,7 +11,16 @@
 require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+let _genAI = null;
+const getGenAIClient = () => {
+  if (!_genAI) {
+    if (!process.env.GEMINI_API_KEY) {
+      console.warn('[embedder] GEMINI_API_KEY is not set.');
+    }
+    _genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'MISSING_KEY');
+  }
+  return _genAI;
+};
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 const BATCH_SIZE = 5;
@@ -43,7 +52,7 @@ function createFallbackEmbedding(text, dim = 768) {
  * Get embedding vector for a single text string from Gemini API.
  */
 async function getEmbedding(text) {
-  const model = genAI.getGenerativeModel({ model: EMBEDDING_MODEL });
+  const model = getGenAIClient().getGenerativeModel({ model: EMBEDDING_MODEL });
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
