@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 import './ClausesPanel.css';
 
 // ─── Clause Queries ───────────────────────────────────────────────────────────
@@ -69,7 +70,7 @@ export default function ClausesPanel({ sessionId, docType, vectors }) {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('/api/query', {
+        const res = await fetch(`${API_BASE_URL}/api/query`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionId, question, k: 6, vectors }),

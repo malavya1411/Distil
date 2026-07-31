@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 import './RiskMatrix.css';
 
 // ─── Query templates ──────────────────────────────────────────────────────────
@@ -104,7 +105,7 @@ export default function RiskMatrix({ sessionId, docType, vectors }) {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('/api/query', {
+        const res = await fetch(`${API_BASE_URL}/api/query`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionId, question, k: 6, vectors }),

@@ -4,6 +4,7 @@ import IngestionStatus from './components/IngestionStatus';
 import ChatInterface from './components/ChatInterface';
 import DistilLogoAnimated from './components/DistilLogoAnimated';
 import TermsModal from './components/TermsModal';
+import { API_BASE_URL } from './config';
 import './App.css';
 
 // ─── Landing page data ────────────────────────────────────────────────────
@@ -91,9 +92,9 @@ export default function App() {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('docType', docType);
-        res = await fetch('/api/upload', { method: 'POST', body: formData });
+        res = await fetch(`${API_BASE_URL}/api/upload`, { method: 'POST', body: formData });
       } else {
-        res = await fetch('/api/ingest-text', {
+        res = await fetch(`${API_BASE_URL}/api/ingest-text`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, docType, sourceDoc }),

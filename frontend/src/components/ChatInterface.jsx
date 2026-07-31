@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import SourcesPanel from './SourcesPanel';
 import ClausesPanel from './ClausesPanel';
 import RiskMatrix from './RiskMatrix';
+import { API_BASE_URL } from '../config';
 import './ChatInterface.css';
 
 // ─── AI Prompt Cards Data ──────────────────────────────────────────────────
@@ -258,7 +259,7 @@ export default function ChatInterface({ sessionId, sessionInfo, vectors, onReset
     setLoading(true);
 
     try {
-      const res = await fetch('/api/query', {
+      const res = await fetch(`${API_BASE_URL}/api/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
