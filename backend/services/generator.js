@@ -121,7 +121,7 @@ async function generateAnswer(question, chunks, conversationHistory = []) {
         model: modelToUse,
         messages,
         temperature: 0.15,      // low temperature = faithful, grounded answers
-        max_tokens: 1024,
+        max_completion_tokens: 1024,   // groq-sdk v1.x uses max_completion_tokens
         top_p: 0.85,
       });
 

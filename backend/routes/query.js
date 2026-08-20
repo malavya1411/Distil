@@ -97,7 +97,17 @@ router.post('/query', express.json(), async (req, res) => {
 
   } catch (err) {
     console.error('[query] Error:', err.message);
-    return res.status(500).json({ error: err.message || 'Query failed.' });
+    console.error('[query] Stack:', err.stack);
+    console.error('[query] ENV check — GEMINI_API_KEY set:', !!process.env.GEMINI_API_KEY);
+    console.error('[query] ENV check — GROQ_API_KEY set:', !!process.env.GROQ_API_KEY);
+    return res.status(500).json({
+      error: err.message || 'Query failed.',
+      hint: !process.env.GEMINI_API_KEY
+        ? 'GEMINI_API_KEY is not set on the server.'
+        : !process.env.GROQ_API_KEY
+        ? 'GROQ_API_KEY is not set on the server.'
+        : undefined,
+    });
   }
 });
 

@@ -56,10 +56,19 @@ async function getEmbedding(text) {
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const result = await model.embedContent(text);
-      if (result?.embedding?.values) {
-        return result.embedding.values;
+      // SDK ≥ 0.21 accepts a string directly; older versions needed a Content object.
+      // Normalise to a plain string to be safe across SDK versions.
+      const result = await model.embedContent(String(text));
+      // Handle both { embedding: { values: [...] } } and flat { values: [...] }
+      const values =
+        result?.embedding?.values ??
+        result?.embeddings?.[0]?.values ??
+        null;
+
+      if (values && values.length > 0) {
+        return values;
       }
+      throw new Error(`Unexpected embedding response shape: ${JSON.stringify(result).slice(0, 200)}`);
     } catch (err) {
       const isRateLimit =
         err?.status === 429 ||
@@ -72,6 +81,8 @@ async function getEmbedding(text) {
         await sleep(delay);
         continue;
       }
+      // Log full error for debugging before re-throwing
+      console.error(`[embedder] getEmbedding failed (attempt ${attempt}):`, err.message);
       throw err;
     }
   }
