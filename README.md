@@ -16,7 +16,7 @@
 
 ## Technical Overview & System Architecture
 
-Distil is built on a high-throughput Retrieval-Augmented Generation (RAG) architecture engineered for privacy, mathematical precision, and sub-second end to end response latency.
+Distil is built on a high throughput Retrieval Augmented Generation(RAG) architecture engineered for privacy, mathematical precision, and sub-second end to end response latency.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
