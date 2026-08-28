@@ -36,7 +36,7 @@ Distil is built on a high throughput Retrieval Augmented Generation(RAG) archite
 └─────────┬────────┘     Academic Chunker (Abstract, Method, Results)
           │
           ▼
-┌──────────────────┐     Throttled Batch Request (Rate-Limit Queue)
+┌──────────────────┐     Throttled Batch Request (Rate Limit Queue)
 │ Gemini Embedder  │ ──► Model: gemini-embedding-001 (3072-dim vectors)
 └─────────┬────────┘
           │
@@ -58,14 +58,14 @@ Distil is built on a high throughput Retrieval Augmented Generation(RAG) archite
 └─────────┬────────┘     Fallback: llama-3.1-8b-instant
           │
           ▼
-┌──────────────────┐     Warm Parchment 2-Column Workspace
+┌──────────────────┐     Warm Parchment 2 Column Workspace
 │ UI Presentation  │ ──► In-Page View Switching: RAG Chat, Clauses & Risk Matrix
 └──────────────────┘
 ```
 
 ---
 
-## In-Depth Architectural Components
+## In Depth Architectural Components
 
 ### 1. Domain-Aware Boundary Chunking (`backend/services/chunker.js`)
 Standard fixed-length character chunking frequently chops sentences across clause boundaries, breaking the semantic context of legal and academic documents. Distil utilizes domain-aware regex parsing:
