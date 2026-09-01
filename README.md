@@ -5,7 +5,7 @@
 
 ---
 
-## Key Working (How It Works)
+## Key Working
 
 1. **Upload & Domain Aware Chunking**: Upload a PDF or paste text. Distil splits documents along legal section boundaries (e.g., `Section 8.2`) or paper headings instead of arbitrary character cuts.
 2. **Vector Embedding**: Text chunks are embedded into 3072 dimensional vectors using Gemini API (`gemini-embedding-001`) and stored in a private, session scoped in memory vector index.
