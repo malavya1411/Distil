@@ -67,7 +67,7 @@ Distil is built on a high throughput Retrieval Augmented Generation(RAG) archite
 
 ## In Depth Architectural Components
 
-### 1. Domain-Aware Boundary Chunking (`backend/services/chunker.js`)
+### 1. Domain Aware Boundary Chunking (`backend/services/chunker.js`)
 Standard fixed-length character chunking frequently chops sentences across clause boundaries, breaking the semantic context of legal and academic documents. Distil utilizes domain-aware regex parsing:
 - **Legal Mode**: Splits on uppercase section headers (`SECTION`, `ARTICLE`, `CLAUSE`, `SCHEDULE`, `EXHIBIT`, or numbered clauses like `8.2.1`). Preserves legal definitions intact.
 - **Academic Mode**: Identifies paper structural headings (`Abstract`, `Introduction`, `Methodology`, `Experimental Setup`, `Results`, `Discussion`, `Conclusion`).
