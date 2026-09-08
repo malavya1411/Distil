@@ -37,11 +37,11 @@ Distil is built on a high throughput Retrieval Augmented Generation(RAG) archite
           │
           ▼
 ┌──────────────────┐     Throttled Batch Request (Rate Limit Queue)
-│ Gemini Embedder  │ ──► Model: gemini-embedding-001 (3072-dim vectors)
+│ Gemini Embedder  │ ──► Model: gemini embedding-001 (3072 dim vectors)
 └─────────┬────────┘
           │
           ▼
-┌──────────────────┐     In-Memory Session Store
+┌──────────────────┐     In Memory Session Store
 │ Vector Index     │ ──► Session Isolation (Zero Disk Persistence)
 └─────────┬────────┘
           │
