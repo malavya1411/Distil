@@ -80,7 +80,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 
 ### 3. Session-Scoped Vector Index & Retrieval (`backend/services/retriever.js` & `backend/store/vectorStore.js`)
 - **In-Memory Security**: Embeddings and raw text live strictly in volatile memory (`Map<sessionId, SessionData>`). No database persistence or disk storage. Discarded when session resets.
-- **Cosine Distance Search**: Computes normalized dot-product cosine similarity:
+- **Cosine Distance Search**: Computes normalized dot product cosine similarity:
   $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 - **Threshold Guard (`SIMILARITY_THRESHOLD = 0.55`)**: Chunks below 55% similarity score are discarded. If zero chunks clear the threshold, the system flags `noMatch: true` and refuses to answer rather than allowing model hallucination.
 
