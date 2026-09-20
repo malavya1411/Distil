@@ -75,7 +75,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 
 ### 2. Throttled Vector Embedding Engine (`backend/services/embedder.js`)
 - **Embedding Model**: Google AI `gemini-embedding-001` producing 3072 dimensional floating-point vector representations.
-- **Concurrency & Throttling**: Implements a Promise-based queue worker to respect API rate limits (QPM).
+- **Concurrency & Throttling**: Implements a Promise based queue worker to respect API rate limits (QPM).
 - **Exponential Backoff**: Automatic retry handling for HTTP `429 Too Many Requests` with jittered exponential backoff (`2^retry * 1000ms`).
 
 ### 3. Session-Scoped Vector Index & Retrieval (`backend/services/retriever.js` & `backend/store/vectorStore.js`)
