@@ -112,7 +112,7 @@ Distil provides three integrated workspace view modes available from the sidebar
 
 ## Design System & UX Architecture
 
-Distil features a warm parchment design language built for long-form reading, readability, and legal trust:
+Distil features a warm parchment design language built for long form reading, readability, and legal trust:
 
 - **Warm Parchment Color Palette** (`index.css`):
   - **Background (`--bg-base`)**: `#f5f1e6` (Warm Parchment)
