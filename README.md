@@ -98,7 +98,7 @@ Distil provides three integrated workspace view modes available from the sidebar
 
 1. **RAG Document Chat**:
    - Multi-turn grounded Q&A interface.
-   - Perplexity-style Evidence Citations cards showing exact source passages, page numbers, section headers, and similarity score (e.g., `98% match`).
+   - Perplexity style Evidence Citations cards showing exact source passages, page numbers, section headers, and similarity score (e.g., `98% match`).
    - Integrated single row answer toolbar with Copy SVG button and evidence pill toggle.
    - Export Summary button to download full markdown exports (`.md`).
 2. **Key Extracted Clauses**:
