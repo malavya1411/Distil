@@ -127,7 +127,7 @@ Distil features a warm parchment design language built for long form reading, re
   - **Headings**: `Libre Baskerville` (Classic Serif)
   - **Body**: `Lora` (Book Serif)
   - **Monospace / Code / Scores**: `IBM Plex Mono`
-- **In-Page SPA View Switching**: No popups or modal overlays — selecting collections switches views smoothly within the main workspace canvas.
+- **In-Page SPA View Switching**: No popups or modal overlays selecting collections switches views smoothly within the main workspace canvas.
 
 ---
 
