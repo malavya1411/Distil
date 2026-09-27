@@ -221,7 +221,7 @@ npm run dev
 
 ### `POST /api/upload`
 Uploads a PDF file for ingestion and vector embedding.
-- **Content-Type**: `multipart/form-data`
+- **Content Type**: `multipart/form-data`
 - **Parameters**: `file` (PDF file binary), `docType` (`legal` | `academic` | `auto`)
 - **Response**:
 ```json
