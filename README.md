@@ -97,7 +97,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 Distil provides three integrated workspace view modes available from the sidebar collections menu:
 
 1. **RAG Document Chat**:
-   - Multi-turn grounded Q&A interface.
+   - Multi turn grounded Q&A interface.
    - Perplexity style Evidence Citations cards showing exact source passages, page numbers, section headers, and similarity score (e.g., `98% match`).
    - Integrated single row answer toolbar with Copy SVG button and evidence pill toggle.
    - Export Summary button to download full markdown exports (`.md`).
