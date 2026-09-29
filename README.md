@@ -92,7 +92,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 
 ---
 
-## Workspace Features & In-Page Collections
+## Workspace Features & In Page Collections
 
 Distil provides three integrated workspace view modes available from the sidebar collections menu:
 
