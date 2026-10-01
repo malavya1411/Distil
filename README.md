@@ -78,7 +78,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 - **Concurrency & Throttling**: Implements a Promise based queue worker to respect API rate limits (QPM).
 - **Exponential Backoff**: Automatic retry handling for HTTP `429 Too Many Requests` with jittered exponential backoff (`2^retry * 1000ms`).
 
-### 3. Session-Scoped Vector Index & Retrieval (`backend/services/retriever.js` & `backend/store/vectorStore.js`)
+### 3. Session Scoped Vector Index & Retrieval (`backend/services/retriever.js` & `backend/store/vectorStore.js`)
 - **In Memory Security**: Embeddings and raw text live strictly in volatile memory (`Map<sessionId, SessionData>`). No database persistence or disk storage. Discarded when session resets.
 - **Cosine Distance Search**: Computes normalized dot product cosine similarity:
   $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
