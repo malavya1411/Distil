@@ -1,13 +1,13 @@
 # Distil — Production Grade Document Intelligence & Grounded RAG Platform
 
-> **Read Less. Understand More.**  
+> **Read Less.Understand More.**  
 > Upload complex legal agreements,Terms & Conditions, privacy policies,or academic research papers.Ask natural language questions and receive sub second grounded answers backed by verbatim source passage citations with zero hallucinations.
 
 ---
 
 ## Key Working
 
-1. **Upload & Domain Aware Chunking**: Upload a PDF or paste text. Distil splits documents along legal section boundaries (e.g., `Section 8.2`) or paper headings instead of arbitrary character cuts.
+1. **Upload & Domain Aware Chunking**:Upload a PDF or paste text. Distil splits documents along legal section boundaries (e.g., `Section 8.2`) or paper headings instead of arbitrary character cuts.
 2. **Vector Embedding**: Text chunks are embedded into 3072 dimensional vectors using Gemini API (`gemini-embedding-001`) and stored in a private, session scoped in memory vector index.
 3. **Similarity Search & Retrieval**: When a question is asked, Distil performs cosine similarity search to retrieve the top 4 most relevant passage chunks clearing a strict `0.55` similarity threshold.
 4. **Sub Second Grounded Generation**: Retrieved chunks are passed to Groq LPU (`llama-3.3-70b-versatile`), producing a grounded answer with verbatim evidence citations in **~350ms** with zero hallucinations.
@@ -281,4 +281,4 @@ Confirms API status and environment configuration.
 
 ## License
 
-MIT License — free for open-source exploration, hackathons, and research.
+MIT License free for open-source exploration, hackathons, and research.
