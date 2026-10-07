@@ -84,7 +84,7 @@ Standard fixed length character chunking frequently chops sentences across claus
   $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 - **Threshold Guard (`SIMILARITY_THRESHOLD = 0.55`)**: Chunks below 55% similarity score are discarded. If zero chunks clear the threshold, the system flags `noMatch: true` and refuses to answer rather than allowing model hallucination.
 
-### 4. Sub Second Groq LPU Answer Generation (`backend/services/generator.js`)
+### 4.Sub Second Groq LPU Answer Generation (`backend/services/generator.js`)
 - **LPU Speed Advantage**: Generates answers via Groq's Language Processing Unit (LPU) hardware, cutting generation time down to **~350ms**.
 - **Primary Model**: `llama-3.3-70b-versatile` (70 Billion parameter model offering superior instruction compliance for strict grounding rules).
 - **Fallback Model**: `llama-3.1-8b-instant` (automatically triggered if rate limits are reached).
