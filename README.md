@@ -174,7 +174,7 @@ Distil/
 
 ## Environment Setup & Quick Start
 
-### 1. Requirements & API Credentials
+### 1.Requirements & API Credentials
 - **Node.js** v18+ and **npm**
 - **Gemini API Key**: Obtain for free at [Google AI Studio](https://aistudio.google.com)
 - **Groq API Key**: Obtain for free at [Groq Console](https://console.groq.com)
