@@ -196,7 +196,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 GROQ_API_KEY=your_groq_api_key_here
 ```
 
-### 3. Start Backend Server
+### 3.Start Backend Server
 
 ```bash
 cd backend
