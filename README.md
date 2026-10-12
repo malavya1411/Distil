@@ -179,7 +179,7 @@ Distil/
 - **Gemini API Key**: Obtain for free at [Google AI Studio](https://aistudio.google.com)
 - **Groq API Key**: Obtain for free at [Groq Console](https://console.groq.com)
 
-### 2. Configure Backend Environment
+### 2.Configure Backend Environment
 
 Create a `.env` file inside the `backend/` directory:
 
