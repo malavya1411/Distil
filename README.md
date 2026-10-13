@@ -242,7 +242,7 @@ Ingests raw text directly into the vector store.
 
 ### `POST /api/query`
 Queries an ingested document session.
-- **Content-Type**: `application/json`
+- **Content Type**: `application/json`
 - **Body**:
 ```json
 {
