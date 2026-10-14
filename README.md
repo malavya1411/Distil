@@ -234,7 +234,7 @@ Uploads a PDF file for ingestion and vector embedding.
 }
 ```
 
-### `POST /api/ingest-text`
+### `POST /api/ingest text`
 Ingests raw text directly into the vector store.
 - **Content-Type**: `application/json`
 - **Body**: `{ "text": "...", "docType": "legal", "sourceDoc": "pasted-document" }`
