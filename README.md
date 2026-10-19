@@ -213,7 +213,6 @@ cd frontend
 npm install
 npm run dev
 ```
-- Web Application: `http://localhost:5173`
 
 ---
 
