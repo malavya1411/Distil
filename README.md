@@ -206,13 +206,6 @@ npm start
 - API Server: `http://localhost:3001`
 - Health Endpoint: `http://localhost:3001/api/health`
 
-### 4.Start Frontend Application
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
 
 ---
 
