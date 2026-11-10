@@ -110,7 +110,7 @@ Distil provides three integrated workspace view modes available from the sidebar
    - In-page structured view scanning the document for key legal/academic clauses.
    - Renders color coded clause cards with clause number badges and plain English summaries.
 3. **Risk & Compliance Matrix**:
-   - In page risk analysis view extracting risk factors across Data Privacy, Liability, Termination, Financial Terms, and Intellectual Property.
+   - In page risk analysis view extracting risk factors across Data Privacy, Liability, Termination, Financial Terms,and Intellectual Property.
    - Includes a severity summary bar(`HIGH`, `MEDIUM`, `LOW`) and a structured interactive matrix table linking risks directly to document clauses.
 
 ---
