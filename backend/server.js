@@ -43,11 +43,10 @@ app.get('/api/health', (_req, res) => {
     timestamp: new Date().toISOString(),
     env: {
       geminiKeySet: !!process.env.GEMINI_API_KEY,
-      groqKeySet:   !!process.env.GROQ_API_KEY,
     },
     models: {
       embeddings: 'gemini-embedding-001',
-      generation: 'llama-3.3-70b-versatile (Groq)',
+      generation: process.env.GEMINI_GENERATION_MODEL || 'gemini-2.5-flash',
     },
   });
 });
@@ -66,10 +65,9 @@ app.use((err, _req, res, _next) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`\n🚀 Distil backend running on http://localhost:${PORT}`);
-    console.log(`   Gemini API key : ${process.env.GEMINI_API_KEY ? '✅ set' : '❌ NOT SET — embeddings will fail'}`);
-    console.log(`   Groq API key   : ${process.env.GROQ_API_KEY   ? '✅ set' : '❌ NOT SET — generation will fail'}`);
+    console.log(`   Gemini API key : ${process.env.GEMINI_API_KEY ? '✅ set' : '❌ NOT SET — Gemini calls will fail'}`);
     console.log(`   Embeddings     : gemini-embedding-001`);
-    console.log(`   Generation     : llama-3.3-70b-versatile (Groq LPU)`);
+    console.log(`   Generation     : ${process.env.GEMINI_GENERATION_MODEL || 'gemini-2.5-flash'} (Gemini)`);
     console.log(`   Health check   : http://localhost:${PORT}/api/health\n`);
   });
 }

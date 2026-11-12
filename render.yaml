@@ -8,7 +8,5 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
-      - key: GROQ_API_KEY
-        sync: false
       - key: FRONTEND_URL
         sync: false

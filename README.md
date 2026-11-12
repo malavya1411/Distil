@@ -10,7 +10,7 @@
 1. **Upload & Domain Aware Chunking**:Upload a PDF or paste text. Distil splits documents along legal section boundaries(e.g., `Section 8.2`) or paper headings instead of arbitrary character cuts.
 2. **Vector Embedding**:Text chunks are embedded into 3072 dimensional vectors using Gemini API(`gemini-embedding-001`)and stored in a private, session scoped in memory vector index.
 3. **Similarity Search & Retrieval**: When a question is asked, Distil performs cosine similarity search to retrieve the top 4 most relevant passage chunks clearing a strict `0.55` similarity threshold.
-4. **Sub Second Grounded Generation**: Retrieved chunks are passed to Groq LPU(`llama-3.3-70b-versatile`),producing a grounded answer with verbatim evidence citations in **~350ms** with zero hallucinations.
+4. **Grounded Generation**: Retrieved chunks are passed to Gemini (`gemini-2.5-flash`) with a strict document-only grounding prompt.
 
 ---
 
@@ -54,7 +54,7 @@ Distil is built on a high throughput Retrieval Augmented Generation(RAG) archite
           │
           ▼
 ┌──────────────────┐     Strict System Prompting (Zero Hallucination)
-│ Groq LPU Gen     │ ──► Model: llama-3.3-70b-versatile (Inference ~350ms)
+│ Gemini Gen       │ ──► Model: gemini-2.5-flash
 └─────────┬────────┘     Fallback: llama-3.1-8b-instant
           │
           ▼
@@ -88,10 +88,10 @@ Standard fixed length character chunking frequently chops sentences across claus
   $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot\mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 - **Threshold Guard (`SIMILARITY_THRESHOLD = 0.55`)**: Chunks below 55% similarity score are discarded.If zero chunks clear the threshold, the system flags `noMatch: true` and refuses to answer rather than allowing model hallucination.
 
-### 4.Sub Second Groq LPU Answer Generation(`backend/services/generator.js`)
+### 4. Gemini Answer Generation (`backend/services/generator.js`)
 
-- **LPU Speed Advantage**: Generates answers via Groq's Language Processing Unit (LPU) hardware, cutting generation time down to **~350ms**.
-- **Primary Model**: `llama-3.3-70b-versatile` (70 Billion parameter model offering superior instruction compliance for strict grounding rules).
+- **Provider**: Google Gemini API, configured with `GEMINI_API_KEY`.
+- **Default Model**: `gemini-2.5-flash`; override with `GEMINI_GENERATION_MODEL`.
 - **Fallback Model**: `llama-3.1-8b-instant` (automatically triggered if rate limits are reached).
 - **Strict Grounding Rules**: The system prompt forces the model to answer _exclusively_ from retrieved context and explicitly refuse outside knowledge.
 
@@ -183,7 +183,6 @@ Distil/
 
 - **Node.js** v18+ and **npm**
 - **Gemini API Key**: Obtain for free at [Google AI Studio](https://aistudio.google.com)
-- **Groq API Key**: Obtain for free at [Groq Console](https://console.groq.com)
 
 ### 2.Configure Backend Environment
 
@@ -199,7 +198,7 @@ Set your keys inside `backend/.env`:
 ```env
 PORT=3001
 GEMINI_API_KEY=your_gemini_api_key_here
-GROQ_API_KEY=your_groq_api_key_here
+GEMINI_GENERATION_MODEL=gemini-2.5-flash
 ```
 
 ### 3.Start Backend Server
@@ -308,7 +307,7 @@ Queries an ingested document session.
   ],
   "noMatch": false,
   "threshold": 0.55,
-  "model": "llama-3.3-70b-versatile"
+  "model": "gemini-2.5-flash"
 }
 ```
 
@@ -334,7 +333,7 @@ GET /api/health
   },
   "models": {
     "embeddings": "gemini-embedding-001",
-    "generation": "llama-3.3-70b-versatile (Groq)"
+    "generation": "gemini-2.5-flash"
   }
 }
 ```
@@ -440,7 +439,7 @@ Create a `.env` file inside `backend/`:
 ```env
 PORT=3001
 GEMINI_API_KEY=AIzaSy...your_gemini_api_key
-GROQ_API_KEY=gsk_...your_groq_api_key
+GEMINI_GENERATION_MODEL=gemini-2.5-flash
 ```
 
 Start the backend server:
@@ -510,8 +509,6 @@ Distil is engineered for seamless deployment across standard cloud providers:
       envVars:
         - key: GEMINI_API_KEY
           sync: false
-        - key: GROQ_API_KEY
-          sync: false
   ```
 
 ---
@@ -538,7 +535,7 @@ Typical end-to-end metrics measured on standard 30-page legal contracts (~12,000
 | **Domain Chunking**        | ~35 ms            | Regex clause detection & sentence splitting                  |
 | **Vector Embedding**       | ~4.2 s            | Gemini API batch embedding (5 chunks/batch with rate limits) |
 | **Vector Retrieval**       | **~2 ms**         | In-memory dot-product cosine similarity over 45 vectors      |
-| **Groq LPU Generation**    | **~350 ms**       | `llama-3.3-70b-versatile` full answer generation             |
+| **Gemini Generation**      | varies            | `gemini-2.5-flash` grounded answer generation                |
 | **Total Query Round-Trip** | **~850 ms**       | Query embedding + retrieval + generation + transfer          |
 
 ---
