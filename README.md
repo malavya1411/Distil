@@ -88,7 +88,7 @@ Standard fixed length character chunking frequently chops sentences across claus
   $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot\mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 - **Threshold Guard (`SIMILARITY_THRESHOLD = 0.55`)**: Chunks below 55% similarity score are discarded.If zero chunks clear the threshold, the system flags `noMatch: true` and refuses to answer rather than allowing model hallucination.
 
-### 4. Gemini Answer Generation (`backend/services/generator.js`)
+### 4. Gemini Answer Generation(`backend/services/generator.js`)
 
 - **Provider**: Google Gemini API, configured with `GEMINI_API_KEY`.
 - **Default Model**: `gemini-2.5-flash`; override with `GEMINI_GENERATION_MODEL`.
