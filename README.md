@@ -90,7 +90,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 
 ### 4. Gemini Answer Generation(`backend/services/generator.js`)
 
-- **Provider**: Google Gemini API, configured with `GEMINI_API_KEY`.
+- **Provider**:Google Gemini API, configured with `GEMINI_API_KEY`.
 - **Default Model**: `gemini-2.5-flash`; override with `GEMINI_GENERATION_MODEL`.
 - **Fallback Model**: `llama-3.1-8b-instant` (automatically triggered if rate limits are reached).
 - **Strict Grounding Rules**: The system prompt forces the model to answer _exclusively_ from retrieved context and explicitly refuse outside knowledge.
