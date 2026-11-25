@@ -73,7 +73,7 @@ Standard fixed length character chunking frequently chops sentences across claus
 
 - **Legal Mode**:Splits on uppercase section headers(`SECTION`, `ARTICLE`, `CLAUSE`, `SCHEDULE`, `EXHIBIT`,or numbered clauses like `8.2.1`). Preserves legal definitions intact.
 - **Academic Mode**:Identifies paper structural headings(`Abstract`, `Introduction`, `Methodology`, `Experimental Setup`, `Results`, `Discussion`, `Conclusion`).
-- **Sliding Overlap**: Maintains a 15% sliding window overlap between consecutive chunks to ensure context continuity across chunk seams.
+- **Sliding Overlap**:Maintains a 15% sliding window overlap between consecutive chunks to ensure context continuity across chunk seams.
 
 ### 2.Throttled Vector Embedding Engine(`backend/services/embedder.js`)
 
